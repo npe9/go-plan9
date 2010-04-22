@@ -1542,7 +1542,7 @@ alloc(int32 n)
 	p = malloc(n);
 	if(p == nil) {
 		print("alloc out of mem\n");
-		exit(1);
+		exits("alloc");
 	}
 	memset(p, 0, n);
 	return p;
@@ -1556,7 +1556,7 @@ allocn(void *p, int32 n, int32 d)
 	p = realloc(p, n+d);
 	if(p == nil) {
 		print("allocn out of mem\n");
-		exit(1);
+		exits("allocn");
 	}
 	if(d > 0)
 		memset((char*)p+n, 0, d);

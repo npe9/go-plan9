@@ -16,6 +16,8 @@
 /* We generate C code which implements the function such that it can
    be called from Go and executes the C code.  */
 
+#include <u.h>
+#include <libc.h>
 #include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -671,7 +673,7 @@ usage(void)
 	exit(1);
 }
 
-int
+void
 main(int argc, char **argv)
 {
 	char *goarch;
@@ -692,7 +694,7 @@ main(int argc, char **argv)
 	if(argc <= 1 || strcmp(argv[1], "-") == 0) {
 		file = "<stdin>";
 		process_file();
-		return 0;
+		exits(nil);
 	}
 
 	if(argc > 2)
@@ -700,8 +702,8 @@ main(int argc, char **argv)
 
 	file = argv[1];
 	if(freopen(file, "r", stdin) == 0) {
-		fprintf(stderr, "open %s: %s\n", file, strerror(errno));
-		exit(1);
+		fprintf(stderr, "open %s: %r\n", file);
+		exits("open");
 	}
 
 	if(!gcc) {
@@ -716,5 +718,5 @@ main(int argc, char **argv)
 	}
 
 	process_file();
-	return 0;
+	exits(nil);
 }

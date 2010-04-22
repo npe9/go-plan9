@@ -1,0 +1,9 @@
+enum {
+	PROT_NONE = 0,
+	PROT_READ = 0,
+	PROT_WRITE = 0,
+	PROT_EXEC = 0,
+
+	MAP_ANON = 0,
+	MAP_PRIVATE = 0,
+};

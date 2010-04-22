@@ -1,0 +1,1724 @@
+#line 1 "/usr/sape/src/go/src/cmd/cc/omachcap.c"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1 "/386/include/u.h"
+
+typedef	unsigned short	ushort;
+typedef	unsigned char	uchar;
+typedef unsigned long	ulong;
+typedef unsigned int	uint;
+typedef   signed char	schar;
+typedef	long long	vlong;
+typedef	unsigned long long uvlong;
+typedef unsigned long	uintptr;
+typedef unsigned long	usize;
+typedef	ushort		Rune;
+typedef union FPdbleword FPdbleword;
+typedef long		jmp_buf[2];
+
+
+
+typedef unsigned int	mpdigit;
+typedef unsigned char	u8int;
+typedef unsigned short	u16int;
+typedef unsigned int	u32int;
+typedef unsigned long long u64int;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+union FPdbleword
+{
+	double	x;
+	struct {
+		ulong lo;
+		ulong hi;
+	};
+};
+
+typedef	char*	va_list;
+
+#line 58 "/386/include/u.h"
+
+#line 60 "/386/include/u.h"
+
+#line 66 "/386/include/u.h"
+#line 32 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+#line 1 "/usr/sape/src/go/include/plan9/libc.h"
+
+
+
+#line 1 "/sys/include/libc.h"
+#pragma	lib	"libc.a"
+#pragma	src	"/sys/src/libc"
+
+
+
+
+
+
+#line 11 "/sys/include/libc.h"
+extern	void*	memccpy(void*, void*, int, ulong);
+extern	void*	memset(void*, int, ulong);
+extern	int	memcmp(void*, void*, ulong);
+extern	void*	memcpy(void*, void*, ulong);
+extern	void*	memmove(void*, void*, ulong);
+extern	void*	memchr(void*, int, ulong);
+
+
+#line 21 "/sys/include/libc.h"
+extern	char*	strcat(char*, char*);
+extern	char*	strchr(char*, int);
+extern	int	strcmp(char*, char*);
+extern	char*	strcpy(char*, char*);
+extern	char*	strecpy(char*, char*, char*);
+extern	char*	strdup(char*);
+extern	char*	strncat(char*, char*, long);
+extern	char*	strncpy(char*, char*, long);
+extern	int	strncmp(char*, char*, long);
+extern	char*	strpbrk(char*, char*);
+extern	char*	strrchr(char*, int);
+extern	char*	strtok(char*, char*);
+extern	long	strlen(char*);
+extern	long	strspn(char*, char*);
+extern	long	strcspn(char*, char*);
+extern	char*	strstr(char*, char*);
+extern	int	cistrncmp(char*, char*, int);
+extern	int	cistrcmp(char*, char*);
+extern	char*	cistrstr(char*, char*);
+extern	int	tokenize(char*, char**, int);
+
+enum
+{
+	UTFmax		= 3,
+	Runesync	= 0x80,
+	Runeself	= 0x80,
+	Runeerror	= 0xFFFD,
+};
+
+
+#line 53 "/sys/include/libc.h"
+extern	int	runetochar(char*, Rune*);
+extern	int	chartorune(Rune*, char*);
+extern	int	runelen(long);
+extern	int	runenlen(Rune*, int);
+extern	int	fullrune(char*, int);
+extern	int	utflen(char*);
+extern	int	utfnlen(char*, long);
+extern	char*	utfrune(char*, long);
+extern	char*	utfrrune(char*, long);
+extern	char*	utfutf(char*, char*);
+extern	char*	utfecpy(char*, char*, char*);
+
+extern	Rune*	runestrcat(Rune*, Rune*);
+extern	Rune*	runestrchr(Rune*, Rune);
+extern	int	runestrcmp(Rune*, Rune*);
+extern	Rune*	runestrcpy(Rune*, Rune*);
+extern	Rune*	runestrncpy(Rune*, Rune*, long);
+extern	Rune*	runestrecpy(Rune*, Rune*, Rune*);
+extern	Rune*	runestrdup(Rune*);
+extern	Rune*	runestrncat(Rune*, Rune*, long);
+extern	int	runestrncmp(Rune*, Rune*, long);
+extern	Rune*	runestrrchr(Rune*, Rune);
+extern	long	runestrlen(Rune*);
+extern	Rune*	runestrstr(Rune*, Rune*);
+
+extern	Rune	tolowerrune(Rune);
+extern	Rune	totitlerune(Rune);
+extern	Rune	toupperrune(Rune);
+extern	int	isalpharune(Rune);
+extern	int	islowerrune(Rune);
+extern	int	isspacerune(Rune);
+extern	int	istitlerune(Rune);
+extern	int	isupperrune(Rune);
+extern	int	isdigitrune(Rune);
+
+
+#line 91 "/sys/include/libc.h"
+extern	void*	malloc(ulong);
+extern	void*	mallocz(ulong, int);
+extern	void	free(void*);
+extern	ulong	msize(void*);
+extern	void*	mallocalign(ulong, ulong, long, ulong);
+extern	void*	calloc(ulong, ulong);
+extern	void*	realloc(void*, ulong);
+extern	void	setmalloctag(void*, ulong);
+extern	void	setrealloctag(void*, ulong);
+extern	ulong	getmalloctag(void*);
+extern	ulong	getrealloctag(void*);
+extern	void*	malloctopoolblock(void*);
+
+
+#line 107 "/sys/include/libc.h"
+typedef struct Fmt	Fmt;
+struct Fmt{
+	uchar	runes;
+	void	*start;
+	void	*to;
+	void	*stop;
+	int	(*flush)(Fmt *);
+	void	*farg;
+	int	nfmt;
+	va_list	args;
+	int	r;
+	int	width;
+	int	prec;
+	ulong	flags;
+};
+
+enum{
+	FmtWidth	= 1,
+	FmtLeft		= FmtWidth << 1,
+	FmtPrec		= FmtLeft << 1,
+	FmtSharp	= FmtPrec << 1,
+	FmtSpace	= FmtSharp << 1,
+	FmtSign		= FmtSpace << 1,
+	FmtZero		= FmtSign << 1,
+	FmtUnsigned	= FmtZero << 1,
+	FmtShort	= FmtUnsigned << 1,
+	FmtLong		= FmtShort << 1,
+	FmtVLong	= FmtLong << 1,
+	FmtComma	= FmtVLong << 1,
+	FmtByte		= FmtComma << 1,
+
+	FmtFlag		= FmtByte << 1
+};
+
+extern	int	print(char*, ...);
+extern	char*	seprint(char*, char*, char*, ...);
+extern	char*	vseprint(char*, char*, char*, va_list);
+extern	int	snprint(char*, int, char*, ...);
+extern	int	vsnprint(char*, int, char*, va_list);
+extern	char*	smprint(char*, ...);
+extern	char*	vsmprint(char*, va_list);
+extern	int	sprint(char*, char*, ...);
+extern	int	fprint(int, char*, ...);
+extern	int	vfprint(int, char*, va_list);
+
+extern	int	runesprint(Rune*, char*, ...);
+extern	int	runesnprint(Rune*, int, char*, ...);
+extern	int	runevsnprint(Rune*, int, char*, va_list);
+extern	Rune*	runeseprint(Rune*, Rune*, char*, ...);
+extern	Rune*	runevseprint(Rune*, Rune*, char*, va_list);
+extern	Rune*	runesmprint(char*, ...);
+extern	Rune*	runevsmprint(char*, va_list);
+
+extern	int	fmtfdinit(Fmt*, int, char*, int);
+extern	int	fmtfdflush(Fmt*);
+extern	int	fmtstrinit(Fmt*);
+extern	char*	fmtstrflush(Fmt*);
+extern	int	runefmtstrinit(Fmt*);
+extern	Rune*	runefmtstrflush(Fmt*);
+
+#pragma	varargck	argpos	fmtprint	2
+#pragma	varargck	argpos	fprint		2
+#pragma	varargck	argpos	print		1
+#pragma	varargck	argpos	runeseprint	3
+#pragma	varargck	argpos	runesmprint	1
+#pragma	varargck	argpos	runesnprint	3
+#pragma	varargck	argpos	runesprint	2
+#pragma	varargck	argpos	seprint		3
+#pragma	varargck	argpos	smprint		1
+#pragma	varargck	argpos	snprint		3
+#pragma	varargck	argpos	sprint		2
+
+#pragma	varargck	type	"lld"	vlong
+#pragma	varargck	type	"llx"	vlong
+#pragma	varargck	type	"lld"	uvlong
+#pragma	varargck	type	"llx"	uvlong
+#pragma	varargck	type	"ld"	long
+#pragma	varargck	type	"lx"	long
+#pragma	varargck	type	"lb"	long
+#pragma	varargck	type	"ld"	ulong
+#pragma	varargck	type	"lx"	ulong
+#pragma	varargck	type	"lb"	ulong
+#pragma	varargck	type	"d"	int
+#pragma	varargck	type	"x"	int
+#pragma	varargck	type	"c"	int
+#pragma	varargck	type	"C"	int
+#pragma	varargck	type	"b"	int
+#pragma	varargck	type	"d"	uint
+#pragma	varargck	type	"x"	uint
+#pragma	varargck	type	"c"	uint
+#pragma	varargck	type	"C"	uint
+#pragma	varargck	type	"b"	uint
+#pragma	varargck	type	"f"	double
+#pragma	varargck	type	"e"	double
+#pragma	varargck	type	"g"	double
+#pragma	varargck	type	"s"	char*
+#pragma	varargck	type	"q"	char*
+#pragma	varargck	type	"S"	Rune*
+#pragma	varargck	type	"Q"	Rune*
+#pragma	varargck	type	"r"	void
+#pragma	varargck	type	"%"	void
+#pragma	varargck	type	"n"	int*
+#pragma	varargck	type	"p"	uintptr
+#pragma	varargck	type	"p"	void*
+#pragma	varargck	flag	','
+#pragma	varargck	flag	' '
+#pragma	varargck	flag	'h'
+#pragma varargck	type	"<"	void*
+#pragma varargck	type	"["	void*
+#pragma varargck	type	"H"	void*
+#pragma varargck	type	"lH"	void*
+
+extern	int	fmtinstall(int, int (*)(Fmt*));
+extern	int	dofmt(Fmt*, char*);
+extern	int	dorfmt(Fmt*, Rune*);
+extern	int	fmtprint(Fmt*, char*, ...);
+extern	int	fmtvprint(Fmt*, char*, va_list);
+extern	int	fmtrune(Fmt*, int);
+extern	int	fmtstrcpy(Fmt*, char*);
+extern	int	fmtrunestrcpy(Fmt*, Rune*);
+
+#line 231 "/sys/include/libc.h"
+extern	int	errfmt(Fmt *f);
+
+
+#line 236 "/sys/include/libc.h"
+extern	char	*unquotestrdup(char*);
+extern	Rune	*unquoterunestrdup(Rune*);
+extern	char	*quotestrdup(char*);
+extern	Rune	*quoterunestrdup(Rune*);
+extern	int	quotestrfmt(Fmt*);
+extern	int	quoterunestrfmt(Fmt*);
+extern	void	quotefmtinstall(void);
+extern	int	(*doquote)(int);
+extern	int	needsrcquote(int);
+
+
+#line 249 "/sys/include/libc.h"
+extern	void	srand(long);
+extern	int	rand(void);
+extern	int	nrand(int);
+extern	long	lrand(void);
+extern	long	lnrand(long);
+extern	double	frand(void);
+extern	ulong	truerand(void);
+extern	ulong	ntruerand(ulong);
+
+
+#line 261 "/sys/include/libc.h"
+extern	ulong	getfcr(void);
+extern	void	setfsr(ulong);
+extern	ulong	getfsr(void);
+extern	void	setfcr(ulong);
+extern	double	NaN(void);
+extern	double	Inf(int);
+extern	int	isNaN(double);
+extern	int	isInf(double, int);
+extern	ulong	umuldiv(ulong, ulong, ulong);
+extern	long	muldiv(long, long, long);
+
+extern	double	pow(double, double);
+extern	double	atan2(double, double);
+extern	double	fabs(double);
+extern	double	atan(double);
+extern	double	log(double);
+extern	double	log10(double);
+extern	double	exp(double);
+extern	double	floor(double);
+extern	double	ceil(double);
+extern	double	hypot(double, double);
+extern	double	sin(double);
+extern	double	cos(double);
+extern	double	tan(double);
+extern	double	asin(double);
+extern	double	acos(double);
+extern	double	sinh(double);
+extern	double	cosh(double);
+extern	double	tanh(double);
+extern	double	sqrt(double);
+extern	double	fmod(double, double);
+
+
+
+
+
+
+#line 300 "/sys/include/libc.h"
+
+typedef
+struct Tm
+{
+	int	sec;
+	int	min;
+	int	hour;
+	int	mday;
+	int	mon;
+	int	year;
+	int	wday;
+	int	yday;
+	char	zone[4];
+	int	tzoff;
+} Tm;
+
+extern	Tm*	gmtime(long);
+extern	Tm*	localtime(long);
+extern	char*	asctime(Tm*);
+extern	char*	ctime(long);
+extern	double	cputime(void);
+extern	long	times(long*);
+extern	long	tm2sec(Tm*);
+extern	vlong	nsec(void);
+
+extern	void	cycles(uvlong*);
+
+
+#line 330 "/sys/include/libc.h"
+enum
+{
+	PNPROC		= 1,
+	PNGROUP		= 2,
+};
+
+extern	void	_assert(char*);
+extern	int	abs(int);
+extern	int	atexit(void(*)(void));
+extern	void	atexitdont(void(*)(void));
+extern	int	atnotify(int(*)(void*, char*), int);
+extern	double	atof(char*);
+extern	int	atoi(char*);
+extern	long	atol(char*);
+extern	vlong	atoll(char*);
+extern	double	charstod(int(*)(void*), void*);
+extern	char*	cleanname(char*);
+extern	int	decrypt(void*, void*, int);
+extern	int	encrypt(void*, void*, int);
+extern	int	dec64(uchar*, int, char*, int);
+extern	int	enc64(char*, int, uchar*, int);
+extern	int	dec32(uchar*, int, char*, int);
+extern	int	enc32(char*, int, uchar*, int);
+extern	int	dec16(uchar*, int, char*, int);
+extern	int	enc16(char*, int, uchar*, int);
+extern	int	encodefmt(Fmt*);
+extern	void	exits(char*);
+extern	double	frexp(double, int*);
+extern	uintptr	getcallerpc(void*);
+extern	char*	getenv(char*);
+extern	int	getfields(char*, char**, int, int, char*);
+extern	int	gettokens(char *, char **, int, char *);
+extern	char*	getuser(void);
+extern	char*	getwd(char*, int);
+extern	int	iounit(int);
+extern	long	labs(long);
+extern	double	ldexp(double, int);
+extern	void	longjmp(jmp_buf, int);
+extern	char*	mktemp(char*);
+extern	double	modf(double, double*);
+extern	int	netcrypt(void*, void*);
+extern	void	notejmp(void*, jmp_buf, int);
+extern	void	perror(char*);
+extern	int	postnote(int, int, char *);
+extern	double	pow10(int);
+extern	int	putenv(char*, char*);
+extern	void	qsort(void*, long, long, int (*)(void*, void*));
+extern	int	setjmp(jmp_buf);
+extern	double	strtod(char*, char**);
+extern	long	strtol(char*, char**, int);
+extern	ulong	strtoul(char*, char**, int);
+extern	vlong	strtoll(char*, char**, int);
+extern	uvlong	strtoull(char*, char**, int);
+extern	void	sysfatal(char*, ...);
+#pragma	varargck	argpos	sysfatal	1
+extern	void	syslog(int, char*, char*, ...);
+#pragma	varargck	argpos	syslog	3
+extern	long	time(long*);
+extern	int	tolower(int);
+extern	int	toupper(int);
+
+
+#line 394 "/sys/include/libc.h"
+enum {
+	Profoff,
+	Profuser,
+	Profkernel,
+	Proftime,
+	Profsample,
+};
+extern	void	prof(void (*fn)(void*), void *arg, int entries, int what);
+
+
+#line 406 "/sys/include/libc.h"
+
+long ainc(long*);
+long adec(long*);
+int cas32(u32int*, u32int, u32int);
+int casp(void**, void*, void*);
+int casl(ulong*, ulong, ulong);
+
+
+#line 416 "/sys/include/libc.h"
+typedef
+struct Lock {
+	int	val;
+} Lock;
+
+extern int	_tas(int*);
+
+extern	void	lock(Lock*);
+extern	void	unlock(Lock*);
+extern	int	canlock(Lock*);
+
+typedef struct QLp QLp;
+struct QLp
+{
+	int	inuse;
+	QLp	*next;
+	char	state;
+};
+
+typedef
+struct QLock
+{
+	Lock	lock;
+	int	locked;
+	QLp	*head;
+	QLp 	*tail;
+} QLock;
+
+extern	void	qlock(QLock*);
+extern	void	qunlock(QLock*);
+extern	int	canqlock(QLock*);
+extern	void	_qlockinit(void* (*)(void*, void*));
+
+typedef
+struct RWLock
+{
+	Lock	lock;
+	int	readers;
+	int	writer;
+	QLp	*head;
+	QLp	*tail;
+} RWLock;
+
+extern	void	rlock(RWLock*);
+extern	void	runlock(RWLock*);
+extern	int	canrlock(RWLock*);
+extern	void	wlock(RWLock*);
+extern	void	wunlock(RWLock*);
+extern	int	canwlock(RWLock*);
+
+typedef
+struct Rendez
+{
+	QLock	*l;
+	QLp	*head;
+	QLp	*tail;
+} Rendez;
+
+extern	void	rsleep(Rendez*);
+extern	int	rwakeup(Rendez*);
+extern	int	rwakeupall(Rendez*);
+extern	void**	privalloc(void);
+extern	void	privfree(void**);
+
+
+#line 483 "/sys/include/libc.h"
+
+extern	int	accept(int, char*);
+extern	int	announce(char*, char*);
+extern	int	dial(char*, char*, char*, int*);
+extern	void	setnetmtpt(char*, int, char*);
+extern	int	hangup(int);
+extern	int	listen(char*, char*);
+extern	char*	netmkaddr(char*, char*, char*);
+extern	int	reject(int, char*, char*);
+
+
+#line 496 "/sys/include/libc.h"
+extern	int	pushssl(int, char*, char*, char*, int*);
+extern	int	pushtls(int, char*, char*, int, char*, char*);
+
+
+#line 502 "/sys/include/libc.h"
+typedef struct NetConnInfo NetConnInfo;
+struct NetConnInfo
+{
+	char	*dir;
+	char	*root;
+	char	*spec;
+	char	*lsys;
+	char	*lserv;
+	char	*rsys;
+	char	*rserv;
+	char	*laddr;
+	char	*raddr;
+};
+extern	NetConnInfo*	getnetconninfo(char*, int);
+extern	void		freenetconninfo(NetConnInfo*);
+
+
+#line 522 "/sys/include/libc.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enum
+{
+	RFNAMEG		= (1<<0),
+	RFENVG		= (1<<1),
+	RFFDG		= (1<<2),
+	RFNOTEG		= (1<<3),
+	RFPROC		= (1<<4),
+	RFMEM		= (1<<5),
+	RFNOWAIT	= (1<<6),
+	RFCNAMEG	= (1<<10),
+	RFCENVG		= (1<<11),
+	RFCFDG		= (1<<12),
+	RFREND		= (1<<13),
+	RFNOMNT		= (1<<14)
+};
+
+typedef
+struct Qid
+{
+	uvlong	path;
+	ulong	vers;
+	uchar	type;
+} Qid;
+
+typedef
+struct Dir {
+
+	ushort	type;
+	uint	dev;
+
+	Qid	qid;
+	ulong	mode;
+	ulong	atime;
+	ulong	mtime;
+	vlong	length;
+	char	*name;
+	char	*uid;
+	char	*gid;
+	char	*muid;
+} Dir;
+
+
+typedef
+struct Waitmsg
+{
+	int	pid;
+	ulong	time[3];
+	char	*msg;
+} Waitmsg;
+
+typedef
+struct IOchunk
+{
+	void	*addr;
+	ulong	len;
+} IOchunk;
+
+extern	void	_exits(char*);
+
+extern	void	abort(void);
+extern	int	access(char*, int);
+extern	long	alarm(ulong);
+extern	int	await(char*, int);
+extern	int	bind(char*, char*, int);
+extern	int	brk(void*);
+extern	int	chdir(char*);
+extern	int	close(int);
+extern	int	create(char*, int, ulong);
+extern	int	dup(int, int);
+extern	int	errstr(char*, uint);
+extern	int	exec(char*, char*[]);
+extern	int	execl(char*, ...);
+extern	int	fork(void);
+extern	int	rfork(int);
+extern	int	fauth(int, char*);
+extern	int	fstat(int, uchar*, int);
+extern	int	fwstat(int, uchar*, int);
+extern	int	fversion(int, int, char*, int);
+extern	int	mount(int, int, char*, int, char*);
+extern	int	unmount(char*, char*);
+extern	int	noted(int);
+extern	int	notify(void(*)(void*, char*));
+extern	int	open(char*, int);
+extern	int	fd2path(int, char*, int);
+extern	int	pipe(int*);
+extern	long	pread(int, void*, long, vlong);
+extern	long	preadv(int, IOchunk*, int, vlong);
+extern	long	pwrite(int, void*, long, vlong);
+extern	long	pwritev(int, IOchunk*, int, vlong);
+extern	long	read(int, void*, long);
+extern	long	readn(int, void*, long);
+extern	long	readv(int, IOchunk*, int);
+extern	int	remove(char*);
+extern	void*	sbrk(ulong);
+extern	long	oseek(int, long, int);
+extern	vlong	seek(int, vlong, int);
+extern	void*	segattach(int, char*, void*, ulong);
+extern	void*	segbrk(void*, void*);
+extern	int	segdetach(void*);
+extern	int	segflush(void*, ulong);
+extern	int	segfree(void*, ulong);
+extern	int	semacquire(long*, int);
+extern	long	semrelease(long*, long);
+extern	int	sleep(long);
+extern	int	stat(char*, uchar*, int);
+extern	Waitmsg*	wait(void);
+extern	int	waitpid(void);
+extern	long	write(int, void*, long);
+extern	long	writev(int, IOchunk*, int);
+extern	int	wstat(char*, uchar*, int);
+extern	void*	rendezvous(void*, void*);
+
+extern	Dir*	dirstat(char*);
+extern	Dir*	dirfstat(int);
+extern	int	dirwstat(char*, Dir*);
+extern	int	dirfwstat(int, Dir*);
+extern	long	dirread(int, Dir**);
+extern	void	nulldir(Dir*);
+extern	long	dirreadall(int, Dir**);
+extern	int	getpid(void);
+extern	int	getppid(void);
+extern	void	rerrstr(char*, uint);
+extern	char*	sysname(void);
+extern	void	werrstr(char*, ...);
+#pragma	varargck	argpos	werrstr	1
+
+extern char *argv0;
+
+#line 717 "/sys/include/libc.h"
+
+
+#line 720 "/sys/include/libc.h"
+
+#line 722 "/sys/include/libc.h"
+
+
+
+
+extern	char	end[];
+#line 5 "/usr/sape/src/go/include/plan9/libc.h"
+
+typedef long long s64int;
+typedef char s8int;
+typedef short s16int;
+typedef long intptr;
+typedef long s32int;
+
+typedef s8int int8;
+typedef u8int uint8;
+typedef s16int int16;
+typedef u16int uint16;
+typedef s32int int32;
+typedef u32int uint32;
+typedef s64int int64;
+typedef u64int uint64;
+
+
+#line 33 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+#line 1 "/sys/include/bio.h"
+#pragma	src	"/sys/src/libbio"
+#pragma	lib	"libbio.a"
+
+typedef	struct	Biobuf	Biobuf;
+typedef	struct	Biobufhdr	Biobufhdr;
+
+enum
+{
+	Bsize		= 8*1024,
+	Bungetsize	= 4,
+	Bmagic		= 0x314159,
+	Beof		= -1,
+	Bbad		= -2,
+
+	Binactive	= 0,
+	Bractive,
+	Bwactive,
+	Bracteof,
+};
+
+struct	Biobufhdr
+{
+	int	icount;
+	int	ocount;
+	int	rdline;
+	int	runesize;
+	int	state;
+	int	fid;
+	int	flag;
+	vlong	offset;
+	int	bsize;
+	uchar*	bbuf;
+	uchar*	ebuf;
+	uchar*	gbuf;
+};
+
+struct	Biobuf
+{
+	Biobufhdr;
+	uchar	b[Bungetsize+Bsize];
+};
+
+
+
+
+
+
+
+
+int	Bbuffered(Biobufhdr*);
+int	Bfildes(Biobufhdr*);
+int	Bflush(Biobufhdr*);
+int	Bgetc(Biobufhdr*);
+int	Bgetd(Biobufhdr*, double*);
+long	Bgetrune(Biobufhdr*);
+int	Binit(Biobuf*, int, int);
+int	Binits(Biobufhdr*, int, int, uchar*, int);
+int	Blinelen(Biobufhdr*);
+vlong	Boffset(Biobufhdr*);
+Biobuf*	Bopen(char*, int);
+int	Bprint(Biobufhdr*, char*, ...);
+int	Bvprint(Biobufhdr*, char*, va_list);
+int	Bputc(Biobufhdr*, int);
+int	Bputrune(Biobufhdr*, long);
+void*	Brdline(Biobufhdr*, int);
+char*	Brdstr(Biobufhdr*, int, int);
+long	Bread(Biobufhdr*, void*, long);
+vlong	Bseek(Biobufhdr*, vlong, int);
+int	Bterm(Biobufhdr*);
+int	Bungetc(Biobufhdr*);
+int	Bungetrune(Biobufhdr*);
+long	Bwrite(Biobufhdr*, void*, long);
+
+#pragma	varargck	argpos	Bprint	2
+#line 34 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+#line 1 "/sys/include/ctype.h"
+#pragma	src	"/sys/src/libc/port"
+#pragma	lib	"libc.a"
+
+
+
+
+
+
+
+
+
+
+extern unsigned char	_ctype[];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 35 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+
+#pragma	lib	"../cc/cc.a$O"
+
+
+
+
+
+
+
+
+
+
+
+
+typedef	struct	Node	Node;
+typedef	struct	Sym	Sym;
+typedef	struct	Type	Type;
+typedef	struct	Funct	Funct;
+typedef	struct	Decl	Decl;
+typedef	struct	Io	Io;
+typedef	struct	Hist	Hist;
+typedef	struct	Term	Term;
+typedef	struct	Init	Init;
+typedef	struct	Bits	Bits;
+typedef	struct	Dynld	Dynld;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct	Bits
+{
+	uint32	b[5];
+};
+
+struct	Node
+{
+	Node*	left;
+	Node*	right;
+	void*	label;
+	int32	pc;
+	int	reg;
+	int32	xoffset;
+	double	fconst;
+	vlong	vconst;
+	char*	cstring;
+	ushort*	rstring;
+
+	Sym*	sym;
+	Type*	type;
+	int32	lineno;
+	uchar	op;
+	uchar	oldop;
+	uchar	xcast;
+	uchar	class;
+	uchar	etype;
+	uchar	complex;
+	uchar	addable;
+	uchar	scale;
+	uchar	garb;
+};
+
+
+struct	Sym
+{
+	Sym*	link;
+	Type*	type;
+	Type*	suetag;
+	Type*	tenum;
+	char*	macro;
+	int32	varlineno;
+	int32	offset;
+	vlong	vconst;
+	double	fconst;
+	Node*	label;
+	ushort	lexical;
+	char	*name;
+	ushort	block;
+	ushort	sueblock;
+	uchar	class;
+	uchar	sym;
+	uchar	aused;
+	uchar	sig;
+};
+
+
+enum{
+	SIGNONE = 0,
+	SIGDONE = 1,
+	SIGINTERN = 2,
+
+	SIGNINTERN = 1729*325*1729,
+};
+
+struct	Decl
+{
+	Decl*	link;
+	Sym*	sym;
+	Type*	type;
+	int32	varlineno;
+	int32	offset;
+	short	val;
+	ushort	block;
+	uchar	class;
+	uchar	aused;
+};
+
+
+struct	Type
+{
+	Sym*	sym;
+	Sym*	tag;
+	Funct*	funct;
+	Type*	link;
+	Type*	down;
+	int32	width;
+	int32	offset;
+	int32	lineno;
+	uchar	shift;
+	uchar	nbits;
+	uchar	etype;
+	uchar	garb;
+};
+
+
+
+
+struct	Init
+{
+	int	code;
+	uint32	value;
+	char*	s;
+};
+
+ extern struct
+{
+	char*	p;
+	int	c;
+} fi;
+
+struct	Io
+{
+	Io*	link;
+	char*	p;
+	char	b[8192];
+	short	c;
+	short	f;
+};
+
+
+struct	Hist
+{
+	Hist*	link;
+	char*	name;
+	int32	line;
+	int32	offset;
+};
+
+ extern Hist*	hist;
+
+struct	Term
+{
+	vlong	mult;
+	Node	*node;
+};
+
+enum
+{
+	Axxx,
+	Ael1,
+	Ael2,
+	Asu2,
+	Aarg0,
+	Aarg1,
+	Aarg2,
+	Aaut3,
+	NALIGN,
+};
+
+enum
+{
+	DMARK,
+	DAUTO,
+	DSUE,
+	DLABEL,
+};
+enum
+{
+	OXXX,
+	OADD,
+	OADDR,
+	OAND,
+	OANDAND,
+	OARRAY,
+	OAS,
+	OASI,
+	OASADD,
+	OASAND,
+	OASASHL,
+	OASASHR,
+	OASDIV,
+	OASHL,
+	OASHR,
+	OASLDIV,
+	OASLMOD,
+	OASLMUL,
+	OASLSHR,
+	OASMOD,
+	OASMUL,
+	OASOR,
+	OASSUB,
+	OASXOR,
+	OBIT,
+	OBREAK,
+	OCASE,
+	OCAST,
+	OCOMMA,
+	OCOND,
+	OCONST,
+	OCONTINUE,
+	ODIV,
+	ODOT,
+	ODOTDOT,
+	ODWHILE,
+	OENUM,
+	OEQ,
+	OEXREG,
+	OFOR,
+	OFUNC,
+	OGE,
+	OGOTO,
+	OGT,
+	OHI,
+	OHS,
+	OIF,
+	OIND,
+	OINDREG,
+	OINIT,
+	OLABEL,
+	OLDIV,
+	OLE,
+	OLIST,
+	OLMOD,
+	OLMUL,
+	OLO,
+	OLS,
+	OLSHR,
+	OLT,
+	OMOD,
+	OMUL,
+	ONAME,
+	ONE,
+	ONOT,
+	OOR,
+	OOROR,
+	OPOSTDEC,
+	OPOSTINC,
+	OPREDEC,
+	OPREINC,
+	OPROTO,
+	OREGISTER,
+	ORETURN,
+	OSET,
+	OSIGN,
+	OSIZE,
+	OSTRING,
+	OLSTRING,
+	OSTRUCT,
+	OSUB,
+	OSWITCH,
+	OUNION,
+	OUSED,
+	OWHILE,
+	OXOR,
+	ONEG,
+	OCOM,
+	OPOS,
+	OELEM,
+
+	OTST,
+	OINDEX,
+	OFAS,
+	OREGPAIR,
+
+	OEND
+};
+enum
+{
+	TXXX,
+	TCHAR,
+	TUCHAR,
+	TSHORT,
+	TUSHORT,
+	TINT,
+	TUINT,
+	TLONG,
+	TULONG,
+	TVLONG,
+	TUVLONG,
+	TFLOAT,
+	TDOUBLE,
+	TIND,
+	TFUNC,
+	TARRAY,
+	TVOID,
+	TSTRUCT,
+	TUNION,
+	TENUM,
+	NTYPE,
+
+	TAUTO	= NTYPE,
+	TEXTERN,
+	TSTATIC,
+	TTYPEDEF,
+	TTYPESTR,
+	TREGISTER,
+	TCONSTNT,
+	TVOLATILE,
+	TUNSIGNED,
+	TSIGNED,
+	TDOT,
+	TFILE,
+	TOLD,
+	NALLTYPES,
+};
+enum
+{
+	CXXX,
+	CAUTO,
+	CEXTERN,
+	CGLOBL,
+	CSTATIC,
+	CLOCAL,
+	CTYPEDEF,
+	CTYPESTR,
+	CPARAM,
+	CSELEM,
+	CLABEL,
+	CEXREG,
+	NCTYPES,
+};
+enum
+{
+	GXXX		= 0,
+	GCONSTNT	= 1<<0,
+	GVOLATILE	= 1<<1,
+	NGTYPES		= 1<<2,
+
+	GINCOMPLETE	= 1<<2,
+};
+enum
+{
+	BCHAR		= 1L<<TCHAR,
+	BUCHAR		= 1L<<TUCHAR,
+	BSHORT		= 1L<<TSHORT,
+	BUSHORT		= 1L<<TUSHORT,
+	BINT		= 1L<<TINT,
+	BUINT		= 1L<<TUINT,
+	BLONG		= 1L<<TLONG,
+	BULONG		= 1L<<TULONG,
+	BVLONG		= 1L<<TVLONG,
+	BUVLONG		= 1L<<TUVLONG,
+	BFLOAT		= 1L<<TFLOAT,
+	BDOUBLE		= 1L<<TDOUBLE,
+	BIND		= 1L<<TIND,
+	BFUNC		= 1L<<TFUNC,
+	BARRAY		= 1L<<TARRAY,
+	BVOID		= 1L<<TVOID,
+	BSTRUCT		= 1L<<TSTRUCT,
+	BUNION		= 1L<<TUNION,
+	BENUM		= 1L<<TENUM,
+	BFILE		= 1L<<TFILE,
+	BDOT		= 1L<<TDOT,
+	BCONSTNT	= 1L<<TCONSTNT,
+	BVOLATILE	= 1L<<TVOLATILE,
+	BUNSIGNED	= 1L<<TUNSIGNED,
+	BSIGNED		= 1L<<TSIGNED,
+	BAUTO		= 1L<<TAUTO,
+	BEXTERN		= 1L<<TEXTERN,
+	BSTATIC		= 1L<<TSTATIC,
+	BTYPEDEF	= 1L<<TTYPEDEF,
+	BTYPESTR	= 1L<<TTYPESTR,
+	BREGISTER	= 1L<<TREGISTER,
+
+	BINTEGER	= BCHAR|BUCHAR|BSHORT|BUSHORT|BINT|BUINT|
+				BLONG|BULONG|BVLONG|BUVLONG,
+	BNUMBER		= BINTEGER|BFLOAT|BDOUBLE,
+
+
+
+	BCLASS		= BAUTO|BEXTERN|BSTATIC|BTYPEDEF|BTYPESTR|BREGISTER,
+	BGARB		= BCONSTNT|BVOLATILE,
+};
+
+struct	Funct
+{
+	Sym*	sym[OEND];
+	Sym*	castto[NTYPE];
+	Sym*	castfr[NTYPE];
+};
+
+struct	Dynld
+{
+	char*	local;
+	char*	remote;
+	char*	path;
+};
+
+ extern Dynld	*dynld;
+ extern int	ndynld;
+
+ extern struct
+{
+	Type*	tenum;
+	Type*	cenum;
+	vlong	lastenum;
+	double	floatenum;
+} en;
+
+ extern int	autobn;
+ extern int32	autoffset;
+ extern int	blockno;
+ extern Decl*	dclstack;
+ extern char	debug[256];
+ extern Hist*	ehist;
+ extern int32	firstbit;
+ extern Sym*	firstarg;
+ extern Type*	firstargtype;
+ extern Decl*	firstdcl;
+ extern int	fperror;
+ extern Sym*	hash[1024];
+ extern char*	hunk;
+ extern char*	include[20];
+ extern Io*	iofree;
+ extern Io*	ionext;
+ extern Io*	iostack;
+ extern int32	lastbit;
+ extern char	lastclass;
+ extern Type*	lastdcl;
+ extern int32	lastfield;
+ extern Type*	lasttype;
+ extern int32	lineno;
+ extern int32	nearln;
+ extern int	nerrors;
+ extern int	newflag;
+ extern int32	nhunk;
+ extern int	ninclude;
+ extern Node*	nodproto;
+ extern Node*	nodcast;
+ extern Biobuf	outbuf;
+ extern Biobuf	diagbuf;
+ extern char*	outfile;
+ extern char*	pathname;
+ extern int	peekc;
+ extern int32	stkoff;
+ extern Type*	strf;
+ extern Type*	strl;
+ extern char	symb[500];
+ extern Sym*	symstring;
+ extern int	taggen;
+ extern Type*	tfield;
+ extern Type*	tufield;
+ extern int	thechar;
+ extern char*	thestring;
+ extern Type*	thisfn;
+ extern int32	thunk;
+ extern Type*	types[NTYPE];
+ extern Type*	fntypes[NTYPE];
+ extern Node*	initlist;
+ extern Term	term[10];
+ extern int	nterm;
+ extern int	packflg;
+ extern int	fproundflg;
+ extern int	textflag;
+ extern int	ncontin;
+ extern int	canreach;
+ extern int	warnreach;
+ extern Bits	zbits;
+
+extern	char	*onames[], *tnames[], *gnames[];
+extern	char	*cnames[], *qnames[], *bnames[];
+extern	uchar	tab[NTYPE][NTYPE];
+extern	uchar	comrel[], invrel[], logrel[];
+extern	int32	ncast[], tadd[], tand[];
+extern	int32	targ[], tasadd[], tasign[], tcast[];
+extern	int32	tdot[], tfunct[], tindir[], tmul[];
+extern	int32	tnot[], trel[], tsub[];
+
+extern	uchar	typeaf[];
+extern	uchar	typefd[];
+extern	uchar	typei[];
+extern	uchar	typesu[];
+extern	uchar	typesuv[];
+extern	uchar	typeu[];
+extern	uchar	typev[];
+extern	uchar	typec[];
+extern	uchar	typeh[];
+extern	uchar	typeil[];
+extern	uchar	typeilp[];
+extern	uchar	typechl[];
+extern	uchar	typechlv[];
+extern	uchar	typechlvp[];
+extern	uchar	typechlp[];
+extern	uchar	typechlpfd[];
+
+ extern uchar*	typeword;
+ extern uchar*	typecmplx;
+
+extern	uint32	thash1;
+extern	uint32	thash2;
+extern	uint32	thash3;
+extern	uint32	thash[];
+
+
+#line 562 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+int	systemtype(int);
+int	pathchar(void);
+
+
+#line 568 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+int	yyparse(void);
+int	mpatov(char*, vlong*);
+
+
+#line 574 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void*	allocn(void*, int32, int32);
+void*	alloc(int32);
+void	cinit(void);
+int	compile(char*, char**, int);
+void	errorexit(void);
+int	filbuf(void);
+int ccgetc(void);
+int32	getr(void);
+int	getnsc(void);
+Sym*	lookup(void);
+void	main(int, char*[]);
+void	newfile(char*, int);
+void	newio(void);
+void	pushio(void);
+int32	escchar(int32, int, int);
+Sym*	slookup(char*);
+void	syminit(Sym*);
+void	unget(int);
+int32	yylex(void);
+int	Lconv(Fmt*);
+int	Tconv(Fmt*);
+int	FNconv(Fmt*);
+int	Oconv(Fmt*);
+int	Qconv(Fmt*);
+int	VBconv(Fmt*);
+void	setinclude(char*);
+
+
+#line 604 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	dodefine(char*);
+void	domacro(void);
+Sym*	getsym(void);
+int32	getnsn(void);
+void	linehist(char*, int);
+void	macdef(void);
+void	macprag(void);
+void	macend(void);
+void	macexpand(Sym*, char*);
+void	macif(int);
+void	macinc(void);
+void	maclin(void);
+void	macund(void);
+
+
+#line 621 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+Node*	doinit(Sym*, Type*, int32, Node*);
+Type*	tcopy(Type*);
+Node*	init1(Sym*, Type*, int32, int);
+Node*	newlist(Node*, Node*);
+void	adecl(int, Type*, Sym*);
+int	anyproto(Node*);
+void	argmark(Node*, int);
+void	dbgdecl(Sym*);
+Node*	dcllabel(Sym*, int);
+Node*	dodecl(void(*)(int, Type*, Sym*), int, Type*, Node*);
+Sym*	mkstatic(Sym*);
+void	doenum(Sym*, Node*);
+void	snap(Type*);
+Type*	dotag(Sym*, int, int);
+void	edecl(int, Type*, Sym*);
+Type*	fnproto(Node*);
+Type*	fnproto1(Node*);
+void	markdcl(void);
+Type*	paramconv(Type*, int);
+void	pdecl(int, Type*, Sym*);
+Decl*	push(void);
+Decl*	push1(Sym*);
+Node*	revertdcl(void);
+int32	xround(int32, int);
+int	rsametype(Type*, Type*, int, int);
+int	sametype(Type*, Type*);
+uint32	sign(Sym*);
+uint32	signature(Type*);
+void	suallign(Type*);
+void	tmerge(Type*, Sym*);
+void	walkparam(Node*, int);
+void	xdecl(int, Type*, Sym*);
+Node*	contig(Sym*, Node*, int32);
+
+
+#line 658 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	ccom(Node*);
+void	complex(Node*);
+int	tcom(Node*);
+int	tcoma(Node*, Node*, Type*, int);
+int	tcomd(Node*);
+int	tcomo(Node*, int);
+int	tcomx(Node*);
+int	tlvalue(Node*);
+void	constas(Node*, Type*, Type*);
+
+
+#line 671 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	acom(Node*);
+void	acom1(vlong, Node*);
+void	acom2(Node*, Type*);
+int	acomcmp1(const void*, const void*);
+int	acomcmp2(const void*, const void*);
+int	addo(Node*);
+void	evconst(Node*);
+
+
+#line 682 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+int	isfunct(Node*);
+void	dclfunct(Type*, Sym*);
+
+
+#line 688 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	arith(Node*, int);
+int	deadheads(Node*);
+Type*	dotsearch(Sym*, Type*, Node*, int32*);
+int32	dotoffset(Type*, Type*, Node*);
+void	gethunk(void);
+Node*	invert(Node*);
+int	bitno(int32);
+void	makedot(Node*, Type*, int32);
+int	mixedasop(Type*, Type*);
+Node*	new(int, Node*, Node*);
+Node*	new1(int, Node*, Node*);
+int	nilcast(Type*, Type*);
+int	nocast(Type*, Type*);
+void	prtree(Node*, char*);
+void	prtree1(Node*, int, int);
+void	relcon(Node*, Node*);
+int	relindex(int);
+int	simpleg(int32);
+Type*	garbt(Type*, int32);
+int	simplec(int32);
+Type*	simplet(int32);
+int	stcompat(Node*, Type*, Type*, int32[]);
+int	tcompat(Node*, Type*, Type*, int32[]);
+void	tinit(void);
+Type*	typ(int, Type*);
+Type*	copytyp(Type*);
+void	typeext(Type*, Node*);
+void	typeext1(Type*, Node*);
+int	side(Node*);
+int	vconst(Node*);
+int	xlog2(uvlong);
+int	vlog(Node*);
+int	topbit(uint32);
+void	simplifyshift(Node*);
+int32	typebitor(int32, int32);
+void	diag(Node*, char*, ...);
+void	warn(Node*, char*, ...);
+void	yyerror(char*, ...);
+void	fatal(Node*, char*, ...);
+
+
+#line 731 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	acidtype(Type*);
+void	acidvar(Sym*);
+
+
+#line 737 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	pickletype(Type*);
+
+
+#line 742 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+Bits	bor(Bits, Bits);
+Bits	band(Bits, Bits);
+Bits	bnot(Bits);
+int	bany(Bits*);
+int	bnum(Bits);
+Bits	blsh(uint);
+int	beq(Bits, Bits);
+int	bset(Bits, uint);
+
+
+#line 754 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	dpcheck(Node*);
+void	arginit(void);
+void	pragvararg(void);
+void	pragpack(void);
+void	pragfpround(void);
+void	pragtextflag(void);
+void	pragincomplete(void);
+void	pragdynld(void);
+
+
+#line 766 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+void	codgen(Node*, Node*);
+void	gclean(void);
+void	gextern(Sym*, Node*, int32, int32);
+void	ginit(void);
+int32	outstring(char*, int32);
+int32	outlstring(ushort*, int32);
+void	sextern(Sym*, Node*, int32, int32);
+void	xcom(Node*);
+int32	exreg(Type*);
+int32	align(int32, Type*, int);
+int32	maxround(int32, int32);
+
+extern	schar	ewidth[];
+
+
+#line 783 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+int	com64(Node*);
+void	com64init(void);
+void	bool64(Node*);
+double	convvtof(vlong);
+vlong	convftov(double);
+double	convftox(double, int);
+vlong	convvtox(vlong, int);
+
+
+#line 794 "/usr/sape/src/go/src/cmd/cc/./cc.h"
+int	machcap(Node*);
+
+#pragma	varargck	argpos	warn	2
+#pragma	varargck	argpos	diag	2
+#pragma	varargck	argpos	yyerror	1
+
+#pragma	varargck	type	"F"	Node*
+#pragma	varargck	type	"L"	int32
+#pragma	varargck	type	"Q"	int32
+#pragma	varargck	type	"O"	int
+#pragma	varargck	type	"T"	Type*
+#pragma	varargck	type	"|"	int
+
+enum
+{
+	Plan9	= 1<<0,
+	Unix	= 1<<1,
+	Windows	= 1<<2,
+};
+int	pathchar(void);
+int	systemtype(int);
+void*	alloc(int32 n);
+void*	allocn(void*, int32, int32);
+#line 32 "/usr/sape/src/go/src/cmd/cc/omachcap.c"
+
+
+int
+machcap(Node *n)
+{
+	return 0;
+}

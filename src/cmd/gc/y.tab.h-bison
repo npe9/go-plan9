@@ -1,0 +1,181 @@
+
+/* A Bison parser, made by GNU Bison 2.4.1.  */
+
+/* Skeleton interface for Bison's Yacc-like parsers in C
+   
+      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   Free Software Foundation, Inc.
+   
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+/* As a special exception, you may create a larger work that contains
+   part or all of the Bison parser skeleton and distribute that work
+   under terms of your choice, so long as that work isn't itself a
+   parser generator using the skeleton or a modified version thereof
+   as a parser skeleton.  Alternatively, if you modify or redistribute
+   the parser skeleton itself, you may (at your option) remove this
+   special exception, which will cause the skeleton and the resulting
+   Bison output files to be licensed under the GNU General Public
+   License without this special exception.
+   
+   This special exception was added by the Free Software Foundation in
+   version 2.2 of Bison.  */
+
+
+/* Tokens.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+   /* Put the tokens into the symbol table, so that GDB and other debuggers
+      know about them.  */
+   enum yytokentype {
+     LLITERAL = 258,
+     LASOP = 259,
+     LBREAK = 260,
+     LCASE = 261,
+     LCHAN = 262,
+     LCOLAS = 263,
+     LCONST = 264,
+     LCONTINUE = 265,
+     LDDD = 266,
+     LDEFAULT = 267,
+     LDEFER = 268,
+     LELSE = 269,
+     LFALL = 270,
+     LFOR = 271,
+     LFUNC = 272,
+     LGO = 273,
+     LGOTO = 274,
+     LIF = 275,
+     LIMPORT = 276,
+     LINTERFACE = 277,
+     LMAKE = 278,
+     LMAP = 279,
+     LNAME = 280,
+     LNEW = 281,
+     LPACKAGE = 282,
+     LRANGE = 283,
+     LRETURN = 284,
+     LSELECT = 285,
+     LSTRUCT = 286,
+     LSWITCH = 287,
+     LTYPE = 288,
+     LVAR = 289,
+     LANDAND = 290,
+     LANDNOT = 291,
+     LBODY = 292,
+     LCOMM = 293,
+     LDEC = 294,
+     LEQ = 295,
+     LGE = 296,
+     LGT = 297,
+     LIGNORE = 298,
+     LINC = 299,
+     LLE = 300,
+     LLSH = 301,
+     LLT = 302,
+     LNE = 303,
+     LOROR = 304,
+     LRSH = 305,
+     LSEMIBRACE = 306,
+     NotPackage = 307,
+     NotParen = 308,
+     PreferToRightParen = 309,
+     NotSemi = 310
+   };
+#endif
+/* Tokens.  */
+#define LLITERAL 258
+#define LASOP 259
+#define LBREAK 260
+#define LCASE 261
+#define LCHAN 262
+#define LCOLAS 263
+#define LCONST 264
+#define LCONTINUE 265
+#define LDDD 266
+#define LDEFAULT 267
+#define LDEFER 268
+#define LELSE 269
+#define LFALL 270
+#define LFOR 271
+#define LFUNC 272
+#define LGO 273
+#define LGOTO 274
+#define LIF 275
+#define LIMPORT 276
+#define LINTERFACE 277
+#define LMAKE 278
+#define LMAP 279
+#define LNAME 280
+#define LNEW 281
+#define LPACKAGE 282
+#define LRANGE 283
+#define LRETURN 284
+#define LSELECT 285
+#define LSTRUCT 286
+#define LSWITCH 287
+#define LTYPE 288
+#define LVAR 289
+#define LANDAND 290
+#define LANDNOT 291
+#define LBODY 292
+#define LCOMM 293
+#define LDEC 294
+#define LEQ 295
+#define LGE 296
+#define LGT 297
+#define LIGNORE 298
+#define LINC 299
+#define LLE 300
+#define LLSH 301
+#define LLT 302
+#define LNE 303
+#define LOROR 304
+#define LRSH 305
+#define LSEMIBRACE 306
+#define NotPackage 307
+#define NotParen 308
+#define PreferToRightParen 309
+#define NotSemi 310
+
+
+
+
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef union YYSTYPE
+{
+
+/* Line 1676 of yacc.c  */
+#line 23 "go.y"
+
+	Node*		node;
+	NodeList*		list;
+	Type*		type;
+	Sym*		sym;
+	struct	Val	val;
+	int		lint;
+
+
+
+/* Line 1676 of yacc.c  */
+#line 173 "y.tab.h"
+} YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define yystype YYSTYPE /* obsolescent; will be withdrawn */
+# define YYSTYPE_IS_DECLARED 1
+#endif
+
+extern YYSTYPE yylval;
+
+

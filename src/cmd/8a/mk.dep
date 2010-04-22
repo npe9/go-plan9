@@ -1,0 +1,6 @@
+y.tab.$O: a.h y.debug
+y.tab.acid: y.tab.c a.h y.debug
+lex.$O: a.h y.tab.h /sys/include/ctype.h ../cc/lexbody ../cc/macbody
+lex.acid: lex.c a.h y.tab.h /sys/include/ctype.h ../cc/lexbody ../cc/macbody
+enam.$O:
+enam.acid: ../8l/enam.c

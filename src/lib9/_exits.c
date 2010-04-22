@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include <libc.h>
 
 void
-_exits(char *s)
+_exit(int n)
 {
-	if(s == 0 || *s == 0)
-		_exit(0);
-	_exit(exitcode(s));
+	if(n == 0)
+		_exits(nil);
+	_exits(strerror(n));
 }

@@ -1,0 +1,50 @@
+align.$O: go.h
+align.acid: align.c go.h
+bits.$O: go.h
+bits.acid: bits.c go.h
+builtin.$O:
+builtin.acid: builtin.c
+closure.$O: go.h
+closure.acid: closure.c go.h
+const.$O: go.h
+const.acid: const.c go.h
+dcl.$O: go.h
+dcl.acid: dcl.c go.h
+export.$O: go.h
+export.acid: export.c go.h
+gen.$O: go.h
+gen.acid: gen.c go.h
+init.$O: go.h
+init.acid: init.c go.h
+lex.$O: go.h /usr/sape/src/go/include/ar.h
+lex.acid: lex.c go.h /usr/sape/src/go/include/ar.h
+md5.$O: go.h md5.h
+md5.acid: md5.c go.h md5.h
+mparith1.$O: go.h
+mparith1.acid: mparith1.c go.h
+mparith2.$O: go.h
+mparith2.acid: mparith2.c go.h
+mparith3.$O: go.h
+mparith3.acid: mparith3.c go.h
+obj.$O: go.h
+obj.acid: obj.c go.h
+print.$O: go.h
+print.acid: print.c go.h
+range.$O: go.h
+range.acid: range.c go.h
+reflect.$O: go.h
+reflect.acid: reflect.c go.h
+select.$O: go.h
+select.acid: select.c go.h
+sinit.$O: go.h
+sinit.acid: sinit.c go.h
+subr.$O: go.h md5.h opnames.h
+subr.acid: subr.c go.h md5.h opnames.h
+swt.$O: go.h
+swt.acid: swt.c go.h
+typecheck.$O: go.h
+typecheck.acid: typecheck.c go.h
+unsafe.$O: go.h
+unsafe.acid: unsafe.c go.h
+walk.$O: go.h
+walk.acid: walk.c go.h

@@ -1,0 +1,14 @@
+asm.$O: l.h ../ld/lib.h ../ld/elf.h ../ld/macho.h
+asm.acid: asm.c l.h ../ld/lib.h ../ld/elf.h ../ld/macho.h
+enam.$O:
+enam.acid: enam.c
+list.$O: l.h ../ld/lib.h
+list.acid: list.c l.h ../ld/lib.h
+obj.$O: l.h ../ld/lib.h ../ld/elf.h ../ld/macho.h /usr/sape/src/go/include/ar.h
+obj.acid: obj.c l.h ../ld/lib.h ../ld/elf.h ../ld/macho.h /usr/sape/src/go/include/ar.h
+optab.$O: l.h
+optab.acid: optab.c l.h
+pass.$O: l.h ../ld/lib.h
+pass.acid: pass.c l.h ../ld/lib.h
+span.$O: l.h ../ld/lib.h
+span.acid: span.c l.h ../ld/lib.h

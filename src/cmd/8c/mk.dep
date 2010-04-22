@@ -1,0 +1,22 @@
+cgen.$O: gc.h
+cgen.acid: cgen.c gc.h
+cgen64.$O: gc.h
+cgen64.acid: cgen64.c gc.h
+div.$O: gc.h
+div.acid: div.c gc.h
+list.$O: gc.h
+list.acid: list.c gc.h
+machcap.$O: gc.h
+machcap.acid: machcap.c gc.h
+mul.$O: gc.h
+mul.acid: mul.c gc.h
+peep.$O: gc.h
+peep.acid: peep.c gc.h
+reg.$O: gc.h
+reg.acid: reg.c gc.h
+sgen.$O: gc.h
+sgen.acid: sgen.c gc.h
+swt.$O: gc.h
+swt.acid: swt.c gc.h
+txt.$O: gc.h
+txt.acid: txt.c gc.h

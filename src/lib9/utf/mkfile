@@ -1,0 +1,25 @@
+
+<../../mk.conf
+
+LIB=\
+	$GOROOT/lib/$objtype/libutf.a\
+
+HFILES=\
+	utf.h\
+	utfdef.h\
+
+CFILES=\
+	rune.c\
+	utfecpy.c\
+	utflen.c\
+	utfnlen.c\
+	utfrrune.c\
+	utfrune.c\
+	utfutf.c\
+	runetype.c\
+
+OFILES = ${CFILES:%.c=%.$O}
+
+</sys/src/cmd/mklib
+
+<../../mk.inc

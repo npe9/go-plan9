@@ -1,0 +1,43 @@
+#!/bin/rc
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+OUT='mk.deps'
+TMP='mk.deps.tmp'
+
+if(test -f $OUT && ! test -w $OUT){
+	echo $0: $OUT 'is read-only; aborting.' >[1=2]
+	exit 1
+}
+
+# Get list of directories from Makefile
+dirs=`{sed '1,/^DIRS=/d; /^$/,$d; s/\\//g' mkfile}
+dirpat=`{echo $dirs | sed 's/ /|/g; s/.*/^(&)$/'}
+
+wd=`{pwd}
+
+{
+for(dir in $dirs){
+	cd $dir || exit 1
+
+	sources=`{sed -n 's/\.go\\/.go/p' mkfile}
+
+	sources=`{ls $sources >[2] /dev/null}  # remove .s, .c, etc.
+
+	deps=`{
+		sed -n '/^import.*"/p; /^import[ \t]*\(/,/^\)/p' $sources /dev/null |
+		sed 's/[ 	;"\(\)]/\n/g' |
+		sed '/^$/d' |
+		grep $dirpat |
+		grep -v '^'^$dir^'$' |
+		sed 's/$/.install/' |
+		sort -u
+	}
+
+	echo $dir.install: $deps
+	cd $wd
+}
+} > $TMP
+
+mv $TMP $OUT

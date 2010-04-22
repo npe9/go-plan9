@@ -1,0 +1,79 @@
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+<../../mk.conf
+
+LIB=\
+	gc.a$O\
+
+HFILES=\
+	go.h\
+	y.tab.h\
+	md5.h\
+
+YFILES=\
+	go.y\
+
+CFILES=\
+	align.c\
+	bits.c\
+	builtin.c\
+	closure.c\
+	const.c\
+	dcl.c\
+	export.c\
+	gen.c\
+	init.c\
+	lex.c\
+	md5.c\
+	mparith1.c\
+	mparith2.c\
+	mparith3.c\
+	obj.c\
+	print.c\
+	range.c\
+	reflect.c\
+	select.c\
+	sinit.c\
+	subr.c\
+	swt.c\
+	typecheck.c\
+	unsafe.c\
+	walk.c\
+	y.tab.c\
+
+OFILES = ${CFILES:%.c=%.$O}
+
+</sys/src/cmd/mklib
+YFLAGS=-d -D0
+
+$OFILES: $HFILES
+
+install: $LIB
+
+mkbuiltin1:	mkbuiltin1.$O
+	$LD -o mkbuiltin1 mkbuiltin1.$O
+
+mkbuiltin1.$O:	mkbuiltin1.c
+	$CC $CFLAGS mkbuiltin1.c
+
+builtin.c:	runtime.go unsafe.go mkbuiltin1 mkbuiltin
+	cp builtin.c.boot builtin.c
+#	./mkbuiltin >builtin.c || \
+#	{echo 'mkbuiltin failed; using bootstrap copy of builtin.c'; cp builtin.c.boot builtin.c}
+
+subr.$O: opnames.h
+
+opnames.h:	mkopnames go.h
+	./mkopnames go.h >opnames.h
+
+#clean:
+#	rm -f *.[568o] enam.c [568].out a.out $LIB mkbuiltin1 builtin.c _builtin.c
+
+dcl.$O: y.tab.h
+export.$O: y.tab.h
+lex.$O: y.tab.h
+subr.$O: y.tab.h
+
+<../../mk.inc

@@ -1,0 +1,54 @@
+#!/bin/rc
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+if(~ $GOBIN '')
+	GOBIN=$home/bin/$objtype
+
+if(! test -f $GOROOT/include/u.h){
+	echo '$GOROOT is not set correctly or not exported' >[1=2]
+	exit 1
+}
+
+if(! test -d $GOBIN){
+	echo '$GOBIN is not a directory or does not exist' >[1=2]
+	echo 'create it or set $GOBIN differently' >[1=2]
+	exit gobin
+}
+
+switch($GOARCH){
+case amd64 386 arm
+	;
+case *
+	echo '$GOARCH is set to <'$GOARCH'>, must be amd64, 386, or arm' >[1=2]
+	exit goarch
+}
+
+switch($GOOS){
+case darwin linux nacl plan9
+	;
+case *
+	echo '$GOOS is set to <'$GOOS'>, must be darwin, linux, nacl, or plan9' >[1=2]
+	exit goos
+}
+
+rc clean.rc
+
+#for(i in lib9 libbio libmach cmd pkg libcgo cmd/cgo cmd/ebnflint cmd/godoc cmd/gofmt cmd/goyacc cmd/hgpatch){
+for(i in lib9 libbio libmach cmd pkg libcgo cmd/cgo cmd/ebnflint cmd/godoc cmd/gofmt cmd/goyacc cmd/hgpatch){
+	if(! ~ $i-$GOOS libcgo-nacl){
+		# The ( ) here are to preserve the current directory
+		# for the next round despite the cd $i below.
+		# set -e does not apply to ( ) so we must explicitly
+		# test the exit status.
+		{
+			echo; echo; echo %%%% making $i %%%%; echo
+			cd $i
+			if(~ $i cmd)
+				rc make.rc
+			if not
+				make install
+		}  || exit 1
+	}
+}

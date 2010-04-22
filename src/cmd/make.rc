@@ -1,0 +1,29 @@
+#!/bin/rc
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+./clean.rc
+
+. $GOROOT/src/mk.$GOARCH
+
+if(~ $O ''){
+	echo 'missing $O - maybe no Make.$GOARCH?' >[1=2]
+	exit 1
+}
+
+cd $O^l
+rc mkenam
+mk enam.$O
+cd ..
+
+targets = (cc $O^l $O^a $O^c gc $O^g)
+#targets = ($targets gopack nm cov godefs prof gotest)
+
+for(i in $targets){
+	echo; echo; echo %%%% making $i %%%%; echo
+	cd $i
+	mk dep
+	mk install
+	cd ..
+}

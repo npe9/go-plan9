@@ -885,8 +885,6 @@ s%~	%%g
 static char*
 etnames[] =
 {
-	[TINT]		= "INT",
-	[TUINT]		= "UINT",
 	[TINT8]		= "INT8",
 	[TUINT8]	= "UINT8",
 	[TINT16]	= "INT16",
@@ -895,10 +893,12 @@ etnames[] =
 	[TUINT32]	= "UINT32",
 	[TINT64]	= "INT64",
 	[TUINT64]	= "UINT64",
+	[TINT]		= "INT",
+	[TUINT]		= "UINT",
 	[TUINTPTR]	= "UINTPTR",
-	[TFLOAT]	= "FLOAT",
 	[TFLOAT32]	= "FLOAT32",
 	[TFLOAT64]	= "FLOAT64",
+	[TFLOAT]	= "FLOAT",
 	[TBOOL]		= "BOOL",
 	[TPTR32]	= "PTR32",
 	[TPTR64]	= "PTR64",
@@ -911,9 +911,8 @@ etnames[] =
 	[TINTER]	= "INTER",
 	[TFORW]		= "FORW",
 	[TFIELD]	= "FIELD",
-	[TSTRING]	= "STRING",
-	[TCHAN]		= "CHAN",
 	[TANY]		= "ANY",
+	[TSTRING]	= "STRING",
 };
 
 int

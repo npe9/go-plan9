@@ -7,7 +7,7 @@
 #include	"y.tab.h"
 #include <ar.h>
 
-extern int yychar;
+int yychar;
 char nopackage[] = "____";
 void lexfini(void);
 

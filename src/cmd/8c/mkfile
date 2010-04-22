@@ -1,0 +1,44 @@
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+<../../mk.conf
+
+TARG=\
+	8gc\
+
+HFILES=\
+	gc.h\
+	../8l/8.out.h\
+	../cc/cc.h\
+
+CFILES=\
+	cgen.c\
+	cgen64.c\
+	div.c\
+	list.c\
+	machcap.c\
+	mul.c\
+	pgen.c\
+	pswt.c\
+	peep.c\
+	reg.c\
+	sgen.c\
+	swt.c\
+	txt.c\
+	enam.c\
+
+OFILES = ${CFILES:%.c=%.$O}
+
+LIB=\
+	../cc/cc.a$O
+
+</sys/src/cmd/mkone
+
+%.$O: ../cc/%.c
+	$CC $CFLAGS -I. ../cc/$stem.c
+
+enam.$O: ../8l/enam.c
+	$CC $CFLAGS -I. ../8l/enam.c
+
+<../../mk.inc

@@ -766,7 +766,7 @@ err:
 
 out:
 	if(reg[i] == 0) {
-		regpc[i] = (ulong)__builtin_return_address(0);
+		regpc[i] = (ulong)getcallerpc(&n);
 		if(i == D_AX || i == D_CX || i == D_DX || i == D_SP) {
 			dump("regalloc-o", o);
 			fatal("regalloc %R", i);

@@ -1,0 +1,26 @@
+lex.$O: cc.h
+lex.acid: lex.c cc.h
+mac.$O: cc.h macbody
+mac.acid: mac.c cc.h macbody
+dcl.$O: cc.h
+dcl.acid: dcl.c cc.h
+acid.$O: cc.h
+acid.acid: acid.c cc.h
+pickle.$O: cc.h
+pickle.acid: pickle.c cc.h
+bits.$O: cc.h
+bits.acid: bits.c cc.h
+com.$O: cc.h
+com.acid: com.c cc.h
+scon.$O: cc.h
+scon.acid: scon.c cc.h
+funct.$O: cc.h
+funct.acid: funct.c cc.h
+sub.$O: cc.h
+sub.acid: sub.c cc.h
+com64.$O: cc.h
+com64.acid: com64.c cc.h
+dpchk.$O: cc.h
+dpchk.acid: dpchk.c cc.h
+omachcap.$O: cc.h
+omachcap.acid: omachcap.c cc.h

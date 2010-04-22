@@ -1,0 +1,20 @@
+enam.$O:
+enam.acid: ../8l/enam.c
+list.$O: gg.h
+list.acid: list.c gg.h
+galign.$O: gg.h
+galign.acid: galign.c gg.h
+gobj.$O: gg.h
+gobj.acid: gobj.c gg.h
+ggen.$O: gg.h opt.h
+ggen.acid: ggen.c gg.h opt.h
+gsubr.$O: gg.h
+gsubr.acid: gsubr.c gg.h
+cgen.$O: gg.h
+cgen.acid: cgen.c gg.h
+cgen64.$O: gg.h
+cgen64.acid: cgen64.c gg.h
+peep.$O: gg.h opt.h
+peep.acid: peep.c gg.h opt.h
+reg.$O: gg.h opt.h
+reg.acid: reg.c gg.h opt.h

@@ -1,0 +1,13 @@
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+O=8
+AS=8ga
+CC=8gc
+GC=8g
+LD=8gl
+OS=568vq
+CFLAGS=-FVw
+OCC=8c
+OLD=8l

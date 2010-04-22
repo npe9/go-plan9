@@ -1,0 +1,40 @@
+# Copyright 2009 The Go Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+<../../mk.conf
+
+LIB=\
+	cc.a$O\
+
+HFILES=\
+	cc.h\
+	y.tab.h\
+
+YFILES=\
+	cc.y\
+
+CFILES=\
+	y.tab.c\
+	lex.c\
+	mac.c\
+	dcl.c\
+	acid.c\
+	pickle.c\
+	bits.c\
+	com.c\
+	scon.c\
+	funct.c\
+	sub.c\
+	com64.c\
+	dpchk.c\
+	omachcap.c\
+
+OFILES = ${CFILES:%.c=%.$O}
+
+</sys/src/cmd/mklib
+YFLAGS=-d -D0
+
+$OFILES: $HFILES
+
+<../../mk.inc

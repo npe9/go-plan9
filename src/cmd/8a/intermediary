@@ -1,0 +1,4172 @@
+#line 1 "/usr/sape/src/go/src/cmd/8a/lex.c"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1 "/usr/sape/src/go/src/cmd/8a/./a.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1 "/386/include/u.h"
+
+typedef	unsigned short	ushort;
+typedef	unsigned char	uchar;
+typedef unsigned long	ulong;
+typedef unsigned int	uint;
+typedef   signed char	schar;
+typedef	long long	vlong;
+typedef	unsigned long long uvlong;
+typedef unsigned long	uintptr;
+typedef unsigned long	usize;
+typedef	ushort		Rune;
+typedef union FPdbleword FPdbleword;
+typedef long		jmp_buf[2];
+
+
+
+typedef unsigned int	mpdigit;
+typedef unsigned char	u8int;
+typedef unsigned short	u16int;
+typedef unsigned int	u32int;
+typedef unsigned long long u64int;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+union FPdbleword
+{
+	double	x;
+	struct {
+		ulong lo;
+		ulong hi;
+	};
+};
+
+typedef	char*	va_list;
+
+#line 58 "/386/include/u.h"
+
+#line 60 "/386/include/u.h"
+
+#line 66 "/386/include/u.h"
+#line 32 "/usr/sape/src/go/src/cmd/8a/./a.h"
+#line 1 "/usr/sape/src/go/include/plan9/libc.h"
+
+
+
+#line 1 "/sys/include/libc.h"
+#pragma	lib	"libc.a"
+#pragma	src	"/sys/src/libc"
+
+
+
+
+
+
+#line 11 "/sys/include/libc.h"
+extern	void*	memccpy(void*, void*, int, ulong);
+extern	void*	memset(void*, int, ulong);
+extern	int	memcmp(void*, void*, ulong);
+extern	void*	memcpy(void*, void*, ulong);
+extern	void*	memmove(void*, void*, ulong);
+extern	void*	memchr(void*, int, ulong);
+
+
+#line 21 "/sys/include/libc.h"
+extern	char*	strcat(char*, char*);
+extern	char*	strchr(char*, int);
+extern	int	strcmp(char*, char*);
+extern	char*	strcpy(char*, char*);
+extern	char*	strecpy(char*, char*, char*);
+extern	char*	strdup(char*);
+extern	char*	strncat(char*, char*, long);
+extern	char*	strncpy(char*, char*, long);
+extern	int	strncmp(char*, char*, long);
+extern	char*	strpbrk(char*, char*);
+extern	char*	strrchr(char*, int);
+extern	char*	strtok(char*, char*);
+extern	long	strlen(char*);
+extern	long	strspn(char*, char*);
+extern	long	strcspn(char*, char*);
+extern	char*	strstr(char*, char*);
+extern	int	cistrncmp(char*, char*, int);
+extern	int	cistrcmp(char*, char*);
+extern	char*	cistrstr(char*, char*);
+extern	int	tokenize(char*, char**, int);
+
+enum
+{
+	UTFmax		= 3,
+	Runesync	= 0x80,
+	Runeself	= 0x80,
+	Runeerror	= 0xFFFD,
+};
+
+
+#line 53 "/sys/include/libc.h"
+extern	int	runetochar(char*, Rune*);
+extern	int	chartorune(Rune*, char*);
+extern	int	runelen(long);
+extern	int	runenlen(Rune*, int);
+extern	int	fullrune(char*, int);
+extern	int	utflen(char*);
+extern	int	utfnlen(char*, long);
+extern	char*	utfrune(char*, long);
+extern	char*	utfrrune(char*, long);
+extern	char*	utfutf(char*, char*);
+extern	char*	utfecpy(char*, char*, char*);
+
+extern	Rune*	runestrcat(Rune*, Rune*);
+extern	Rune*	runestrchr(Rune*, Rune);
+extern	int	runestrcmp(Rune*, Rune*);
+extern	Rune*	runestrcpy(Rune*, Rune*);
+extern	Rune*	runestrncpy(Rune*, Rune*, long);
+extern	Rune*	runestrecpy(Rune*, Rune*, Rune*);
+extern	Rune*	runestrdup(Rune*);
+extern	Rune*	runestrncat(Rune*, Rune*, long);
+extern	int	runestrncmp(Rune*, Rune*, long);
+extern	Rune*	runestrrchr(Rune*, Rune);
+extern	long	runestrlen(Rune*);
+extern	Rune*	runestrstr(Rune*, Rune*);
+
+extern	Rune	tolowerrune(Rune);
+extern	Rune	totitlerune(Rune);
+extern	Rune	toupperrune(Rune);
+extern	int	isalpharune(Rune);
+extern	int	islowerrune(Rune);
+extern	int	isspacerune(Rune);
+extern	int	istitlerune(Rune);
+extern	int	isupperrune(Rune);
+extern	int	isdigitrune(Rune);
+
+
+#line 91 "/sys/include/libc.h"
+extern	void*	malloc(ulong);
+extern	void*	mallocz(ulong, int);
+extern	void	free(void*);
+extern	ulong	msize(void*);
+extern	void*	mallocalign(ulong, ulong, long, ulong);
+extern	void*	calloc(ulong, ulong);
+extern	void*	realloc(void*, ulong);
+extern	void	setmalloctag(void*, ulong);
+extern	void	setrealloctag(void*, ulong);
+extern	ulong	getmalloctag(void*);
+extern	ulong	getrealloctag(void*);
+extern	void*	malloctopoolblock(void*);
+
+
+#line 107 "/sys/include/libc.h"
+typedef struct Fmt	Fmt;
+struct Fmt{
+	uchar	runes;
+	void	*start;
+	void	*to;
+	void	*stop;
+	int	(*flush)(Fmt *);
+	void	*farg;
+	int	nfmt;
+	va_list	args;
+	int	r;
+	int	width;
+	int	prec;
+	ulong	flags;
+};
+
+enum{
+	FmtWidth	= 1,
+	FmtLeft		= FmtWidth << 1,
+	FmtPrec		= FmtLeft << 1,
+	FmtSharp	= FmtPrec << 1,
+	FmtSpace	= FmtSharp << 1,
+	FmtSign		= FmtSpace << 1,
+	FmtZero		= FmtSign << 1,
+	FmtUnsigned	= FmtZero << 1,
+	FmtShort	= FmtUnsigned << 1,
+	FmtLong		= FmtShort << 1,
+	FmtVLong	= FmtLong << 1,
+	FmtComma	= FmtVLong << 1,
+	FmtByte		= FmtComma << 1,
+
+	FmtFlag		= FmtByte << 1
+};
+
+extern	int	print(char*, ...);
+extern	char*	seprint(char*, char*, char*, ...);
+extern	char*	vseprint(char*, char*, char*, va_list);
+extern	int	snprint(char*, int, char*, ...);
+extern	int	vsnprint(char*, int, char*, va_list);
+extern	char*	smprint(char*, ...);
+extern	char*	vsmprint(char*, va_list);
+extern	int	sprint(char*, char*, ...);
+extern	int	fprint(int, char*, ...);
+extern	int	vfprint(int, char*, va_list);
+
+extern	int	runesprint(Rune*, char*, ...);
+extern	int	runesnprint(Rune*, int, char*, ...);
+extern	int	runevsnprint(Rune*, int, char*, va_list);
+extern	Rune*	runeseprint(Rune*, Rune*, char*, ...);
+extern	Rune*	runevseprint(Rune*, Rune*, char*, va_list);
+extern	Rune*	runesmprint(char*, ...);
+extern	Rune*	runevsmprint(char*, va_list);
+
+extern	int	fmtfdinit(Fmt*, int, char*, int);
+extern	int	fmtfdflush(Fmt*);
+extern	int	fmtstrinit(Fmt*);
+extern	char*	fmtstrflush(Fmt*);
+extern	int	runefmtstrinit(Fmt*);
+extern	Rune*	runefmtstrflush(Fmt*);
+
+#pragma	varargck	argpos	fmtprint	2
+#pragma	varargck	argpos	fprint		2
+#pragma	varargck	argpos	print		1
+#pragma	varargck	argpos	runeseprint	3
+#pragma	varargck	argpos	runesmprint	1
+#pragma	varargck	argpos	runesnprint	3
+#pragma	varargck	argpos	runesprint	2
+#pragma	varargck	argpos	seprint		3
+#pragma	varargck	argpos	smprint		1
+#pragma	varargck	argpos	snprint		3
+#pragma	varargck	argpos	sprint		2
+
+#pragma	varargck	type	"lld"	vlong
+#pragma	varargck	type	"llx"	vlong
+#pragma	varargck	type	"lld"	uvlong
+#pragma	varargck	type	"llx"	uvlong
+#pragma	varargck	type	"ld"	long
+#pragma	varargck	type	"lx"	long
+#pragma	varargck	type	"lb"	long
+#pragma	varargck	type	"ld"	ulong
+#pragma	varargck	type	"lx"	ulong
+#pragma	varargck	type	"lb"	ulong
+#pragma	varargck	type	"d"	int
+#pragma	varargck	type	"x"	int
+#pragma	varargck	type	"c"	int
+#pragma	varargck	type	"C"	int
+#pragma	varargck	type	"b"	int
+#pragma	varargck	type	"d"	uint
+#pragma	varargck	type	"x"	uint
+#pragma	varargck	type	"c"	uint
+#pragma	varargck	type	"C"	uint
+#pragma	varargck	type	"b"	uint
+#pragma	varargck	type	"f"	double
+#pragma	varargck	type	"e"	double
+#pragma	varargck	type	"g"	double
+#pragma	varargck	type	"s"	char*
+#pragma	varargck	type	"q"	char*
+#pragma	varargck	type	"S"	Rune*
+#pragma	varargck	type	"Q"	Rune*
+#pragma	varargck	type	"r"	void
+#pragma	varargck	type	"%"	void
+#pragma	varargck	type	"n"	int*
+#pragma	varargck	type	"p"	uintptr
+#pragma	varargck	type	"p"	void*
+#pragma	varargck	flag	','
+#pragma	varargck	flag	' '
+#pragma	varargck	flag	'h'
+#pragma varargck	type	"<"	void*
+#pragma varargck	type	"["	void*
+#pragma varargck	type	"H"	void*
+#pragma varargck	type	"lH"	void*
+
+extern	int	fmtinstall(int, int (*)(Fmt*));
+extern	int	dofmt(Fmt*, char*);
+extern	int	dorfmt(Fmt*, Rune*);
+extern	int	fmtprint(Fmt*, char*, ...);
+extern	int	fmtvprint(Fmt*, char*, va_list);
+extern	int	fmtrune(Fmt*, int);
+extern	int	fmtstrcpy(Fmt*, char*);
+extern	int	fmtrunestrcpy(Fmt*, Rune*);
+
+#line 231 "/sys/include/libc.h"
+extern	int	errfmt(Fmt *f);
+
+
+#line 236 "/sys/include/libc.h"
+extern	char	*unquotestrdup(char*);
+extern	Rune	*unquoterunestrdup(Rune*);
+extern	char	*quotestrdup(char*);
+extern	Rune	*quoterunestrdup(Rune*);
+extern	int	quotestrfmt(Fmt*);
+extern	int	quoterunestrfmt(Fmt*);
+extern	void	quotefmtinstall(void);
+extern	int	(*doquote)(int);
+extern	int	needsrcquote(int);
+
+
+#line 249 "/sys/include/libc.h"
+extern	void	srand(long);
+extern	int	rand(void);
+extern	int	nrand(int);
+extern	long	lrand(void);
+extern	long	lnrand(long);
+extern	double	frand(void);
+extern	ulong	truerand(void);
+extern	ulong	ntruerand(ulong);
+
+
+#line 261 "/sys/include/libc.h"
+extern	ulong	getfcr(void);
+extern	void	setfsr(ulong);
+extern	ulong	getfsr(void);
+extern	void	setfcr(ulong);
+extern	double	NaN(void);
+extern	double	Inf(int);
+extern	int	isNaN(double);
+extern	int	isInf(double, int);
+extern	ulong	umuldiv(ulong, ulong, ulong);
+extern	long	muldiv(long, long, long);
+
+extern	double	pow(double, double);
+extern	double	atan2(double, double);
+extern	double	fabs(double);
+extern	double	atan(double);
+extern	double	log(double);
+extern	double	log10(double);
+extern	double	exp(double);
+extern	double	floor(double);
+extern	double	ceil(double);
+extern	double	hypot(double, double);
+extern	double	sin(double);
+extern	double	cos(double);
+extern	double	tan(double);
+extern	double	asin(double);
+extern	double	acos(double);
+extern	double	sinh(double);
+extern	double	cosh(double);
+extern	double	tanh(double);
+extern	double	sqrt(double);
+extern	double	fmod(double, double);
+
+
+
+
+
+
+#line 300 "/sys/include/libc.h"
+
+typedef
+struct Tm
+{
+	int	sec;
+	int	min;
+	int	hour;
+	int	mday;
+	int	mon;
+	int	year;
+	int	wday;
+	int	yday;
+	char	zone[4];
+	int	tzoff;
+} Tm;
+
+extern	Tm*	gmtime(long);
+extern	Tm*	localtime(long);
+extern	char*	asctime(Tm*);
+extern	char*	ctime(long);
+extern	double	cputime(void);
+extern	long	times(long*);
+extern	long	tm2sec(Tm*);
+extern	vlong	nsec(void);
+
+extern	void	cycles(uvlong*);
+
+
+#line 330 "/sys/include/libc.h"
+enum
+{
+	PNPROC		= 1,
+	PNGROUP		= 2,
+};
+
+extern	void	_assert(char*);
+extern	int	abs(int);
+extern	int	atexit(void(*)(void));
+extern	void	atexitdont(void(*)(void));
+extern	int	atnotify(int(*)(void*, char*), int);
+extern	double	atof(char*);
+extern	int	atoi(char*);
+extern	long	atol(char*);
+extern	vlong	atoll(char*);
+extern	double	charstod(int(*)(void*), void*);
+extern	char*	cleanname(char*);
+extern	int	decrypt(void*, void*, int);
+extern	int	encrypt(void*, void*, int);
+extern	int	dec64(uchar*, int, char*, int);
+extern	int	enc64(char*, int, uchar*, int);
+extern	int	dec32(uchar*, int, char*, int);
+extern	int	enc32(char*, int, uchar*, int);
+extern	int	dec16(uchar*, int, char*, int);
+extern	int	enc16(char*, int, uchar*, int);
+extern	int	encodefmt(Fmt*);
+extern	void	exits(char*);
+extern	double	frexp(double, int*);
+extern	uintptr	getcallerpc(void*);
+extern	char*	getenv(char*);
+extern	int	getfields(char*, char**, int, int, char*);
+extern	int	gettokens(char *, char **, int, char *);
+extern	char*	getuser(void);
+extern	char*	getwd(char*, int);
+extern	int	iounit(int);
+extern	long	labs(long);
+extern	double	ldexp(double, int);
+extern	void	longjmp(jmp_buf, int);
+extern	char*	mktemp(char*);
+extern	double	modf(double, double*);
+extern	int	netcrypt(void*, void*);
+extern	void	notejmp(void*, jmp_buf, int);
+extern	void	perror(char*);
+extern	int	postnote(int, int, char *);
+extern	double	pow10(int);
+extern	int	putenv(char*, char*);
+extern	void	qsort(void*, long, long, int (*)(void*, void*));
+extern	int	setjmp(jmp_buf);
+extern	double	strtod(char*, char**);
+extern	long	strtol(char*, char**, int);
+extern	ulong	strtoul(char*, char**, int);
+extern	vlong	strtoll(char*, char**, int);
+extern	uvlong	strtoull(char*, char**, int);
+extern	void	sysfatal(char*, ...);
+#pragma	varargck	argpos	sysfatal	1
+extern	void	syslog(int, char*, char*, ...);
+#pragma	varargck	argpos	syslog	3
+extern	long	time(long*);
+extern	int	tolower(int);
+extern	int	toupper(int);
+
+
+#line 394 "/sys/include/libc.h"
+enum {
+	Profoff,
+	Profuser,
+	Profkernel,
+	Proftime,
+	Profsample,
+};
+extern	void	prof(void (*fn)(void*), void *arg, int entries, int what);
+
+
+#line 406 "/sys/include/libc.h"
+
+long ainc(long*);
+long adec(long*);
+int cas32(u32int*, u32int, u32int);
+int casp(void**, void*, void*);
+int casl(ulong*, ulong, ulong);
+
+
+#line 416 "/sys/include/libc.h"
+typedef
+struct Lock {
+	int	val;
+} Lock;
+
+extern int	_tas(int*);
+
+extern	void	lock(Lock*);
+extern	void	unlock(Lock*);
+extern	int	canlock(Lock*);
+
+typedef struct QLp QLp;
+struct QLp
+{
+	int	inuse;
+	QLp	*next;
+	char	state;
+};
+
+typedef
+struct QLock
+{
+	Lock	lock;
+	int	locked;
+	QLp	*head;
+	QLp 	*tail;
+} QLock;
+
+extern	void	qlock(QLock*);
+extern	void	qunlock(QLock*);
+extern	int	canqlock(QLock*);
+extern	void	_qlockinit(void* (*)(void*, void*));
+
+typedef
+struct RWLock
+{
+	Lock	lock;
+	int	readers;
+	int	writer;
+	QLp	*head;
+	QLp	*tail;
+} RWLock;
+
+extern	void	rlock(RWLock*);
+extern	void	runlock(RWLock*);
+extern	int	canrlock(RWLock*);
+extern	void	wlock(RWLock*);
+extern	void	wunlock(RWLock*);
+extern	int	canwlock(RWLock*);
+
+typedef
+struct Rendez
+{
+	QLock	*l;
+	QLp	*head;
+	QLp	*tail;
+} Rendez;
+
+extern	void	rsleep(Rendez*);
+extern	int	rwakeup(Rendez*);
+extern	int	rwakeupall(Rendez*);
+extern	void**	privalloc(void);
+extern	void	privfree(void**);
+
+
+#line 483 "/sys/include/libc.h"
+
+extern	int	accept(int, char*);
+extern	int	announce(char*, char*);
+extern	int	dial(char*, char*, char*, int*);
+extern	void	setnetmtpt(char*, int, char*);
+extern	int	hangup(int);
+extern	int	listen(char*, char*);
+extern	char*	netmkaddr(char*, char*, char*);
+extern	int	reject(int, char*, char*);
+
+
+#line 496 "/sys/include/libc.h"
+extern	int	pushssl(int, char*, char*, char*, int*);
+extern	int	pushtls(int, char*, char*, int, char*, char*);
+
+
+#line 502 "/sys/include/libc.h"
+typedef struct NetConnInfo NetConnInfo;
+struct NetConnInfo
+{
+	char	*dir;
+	char	*root;
+	char	*spec;
+	char	*lsys;
+	char	*lserv;
+	char	*rsys;
+	char	*rserv;
+	char	*laddr;
+	char	*raddr;
+};
+extern	NetConnInfo*	getnetconninfo(char*, int);
+extern	void		freenetconninfo(NetConnInfo*);
+
+
+#line 522 "/sys/include/libc.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enum
+{
+	RFNAMEG		= (1<<0),
+	RFENVG		= (1<<1),
+	RFFDG		= (1<<2),
+	RFNOTEG		= (1<<3),
+	RFPROC		= (1<<4),
+	RFMEM		= (1<<5),
+	RFNOWAIT	= (1<<6),
+	RFCNAMEG	= (1<<10),
+	RFCENVG		= (1<<11),
+	RFCFDG		= (1<<12),
+	RFREND		= (1<<13),
+	RFNOMNT		= (1<<14)
+};
+
+typedef
+struct Qid
+{
+	uvlong	path;
+	ulong	vers;
+	uchar	type;
+} Qid;
+
+typedef
+struct Dir {
+
+	ushort	type;
+	uint	dev;
+
+	Qid	qid;
+	ulong	mode;
+	ulong	atime;
+	ulong	mtime;
+	vlong	length;
+	char	*name;
+	char	*uid;
+	char	*gid;
+	char	*muid;
+} Dir;
+
+
+typedef
+struct Waitmsg
+{
+	int	pid;
+	ulong	time[3];
+	char	*msg;
+} Waitmsg;
+
+typedef
+struct IOchunk
+{
+	void	*addr;
+	ulong	len;
+} IOchunk;
+
+extern	void	_exits(char*);
+
+extern	void	abort(void);
+extern	int	access(char*, int);
+extern	long	alarm(ulong);
+extern	int	await(char*, int);
+extern	int	bind(char*, char*, int);
+extern	int	brk(void*);
+extern	int	chdir(char*);
+extern	int	close(int);
+extern	int	create(char*, int, ulong);
+extern	int	dup(int, int);
+extern	int	errstr(char*, uint);
+extern	int	exec(char*, char*[]);
+extern	int	execl(char*, ...);
+extern	int	fork(void);
+extern	int	rfork(int);
+extern	int	fauth(int, char*);
+extern	int	fstat(int, uchar*, int);
+extern	int	fwstat(int, uchar*, int);
+extern	int	fversion(int, int, char*, int);
+extern	int	mount(int, int, char*, int, char*);
+extern	int	unmount(char*, char*);
+extern	int	noted(int);
+extern	int	notify(void(*)(void*, char*));
+extern	int	open(char*, int);
+extern	int	fd2path(int, char*, int);
+extern	int	pipe(int*);
+extern	long	pread(int, void*, long, vlong);
+extern	long	preadv(int, IOchunk*, int, vlong);
+extern	long	pwrite(int, void*, long, vlong);
+extern	long	pwritev(int, IOchunk*, int, vlong);
+extern	long	read(int, void*, long);
+extern	long	readn(int, void*, long);
+extern	long	readv(int, IOchunk*, int);
+extern	int	remove(char*);
+extern	void*	sbrk(ulong);
+extern	long	oseek(int, long, int);
+extern	vlong	seek(int, vlong, int);
+extern	void*	segattach(int, char*, void*, ulong);
+extern	void*	segbrk(void*, void*);
+extern	int	segdetach(void*);
+extern	int	segflush(void*, ulong);
+extern	int	segfree(void*, ulong);
+extern	int	semacquire(long*, int);
+extern	long	semrelease(long*, long);
+extern	int	sleep(long);
+extern	int	stat(char*, uchar*, int);
+extern	Waitmsg*	wait(void);
+extern	int	waitpid(void);
+extern	long	write(int, void*, long);
+extern	long	writev(int, IOchunk*, int);
+extern	int	wstat(char*, uchar*, int);
+extern	void*	rendezvous(void*, void*);
+
+extern	Dir*	dirstat(char*);
+extern	Dir*	dirfstat(int);
+extern	int	dirwstat(char*, Dir*);
+extern	int	dirfwstat(int, Dir*);
+extern	long	dirread(int, Dir**);
+extern	void	nulldir(Dir*);
+extern	long	dirreadall(int, Dir**);
+extern	int	getpid(void);
+extern	int	getppid(void);
+extern	void	rerrstr(char*, uint);
+extern	char*	sysname(void);
+extern	void	werrstr(char*, ...);
+#pragma	varargck	argpos	werrstr	1
+
+extern char *argv0;
+
+#line 717 "/sys/include/libc.h"
+
+
+#line 720 "/sys/include/libc.h"
+
+#line 722 "/sys/include/libc.h"
+
+
+
+
+extern	char	end[];
+#line 5 "/usr/sape/src/go/include/plan9/libc.h"
+
+typedef long long s64int;
+typedef char s8int;
+typedef short s16int;
+typedef long intptr;
+typedef long s32int;
+
+typedef s8int int8;
+typedef u8int uint8;
+typedef s16int int16;
+typedef u16int uint16;
+typedef s32int int32;
+typedef u32int uint32;
+typedef s64int int64;
+typedef u64int uint64;
+
+
+#line 33 "/usr/sape/src/go/src/cmd/8a/./a.h"
+#line 1 "/sys/include/bio.h"
+#pragma	src	"/sys/src/libbio"
+#pragma	lib	"libbio.a"
+
+typedef	struct	Biobuf	Biobuf;
+typedef	struct	Biobufhdr	Biobufhdr;
+
+enum
+{
+	Bsize		= 8*1024,
+	Bungetsize	= 4,
+	Bmagic		= 0x314159,
+	Beof		= -1,
+	Bbad		= -2,
+
+	Binactive	= 0,
+	Bractive,
+	Bwactive,
+	Bracteof,
+};
+
+struct	Biobufhdr
+{
+	int	icount;
+	int	ocount;
+	int	rdline;
+	int	runesize;
+	int	state;
+	int	fid;
+	int	flag;
+	vlong	offset;
+	int	bsize;
+	uchar*	bbuf;
+	uchar*	ebuf;
+	uchar*	gbuf;
+};
+
+struct	Biobuf
+{
+	Biobufhdr;
+	uchar	b[Bungetsize+Bsize];
+};
+
+
+
+
+
+
+
+
+int	Bbuffered(Biobufhdr*);
+int	Bfildes(Biobufhdr*);
+int	Bflush(Biobufhdr*);
+int	Bgetc(Biobufhdr*);
+int	Bgetd(Biobufhdr*, double*);
+long	Bgetrune(Biobufhdr*);
+int	Binit(Biobuf*, int, int);
+int	Binits(Biobufhdr*, int, int, uchar*, int);
+int	Blinelen(Biobufhdr*);
+vlong	Boffset(Biobufhdr*);
+Biobuf*	Bopen(char*, int);
+int	Bprint(Biobufhdr*, char*, ...);
+int	Bvprint(Biobufhdr*, char*, va_list);
+int	Bputc(Biobufhdr*, int);
+int	Bputrune(Biobufhdr*, long);
+void*	Brdline(Biobufhdr*, int);
+char*	Brdstr(Biobufhdr*, int, int);
+long	Bread(Biobufhdr*, void*, long);
+vlong	Bseek(Biobufhdr*, vlong, int);
+int	Bterm(Biobufhdr*);
+int	Bungetc(Biobufhdr*);
+int	Bungetrune(Biobufhdr*);
+long	Bwrite(Biobufhdr*, void*, long);
+
+#pragma	varargck	argpos	Bprint	2
+#line 34 "/usr/sape/src/go/src/cmd/8a/./a.h"
+#line 1 "/usr/sape/src/go/src/cmd/8a/./../8l/8.out.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enum	as
+{
+	AXXX,
+	AAAA,
+	AAAD,
+	AAAM,
+	AAAS,
+	AADCB,
+	AADCL,
+	AADCW,
+	AADDB,
+	AADDL,
+	AADDW,
+	AADJSP,
+	AANDB,
+	AANDL,
+	AANDW,
+	AARPL,
+	ABOUNDL,
+	ABOUNDW,
+	ABSFL,
+	ABSFW,
+	ABSRL,
+	ABSRW,
+	ABTL,
+	ABTW,
+	ABTCL,
+	ABTCW,
+	ABTRL,
+	ABTRW,
+	ABTSL,
+	ABTSW,
+	ABYTE,
+	ACALL,
+	ACLC,
+	ACLD,
+	ACLI,
+	ACLTS,
+	ACMC,
+	ACMPB,
+	ACMPL,
+	ACMPW,
+	ACMPSB,
+	ACMPSL,
+	ACMPSW,
+	ADAA,
+	ADAS,
+	ADATA,
+	ADECB,
+	ADECL,
+	ADECW,
+	ADIVB,
+	ADIVL,
+	ADIVW,
+	AENTER,
+	AGLOBL,
+	AGOK,
+	AHISTORY,
+	AHLT,
+	AIDIVB,
+	AIDIVL,
+	AIDIVW,
+	AIMULB,
+	AIMULL,
+	AIMULW,
+	AINB,
+	AINL,
+	AINW,
+	AINCB,
+	AINCL,
+	AINCW,
+	AINSB,
+	AINSL,
+	AINSW,
+	AINT,
+	AINTO,
+	AIRETL,
+	AIRETW,
+	AJCC,
+	AJCS,
+	AJCXZ,
+	AJEQ,
+	AJGE,
+	AJGT,
+	AJHI,
+	AJLE,
+	AJLS,
+	AJLT,
+	AJMI,
+	AJMP,
+	AJNE,
+	AJOC,
+	AJOS,
+	AJPC,
+	AJPL,
+	AJPS,
+	ALAHF,
+	ALARL,
+	ALARW,
+	ALEAL,
+	ALEAW,
+	ALEAVEL,
+	ALEAVEW,
+	ALOCK,
+	ALODSB,
+	ALODSL,
+	ALODSW,
+	ALONG,
+	ALOOP,
+	ALOOPEQ,
+	ALOOPNE,
+	ALSLL,
+	ALSLW,
+	AMOVB,
+	AMOVL,
+	AMOVW,
+	AMOVBLSX,
+	AMOVBLZX,
+	AMOVBWSX,
+	AMOVBWZX,
+	AMOVWLSX,
+	AMOVWLZX,
+	AMOVSB,
+	AMOVSL,
+	AMOVSW,
+	AMULB,
+	AMULL,
+	AMULW,
+	ANAME,
+	ANEGB,
+	ANEGL,
+	ANEGW,
+	ANOP,
+	ANOTB,
+	ANOTL,
+	ANOTW,
+	AORB,
+	AORL,
+	AORW,
+	AOUTB,
+	AOUTL,
+	AOUTW,
+	AOUTSB,
+	AOUTSL,
+	AOUTSW,
+	APOPAL,
+	APOPAW,
+	APOPFL,
+	APOPFW,
+	APOPL,
+	APOPW,
+	APUSHAL,
+	APUSHAW,
+	APUSHFL,
+	APUSHFW,
+	APUSHL,
+	APUSHW,
+	ARCLB,
+	ARCLL,
+	ARCLW,
+	ARCRB,
+	ARCRL,
+	ARCRW,
+	AREP,
+	AREPN,
+	ARET,
+	AROLB,
+	AROLL,
+	AROLW,
+	ARORB,
+	ARORL,
+	ARORW,
+	ASAHF,
+	ASALB,
+	ASALL,
+	ASALW,
+	ASARB,
+	ASARL,
+	ASARW,
+	ASBBB,
+	ASBBL,
+	ASBBW,
+	ASCASB,
+	ASCASL,
+	ASCASW,
+	ASETCC,
+	ASETCS,
+	ASETEQ,
+	ASETGE,
+	ASETGT,
+	ASETHI,
+	ASETLE,
+	ASETLS,
+	ASETLT,
+	ASETMI,
+	ASETNE,
+	ASETOC,
+	ASETOS,
+	ASETPC,
+	ASETPL,
+	ASETPS,
+	ACDQ,
+	ACWD,
+	ASHLB,
+	ASHLL,
+	ASHLW,
+	ASHRB,
+	ASHRL,
+	ASHRW,
+	ASTC,
+	ASTD,
+	ASTI,
+	ASTOSB,
+	ASTOSL,
+	ASTOSW,
+	ASUBB,
+	ASUBL,
+	ASUBW,
+	ASYSCALL,
+	ATESTB,
+	ATESTL,
+	ATESTW,
+	ATEXT,
+	AVERR,
+	AVERW,
+	AWAIT,
+	AWORD,
+	AXCHGB,
+	AXCHGL,
+	AXCHGW,
+	AXLAT,
+	AXORB,
+	AXORL,
+	AXORW,
+
+	AFMOVB,
+	AFMOVBP,
+	AFMOVD,
+	AFMOVDP,
+	AFMOVF,
+	AFMOVFP,
+	AFMOVL,
+	AFMOVLP,
+	AFMOVV,
+	AFMOVVP,
+	AFMOVW,
+	AFMOVWP,
+	AFMOVX,
+	AFMOVXP,
+
+	AFCOMB,
+	AFCOMBP,
+	AFCOMD,
+	AFCOMDP,
+	AFCOMDPP,
+	AFCOMF,
+	AFCOMFP,
+	AFCOML,
+	AFCOMLP,
+	AFCOMW,
+	AFCOMWP,
+	AFUCOM,
+	AFUCOMP,
+	AFUCOMPP,
+
+	AFADDDP,
+	AFADDW,
+	AFADDL,
+	AFADDF,
+	AFADDD,
+
+	AFMULDP,
+	AFMULW,
+	AFMULL,
+	AFMULF,
+	AFMULD,
+
+	AFSUBDP,
+	AFSUBW,
+	AFSUBL,
+	AFSUBF,
+	AFSUBD,
+
+	AFSUBRDP,
+	AFSUBRW,
+	AFSUBRL,
+	AFSUBRF,
+	AFSUBRD,
+
+	AFDIVDP,
+	AFDIVW,
+	AFDIVL,
+	AFDIVF,
+	AFDIVD,
+
+	AFDIVRDP,
+	AFDIVRW,
+	AFDIVRL,
+	AFDIVRF,
+	AFDIVRD,
+
+	AFXCHD,
+	AFFREE,
+
+	AFLDCW,
+	AFLDENV,
+	AFRSTOR,
+	AFSAVE,
+	AFSTCW,
+	AFSTENV,
+	AFSTSW,
+
+	AF2XM1,
+	AFABS,
+	AFCHS,
+	AFCLEX,
+	AFCOS,
+	AFDECSTP,
+	AFINCSTP,
+	AFINIT,
+	AFLD1,
+	AFLDL2E,
+	AFLDL2T,
+	AFLDLG2,
+	AFLDLN2,
+	AFLDPI,
+	AFLDZ,
+	AFNOP,
+	AFPATAN,
+	AFPREM,
+	AFPREM1,
+	AFPTAN,
+	AFRNDINT,
+	AFSCALE,
+	AFSIN,
+	AFSINCOS,
+	AFSQRT,
+	AFTST,
+	AFXAM,
+	AFXTRACT,
+	AFYL2X,
+	AFYL2XP1,
+
+	AEND,
+
+	ADYNT,
+	AINIT,
+
+	ASIGNAME,
+
+	ACMPXCHGB,
+	ACMPXCHGL,
+	ACMPXCHGW,
+
+	ALAST
+};
+
+enum
+{
+	D_AL		= 0,
+	D_CL,
+	D_DL,
+	D_BL,
+
+	D_AH		= 4,
+	D_CH,
+	D_DH,
+	D_BH,
+
+	D_AX		= 8,
+	D_CX,
+	D_DX,
+	D_BX,
+	D_SP,
+	D_BP,
+	D_SI,
+	D_DI,
+
+	D_F0		= 16,
+	D_F7		= D_F0 + 7,
+
+	D_CS		= 24,
+	D_SS,
+	D_DS,
+	D_ES,
+	D_FS,
+	D_GS,
+
+	D_GDTR,
+	D_IDTR,
+	D_LDTR,
+	D_MSW,
+	D_TASK,
+
+	D_CR		= 35,
+	D_DR		= 43,
+	D_TR		= 51,
+
+	D_NONE		= 59,
+
+	D_BRANCH	= 60,
+	D_EXTERN	= 61,
+	D_STATIC	= 62,
+	D_AUTO		= 63,
+	D_PARAM		= 64,
+	D_CONST		= 65,
+	D_FCONST	= 66,
+	D_SCONST	= 67,
+	D_ADDR		= 68,
+
+	D_FILE,
+	D_FILE1,
+
+	D_INDIR,
+
+	D_CONST2 = D_INDIR+D_INDIR,
+	D_SIZE,
+
+	T_TYPE		= 1<<0,
+	T_INDEX		= 1<<1,
+	T_OFFSET	= 1<<2,
+	T_FCONST	= 1<<3,
+	T_SYM		= 1<<4,
+	T_SCONST	= 1<<5,
+	T_OFFSET2	= 1<<6,
+	T_GOTYPE	= 1<<7,
+
+	REGARG		= -1,
+	REGRET		= D_AX,
+	FREGRET		= D_F0,
+	REGSP		= D_SP,
+	REGTMP		= D_DI,
+};
+
+
+#line 474 "/usr/sape/src/go/src/cmd/8a/./../8l/8.out.h"
+
+
+
+#line 479 "/usr/sape/src/go/src/cmd/8a/./../8l/8.out.h"
+typedef	struct	ieee	Ieee;
+struct	ieee
+{
+	int32	l;
+	int32	h;
+#line 486 "/usr/sape/src/go/src/cmd/8a/./../8l/8.out.h"
+};
+#line 35 "/usr/sape/src/go/src/cmd/8a/./a.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef	struct	Sym	Sym;
+typedef	struct	Ref	Ref;
+typedef	struct	Gen	Gen;
+typedef	struct	Io	Io;
+typedef	struct	Hist	Hist;
+typedef	struct	Gen2 	Gen2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct	Sym
+{
+	Sym*	link;
+	Ref*	ref;
+	char*	macro;
+	int32	value;
+	ushort	type;
+	char	*name;
+	char	sym;
+};
+
+
+struct	Ref
+{
+	int	class;
+};
+
+ struct
+{
+	char*	p;
+	int	c;
+} fi;
+
+struct	Io
+{
+	Io*	link;
+	char	b[8192];
+	char*	p;
+	short	c;
+	short	f;
+};
+
+
+ struct
+{
+	Sym*	sym;
+	short	type;
+} h[50];
+
+struct	Gen
+{
+	double	dval;
+	char	sval[8];
+	int32	offset;
+	int32	offset2;
+	Sym*	sym;
+	short	type;
+	short	index;
+	short	scale;
+};
+struct	Gen2
+{
+	Gen	from;
+	Gen	to;
+};
+
+struct	Hist
+{
+	Hist*	link;
+	char*	name;
+	int32	line;
+	int32	offset;
+};
+
+
+enum
+{
+	CLAST,
+	CMACARG,
+	CMACRO,
+	CPREPROC,
+};
+
+
+ char	debug[256];
+ Sym*	hash[503];
+ char*	Dlist[30];
+ int	nDlist;
+ Hist*	ehist;
+ int	newflag;
+ Hist*	hist;
+ char*	hunk;
+ char*	include[10];
+ Io*	iofree;
+ Io*	ionext;
+ Io*	iostack;
+ int32	lineno;
+ int	nerrors;
+ int32	nhunk;
+ int	ninclude;
+ Gen	nullgen;
+ char*	outfile;
+ int	pass;
+ char*	pathname;
+ int32	pc;
+ int	peekc;
+ int	sym;
+ char	symb[500];
+ int	thechar;
+ char*	thestring;
+ int32	thunk;
+ Biobuf	obuf;
+
+void*	allocn(void*, int32, int32);
+void	errorexit(void);
+void	pushio(void);
+void	newio(void);
+void	newfile(char*, int);
+Sym*	slookup(char*);
+Sym*	lookup(void);
+void	syminit(Sym*);
+int32	yylex(void);
+int ccgetc(void);
+int	getnsc(void);
+void	unget(int);
+int	escchar(int);
+void	cinit(void);
+void	checkscale(int);
+void	pinit(char*);
+void	cclean(void);
+int	isreg(Gen*);
+void	outcode(int, Gen2*);
+void	outhist(void);
+void	zaddr(Gen*, int);
+void	zname(char*, int, int);
+void	ieeedtod(Ieee*, double);
+int	filbuf(void);
+Sym*	getsym(void);
+void	domacro(void);
+void	macund(void);
+void	macdef(void);
+void	macexpand(Sym*, char*);
+void	macinc(void);
+void	macprag(void);
+void	maclin(void);
+void	macif(int);
+void	macend(void);
+void	dodefine(char*);
+void	prfile(int32);
+void	linehist(char*, int);
+void	gethunk(void);
+void	yyerror(char*, ...);
+int	yyparse(void);
+void	setinclude(char*);
+int	assemble(char*);
+#line 33 "/usr/sape/src/go/src/cmd/8a/lex.c"
+#line 1 "/usr/sape/src/go/src/cmd/8a/./y.tab.h"
+
+typedef union 	{
+	Sym	*sym;
+	int32	lval;
+	struct {
+		int32 v1;
+		int32 v2;
+	} con2;
+	double	dval;
+	char	sval[8];
+	Gen	gen;
+	Gen2	gen2;
+}	YYSTYPE;
+extern	YYSTYPE	yylval;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 34 "/usr/sape/src/go/src/cmd/8a/lex.c"
+#line 1 "/sys/include/ctype.h"
+#pragma	src	"/sys/src/libc/port"
+#pragma	lib	"libc.a"
+
+
+
+
+
+
+
+
+
+
+extern unsigned char	_ctype[];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 35 "/usr/sape/src/go/src/cmd/8a/lex.c"
+
+enum
+{
+	Plan9	= 1<<0,
+	Unix	= 1<<1,
+	Windows	= 1<<2,
+};
+
+int
+systemtype(int sys)
+{
+	return sys&Plan9;
+}
+
+int
+pathchar(void)
+{
+	return '/';
+}
+
+void
+main(int argc, char *argv[])
+{
+	char *p;
+	int nout, nproc, i, c;
+
+	thechar = '8';
+	thestring = "386";
+	memset(debug, 0, sizeof(debug));
+	cinit();
+	outfile = 0;
+	include[ninclude++] = ".";
+ for((argv0||(argv0=*argv)),argv++,argc--; argv[0] && argv[0][0]=='-' && argv[0][1]; argc--, argv++) { char *_args, *_argt; Rune _argc; _args = &argv[0][1]; if(_args[0]=='-' && _args[1]==0){ argc--; argv++; break; } _argc = 0; while(*_args && (_args += chartorune(&_argc, _args))) switch(_argc) {
+	default:
+		c = _argc;
+		if(c >= 0 || c < sizeof(debug))
+			debug[c] = 1;
+		break;
+
+	case 'o':
+		outfile =(_argt=_args, _args="", (*_argt? _argt: argv[1]? (argc--, *++argv): 0));
+		break;
+
+	case 'D':
+		p =(_argt=_args, _args="", (*_argt? _argt: argv[1]? (argc--, *++argv): 0));
+		if(p)
+			Dlist[nDlist++] = p;
+		break;
+
+	case 'I':
+		p =(_argt=_args, _args="", (*_argt? _argt: argv[1]? (argc--, *++argv): 0));
+		setinclude(p);
+		break;
+	}SET(_argt);USED(_argt,_argc,_args);}USED(argv, argc);
+	if(*argv == 0) {
+		print("usage: %ca [-options] file.s\n", thechar);
+		errorexit();
+	}
+	if(argc > 1 && systemtype(Windows)){
+		print("can't assemble multiple files on windows\n");
+		errorexit();
+	}
+	if(argc > 1 && !systemtype(Windows)) {
+		nproc = 1;
+		if(p = getenv("NPROC"))
+			nproc = atol(p);
+		c = 0;
+		nout = 0;
+		for(;;) {
+			Waitmsg *w;
+
+			while(nout < nproc && argc > 0) {
+				i = fork();
+				if(i < 0) {
+					fprint(2, "fork: %r\n");
+					errorexit();
+				}
+				if(i == 0) {
+					print("%s:\n", *argv);
+					if(assemble(*argv))
+						errorexit();
+					exits(0);
+				}
+				nout++;
+				argc--;
+				argv++;
+			}
+			w = wait();
+			if(w ==((void*)0)) {
+				if(c)
+					errorexit();
+				exits(0);
+			}
+			if(w->msg[0])
+				c++;
+			nout--;
+		}
+	}
+	if(assemble(argv[0]))
+		errorexit();
+	exits(0);
+}
+
+int
+assemble(char *file)
+{
+	char ofile[100], incfile[20], *p;
+	int i, of;
+
+	strcpy(ofile, file);
+	p = utfrrune(ofile, pathchar());
+	if(p) {
+		include[0] = ofile;
+		*p++ = 0;
+	} else
+		p = ofile;
+	if(outfile == 0) {
+		outfile = p;
+		if(outfile){
+			p = utfrrune(outfile, '.');
+			if(p)
+				if(p[1] == 's' && p[2] == 0)
+					p[0] = 0;
+			p = utfrune(outfile, 0);
+			p[0] = '.';
+			p[1] = thechar;
+			p[2] = 0;
+		} else
+			outfile = "/dev/null";
+	}
+	p = getenv("INCLUDE");
+	if(p) {
+		setinclude(p);
+	} else {
+		if(systemtype(Plan9)) {
+			sprint(incfile,"/%s/include", thestring);
+			setinclude(strdup(incfile));
+		}
+	}
+
+	of = create(outfile,1, 0664);
+	if(of < 0) {
+		yyerror("%ca: cannot create %s", thechar, outfile);
+		errorexit();
+	}
+	Binit(&obuf, of,1);
+
+	pass = 1;
+	pinit(file);
+
+	Bprint(&obuf, "%s\n", thestring);
+
+	for(i=0; i<nDlist; i++)
+		dodefine(Dlist[i]);
+	yyparse();
+	if(nerrors) {
+		cclean();
+		return nerrors;
+	}
+
+	Bprint(&obuf, "\n!\n");
+
+	pass = 2;
+	outhist();
+	pinit(file);
+	for(i=0; i<nDlist; i++)
+		dodefine(Dlist[i]);
+	yyparse();
+	cclean();
+	return nerrors;
+}
+
+struct
+{
+	char	*name;
+	ushort	type;
+	ushort	value;
+} itab[] =
+{
+	"SP",57370,	D_AUTO,
+	"SB",57363,	D_EXTERN,
+	"FP",57361,	D_PARAM,
+	"PC",57362,	D_BRANCH,
+
+	"AL",57364,	D_AL,
+	"CL",57364,	D_CL,
+	"DL",57364,	D_DL,
+	"BL",57364,	D_BL,
+	"AH",57364,	D_AH,
+	"CH",57364,	D_CH,
+	"DH",57364,	D_DH,
+	"BH",57364,	D_BH,
+
+	"AX",57365,	D_AX,
+	"CX",57365,	D_CX,
+	"DX",57365,	D_DX,
+	"BX",57365,	D_BX,
+
+	"BP",57365,	D_BP,
+	"SI",57365,	D_SI,
+	"DI",57365,	D_DI,
+
+	"F0",57367,	D_F0+0,
+	"F1",57367,	D_F0+1,
+	"F2",57367,	D_F0+2,
+	"F3",57367,	D_F0+3,
+	"F4",57367,	D_F0+4,
+	"F5",57367,	D_F0+5,
+	"F6",57367,	D_F0+6,
+	"F7",57367,	D_F0+7,
+
+	"CS",57366,	D_CS,
+	"SS",57366,	D_SS,
+	"DS",57366,	D_DS,
+	"ES",57366,	D_ES,
+	"FS",57366,	D_FS,
+	"GS",57366,	D_GS,
+
+	"GDTR",57364,	D_GDTR,
+	"IDTR",57364,	D_IDTR,
+	"LDTR",57364,	D_LDTR,
+	"MSW",57364,	D_MSW,
+	"TASK",57364,	D_TASK,
+
+	"CR0",57364,	D_CR+0,
+	"CR1",57364,	D_CR+1,
+	"CR2",57364,	D_CR+2,
+	"CR3",57364,	D_CR+3,
+	"CR4",57364,	D_CR+4,
+	"CR5",57364,	D_CR+5,
+	"CR6",57364,	D_CR+6,
+	"CR7",57364,	D_CR+7,
+
+	"DR0",57364,	D_DR+0,
+	"DR1",57364,	D_DR+1,
+	"DR2",57364,	D_DR+2,
+	"DR3",57364,	D_DR+3,
+	"DR4",57364,	D_DR+4,
+	"DR5",57364,	D_DR+5,
+	"DR6",57364,	D_DR+6,
+	"DR7",57364,	D_DR+7,
+
+	"TR0",57364,	D_TR+0,
+	"TR1",57364,	D_TR+1,
+	"TR2",57364,	D_TR+2,
+	"TR3",57364,	D_TR+3,
+	"TR4",57364,	D_TR+4,
+	"TR5",57364,	D_TR+5,
+	"TR6",57364,	D_TR+6,
+	"TR7",57364,	D_TR+7,
+
+	"AAA",57346,	AAAA,
+	"AAD",57346,	AAAD,
+	"AAM",57346,	AAAM,
+	"AAS",57346,	AAAS,
+	"ADCB",57349,	AADCB,
+	"ADCL",57349,	AADCL,
+	"ADCW",57349,	AADCW,
+	"ADDB",57349,	AADDB,
+	"ADDL",57349,	AADDL,
+	"ADDW",57349,	AADDW,
+	"ADJSP",57348,	AADJSP,
+	"ANDB",57349,	AANDB,
+	"ANDL",57349,	AANDL,
+	"ANDW",57349,	AANDW,
+	"ARPL",57349,	AARPL,
+	"BOUNDL",57349,	ABOUNDL,
+	"BOUNDW",57349,	ABOUNDW,
+	"BSFL",57349,	ABSFL,
+	"BSFW",57349,	ABSFW,
+	"BSRL",57349,	ABSRL,
+	"BSRW",57349,	ABSRW,
+	"BTCL",57349,	ABTCL,
+	"BTCW",57349,	ABTCW,
+	"BTL",57349,	ABTL,
+	"BTRL",57349,	ABTRL,
+	"BTRW",57349,	ABTRW,
+	"BTSL",57349,	ABTSL,
+	"BTSW",57349,	ABTSW,
+	"BTW",57349,	ABTW,
+	"BYTE",57348,	ABYTE,
+	"CALL",57351,	ACALL,
+	"CLC",57346,	ACLC,
+	"CLD",57346,	ACLD,
+	"CLI",57346,	ACLI,
+	"CLTS",57346,	ACLTS,
+	"CMC",57346,	ACMC,
+	"CMPB",57350,	ACMPB,
+	"CMPL",57350,	ACMPL,
+	"CMPW",57350,	ACMPW,
+	"CMPSB",57346,	ACMPSB,
+	"CMPSL",57346,	ACMPSL,
+	"CMPSW",57346,	ACMPSW,
+	"CMPXCHGB",57349,	ACMPXCHGB,
+	"CMPXCHGL",57349,	ACMPXCHGL,
+	"CMPXCHGW",57349,	ACMPXCHGW,
+	"DAA",57346,	ADAA,
+	"DAS",57346,	ADAS,
+	"DATA",57352,	ADATA,
+	"DECB",57347,	ADECB,
+	"DECL",57347,	ADECL,
+	"DECW",57347,	ADECW,
+	"DIVB",57348,	ADIVB,
+	"DIVL",57348,	ADIVL,
+	"DIVW",57348,	ADIVW,
+	"END",57346,	AEND,
+	"ENTER",57348,	AENTER,
+	"GLOBL",57359,	AGLOBL,
+	"HLT",57346,	AHLT,
+	"IDIVB",57348,	AIDIVB,
+	"IDIVL",57348,	AIDIVL,
+	"IDIVW",57348,	AIDIVW,
+	"IMULB",57348,	AIMULB,
+	"IMULL",57348,	AIMULL,
+	"IMULW",57348,	AIMULW,
+	"INB",57346,	AINB,
+	"INL",57346,	AINL,
+	"INW",57346,	AINW,
+	"INCB",57347,	AINCB,
+	"INCL",57347,	AINCL,
+	"INCW",57347,	AINCW,
+	"INSB",57346,	AINSB,
+	"INSL",57346,	AINSL,
+	"INSW",57346,	AINSW,
+	"INT",57348,	AINT,
+	"INTO",57346,	AINTO,
+	"IRETL",57346,	AIRETL,
+	"IRETW",57346,	AIRETW,
+
+	"JOS",57354,	AJOS,
+	"JO",57354,	AJOS,
+	"JOC",57354,	AJOC,
+	"JNO",57354,	AJOC,
+	"JCS",57354,	AJCS,
+	"JB",57354,	AJCS,
+	"JC",57354,	AJCS,
+	"JNAE",57354,	AJCS,
+	"JLO",57354,	AJCS,
+	"JCC",57354,	AJCC,
+	"JAE",57354,	AJCC,
+	"JNB",57354,	AJCC,
+	"JNC",57354,	AJCC,
+	"JHS",57354,	AJCC,
+	"JEQ",57354,	AJEQ,
+	"JE",57354,	AJEQ,
+	"JZ",57354,	AJEQ,
+	"JNE",57354,	AJNE,
+	"JNZ",57354,	AJNE,
+	"JLS",57354,	AJLS,
+	"JBE",57354,	AJLS,
+	"JNA",57354,	AJLS,
+	"JHI",57354,	AJHI,
+	"JA",57354,	AJHI,
+	"JNBE",57354,	AJHI,
+	"JMI",57354,	AJMI,
+	"JS",57354,	AJMI,
+	"JPL",57354,	AJPL,
+	"JNS",57354,	AJPL,
+	"JPS",57354,	AJPS,
+	"JP",57354,	AJPS,
+	"JPE",57354,	AJPS,
+	"JPC",57354,	AJPC,
+	"JNP",57354,	AJPC,
+	"JPO",57354,	AJPC,
+	"JLT",57354,	AJLT,
+	"JL",57354,	AJLT,
+	"JNGE",57354,	AJLT,
+	"JGE",57354,	AJGE,
+	"JNL",57354,	AJGE,
+	"JLE",57354,	AJLE,
+	"JNG",57354,	AJLE,
+	"JGT",57354,	AJGT,
+	"JG",57354,	AJGT,
+	"JNLE",57354,	AJGT,
+
+	"JCXZ",57354,	AJCXZ,
+	"JMP",57351,	AJMP,
+	"LAHF",57346,	ALAHF,
+	"LARL",57349,	ALARL,
+	"LARW",57349,	ALARW,
+	"LEAL",57349,	ALEAL,
+	"LEAW",57349,	ALEAW,
+	"LEAVEL",57346,	ALEAVEL,
+	"LEAVEW",57346,	ALEAVEW,
+	"LOCK",57346,	ALOCK,
+	"LODSB",57346,	ALODSB,
+	"LODSL",57346,	ALODSL,
+	"LODSW",57346,	ALODSW,
+	"LONG",57348,	ALONG,
+	"LOOP",57354,	ALOOP,
+	"LOOPEQ",57354,	ALOOPEQ,
+	"LOOPNE",57354,	ALOOPNE,
+	"LSLL",57349,	ALSLL,
+	"LSLW",57349,	ALSLW,
+	"MOVB",57349,	AMOVB,
+	"MOVL",57357,	AMOVL,
+	"MOVW",57357,	AMOVW,
+	"MOVBLSX",57349, AMOVBLSX,
+	"MOVBLZX",57349, AMOVBLZX,
+	"MOVBWSX",57349, AMOVBWSX,
+	"MOVBWZX",57349, AMOVBWZX,
+	"MOVWLSX",57349, AMOVWLSX,
+	"MOVWLZX",57349, AMOVWLZX,
+	"MOVSB",57346,	AMOVSB,
+	"MOVSL",57346,	AMOVSL,
+	"MOVSW",57346,	AMOVSW,
+	"MULB",57348,	AMULB,
+	"MULL",57348,	AMULL,
+	"MULW",57348,	AMULW,
+	"NEGB",57347,	ANEGB,
+	"NEGL",57347,	ANEGL,
+	"NEGW",57347,	ANEGW,
+	"NOP",57353,	ANOP,
+	"NOTB",57347,	ANOTB,
+	"NOTL",57347,	ANOTL,
+	"NOTW",57347,	ANOTW,
+	"ORB",57349,	AORB,
+	"ORL",57349,	AORL,
+	"ORW",57349,	AORW,
+	"OUTB",57346,	AOUTB,
+	"OUTL",57346,	AOUTL,
+	"OUTW",57346,	AOUTW,
+	"OUTSB",57346,	AOUTSB,
+	"OUTSL",57346,	AOUTSL,
+	"OUTSW",57346,	AOUTSW,
+	"POPAL",57346,	APOPAL,
+	"POPAW",57346,	APOPAW,
+	"POPFL",57346,	APOPFL,
+	"POPFW",57346,	APOPFW,
+	"POPL",57347,	APOPL,
+	"POPW",57347,	APOPW,
+	"PUSHAL",57346,	APUSHAL,
+	"PUSHAW",57346,	APUSHAW,
+	"PUSHFL",57346,	APUSHFL,
+	"PUSHFW",57346,	APUSHFW,
+	"PUSHL",57348,	APUSHL,
+	"PUSHW",57348,	APUSHW,
+	"RCLB",57349,	ARCLB,
+	"RCLL",57349,	ARCLL,
+	"RCLW",57349,	ARCLW,
+	"RCRB",57349,	ARCRB,
+	"RCRL",57349,	ARCRL,
+	"RCRW",57349,	ARCRW,
+	"REP",57346,	AREP,
+	"REPN",57346,	AREPN,
+	"RET",57346,	ARET,
+	"ROLB",57349,	AROLB,
+	"ROLL",57349,	AROLL,
+	"ROLW",57349,	AROLW,
+	"RORB",57349,	ARORB,
+	"RORL",57349,	ARORL,
+	"RORW",57349,	ARORW,
+	"SAHF",57346,	ASAHF,
+	"SALB",57349,	ASALB,
+	"SALL",57349,	ASALL,
+	"SALW",57349,	ASALW,
+	"SARB",57349,	ASARB,
+	"SARL",57349,	ASARL,
+	"SARW",57349,	ASARW,
+	"SBBB",57349,	ASBBB,
+	"SBBL",57349,	ASBBL,
+	"SBBW",57349,	ASBBW,
+	"SCASB",57346,	ASCASB,
+	"SCASL",57346,	ASCASL,
+	"SCASW",57346,	ASCASW,
+	"SETCC",57347,	ASETCC,
+	"SETCS",57347,	ASETCS,
+	"SETEQ",57347,	ASETEQ,
+	"SETGE",57347,	ASETGE,
+	"SETGT",57347,	ASETGT,
+	"SETHI",57347,	ASETHI,
+	"SETLE",57347,	ASETLE,
+	"SETLS",57347,	ASETLS,
+	"SETLT",57347,	ASETLT,
+	"SETMI",57347,	ASETMI,
+	"SETNE",57347,	ASETNE,
+	"SETOC",57347,	ASETOC,
+	"SETOS",57347,	ASETOS,
+	"SETPC",57347,	ASETPC,
+	"SETPL",57347,	ASETPL,
+	"SETPS",57347,	ASETPS,
+	"CDQ",57346,	ACDQ,
+	"CWD",57346,	ACWD,
+	"SHLB",57349,	ASHLB,
+	"SHLL",57356,	ASHLL,
+	"SHLW",57356,	ASHLW,
+	"SHRB",57349,	ASHRB,
+	"SHRL",57356,	ASHRL,
+	"SHRW",57356,	ASHRW,
+	"STC",57346,	ASTC,
+	"STD",57346,	ASTD,
+	"STI",57346,	ASTI,
+	"STOSB",57346,	ASTOSB,
+	"STOSL",57346,	ASTOSL,
+	"STOSW",57346,	ASTOSW,
+	"SUBB",57349,	ASUBB,
+	"SUBL",57349,	ASUBL,
+	"SUBW",57349,	ASUBW,
+	"SYSCALL",57346,	ASYSCALL,
+	"TESTB",57349,	ATESTB,
+	"TESTL",57349,	ATESTL,
+	"TESTW",57349,	ATESTW,
+	"TEXT",57355,	ATEXT,
+	"VERR",57348,	AVERR,
+	"VERW",57348,	AVERW,
+	"WAIT",57346,	AWAIT,
+	"WORD",57348,	AWORD,
+	"XCHGB",57349,	AXCHGB,
+	"XCHGL",57349,	AXCHGL,
+	"XCHGW",57349,	AXCHGW,
+	"XLAT",57348,	AXLAT,
+	"XORB",57349,	AXORB,
+	"XORL",57349,	AXORL,
+	"XORW",57349,	AXORW,
+
+	"FMOVB",57349, AFMOVB,
+	"FMOVBP",57349, AFMOVBP,
+	"FMOVD",57349, AFMOVD,
+	"FMOVDP",57349, AFMOVDP,
+	"FMOVF",57349, AFMOVF,
+	"FMOVFP",57349, AFMOVFP,
+	"FMOVL",57349, AFMOVL,
+	"FMOVLP",57349, AFMOVLP,
+	"FMOVV",57349, AFMOVV,
+	"FMOVVP",57349, AFMOVVP,
+	"FMOVW",57349, AFMOVW,
+	"FMOVWP",57349, AFMOVWP,
+	"FMOVX",57349, AFMOVX,
+	"FMOVXP",57349, AFMOVXP,
+	"FCOMB",57349, AFCOMB,
+	"FCOMBP",57349, AFCOMBP,
+	"FCOMD",57349, AFCOMD,
+	"FCOMDP",57349, AFCOMDP,
+	"FCOMDPP",57349, AFCOMDPP,
+	"FCOMF",57349, AFCOMF,
+	"FCOMFP",57349, AFCOMFP,
+	"FCOML",57349, AFCOML,
+	"FCOMLP",57349, AFCOMLP,
+	"FCOMW",57349, AFCOMW,
+	"FCOMWP",57349, AFCOMWP,
+	"FUCOM",57349, AFUCOM,
+	"FUCOMP",57349, AFUCOMP,
+	"FUCOMPP",57349, AFUCOMPP,
+	"FADDW",57349, AFADDW,
+	"FADDL",57349, AFADDL,
+	"FADDF",57349, AFADDF,
+	"FADDD",57349, AFADDD,
+	"FADDDP",57349, AFADDDP,
+	"FSUBDP",57349, AFSUBDP,
+	"FSUBW",57349, AFSUBW,
+	"FSUBL",57349, AFSUBL,
+	"FSUBF",57349, AFSUBF,
+	"FSUBD",57349, AFSUBD,
+	"FSUBRDP",57349, AFSUBRDP,
+	"FSUBRW",57349, AFSUBRW,
+	"FSUBRL",57349, AFSUBRL,
+	"FSUBRF",57349, AFSUBRF,
+	"FSUBRD",57349, AFSUBRD,
+	"FMULDP",57349, AFMULDP,
+	"FMULW",57349, AFMULW,
+	"FMULL",57349, AFMULL,
+	"FMULF",57349, AFMULF,
+	"FMULD",57349, AFMULD,
+	"FDIVDP",57349, AFDIVDP,
+	"FDIVW",57349, AFDIVW,
+	"FDIVL",57349, AFDIVL,
+	"FDIVF",57349, AFDIVF,
+	"FDIVD",57349, AFDIVD,
+	"FDIVRDP",57349, AFDIVRDP,
+	"FDIVRW",57349, AFDIVRW,
+	"FDIVRL",57349, AFDIVRL,
+	"FDIVRF",57349, AFDIVRF,
+	"FDIVRD",57349, AFDIVRD,
+	"FXCHD",57349, AFXCHD,
+	"FFREE",57347, AFFREE,
+	"FLDCW",57348, AFLDCW,
+	"FLDENV",57347, AFLDENV,
+	"FRSTOR",57348, AFRSTOR,
+	"FSAVE",57347, AFSAVE,
+	"FSTCW",57347, AFSTCW,
+	"FSTENV",57347, AFSTENV,
+	"FSTSW",57347, AFSTSW,
+	"F2XM1",57346, AF2XM1,
+	"FABS",57346, AFABS,
+	"FCHS",57346, AFCHS,
+	"FCLEX",57346, AFCLEX,
+	"FCOS",57346, AFCOS,
+	"FDECSTP",57346, AFDECSTP,
+	"FINCSTP",57346, AFINCSTP,
+	"FINIT",57346, AFINIT,
+	"FLD1",57346, AFLD1,
+	"FLDL2E",57346, AFLDL2E,
+	"FLDL2T",57346, AFLDL2T,
+	"FLDLG2",57346, AFLDLG2,
+	"FLDLN2",57346, AFLDLN2,
+	"FLDPI",57346, AFLDPI,
+	"FLDZ",57346, AFLDZ,
+	"FNOP",57346, AFNOP,
+	"FPATAN",57346, AFPATAN,
+	"FPREM",57346, AFPREM,
+	"FPREM1",57346, AFPREM1,
+	"FPTAN",57346, AFPTAN,
+	"FRNDINT",57346, AFRNDINT,
+	"FSCALE",57346, AFSCALE,
+	"FSIN",57346, AFSIN,
+	"FSINCOS",57346, AFSINCOS,
+	"FSQRT",57346, AFSQRT,
+	"FTST",57346, AFTST,
+	"FXAM",57346, AFXAM,
+	"FXTRACT",57346, AFXTRACT,
+	"FYL2X",57346, AFYL2X,
+	"FYL2XP1",57346, AFYL2XP1,
+
+	0
+};
+
+void
+cinit(void)
+{
+	Sym *s;
+	int i;
+
+	nullgen.sym =((Sym*)0);
+	nullgen.offset = 0;
+	if(1)
+		nullgen.dval = 0;
+	for(i=0; i<sizeof(nullgen.sval); i++)
+		nullgen.sval[i] = 0;
+	nullgen.type = D_NONE;
+	nullgen.index = D_NONE;
+	nullgen.scale = 0;
+
+	nerrors = 0;
+	iostack =((Io*)0);
+	iofree =((Io*)0);
+	peekc =(-2);
+	nhunk = 0;
+	for(i=0; i< 503; i++)
+		hash[i] =((Sym*)0);
+	for(i=0; itab[i].name; i++) {
+		s = slookup(itab[i].name);
+		if(s->type != 57371)
+			yyerror("double initialization %s", itab[i].name);
+		s->type = itab[i].type;
+		s->value = itab[i].value;
+	}
+
+	pathname = allocn(pathname, 0, 100);
+	if(getwd(pathname, 99) == 0) {
+		pathname = allocn(pathname, 100, 900);
+		if(getwd(pathname, 999) == 0)
+			strcpy(pathname, "/???");
+	}
+}
+
+void
+checkscale(int scale)
+{
+
+	switch(scale) {
+	case 1:
+	case 2:
+	case 4:
+	case 8:
+		return;
+	}
+	yyerror("scale must be 1248: %d", scale);
+}
+
+void
+syminit(Sym *s)
+{
+
+	s->type = 57371;
+	s->value = 0;
+}
+
+void
+cclean(void)
+{
+	Gen2 g2;
+
+	g2.from = nullgen;
+	g2.to = nullgen;
+	outcode(AEND, &g2);
+	Bflush(&obuf);
+}
+
+void
+zname(char *n, int t, int s)
+{
+
+	Bputc(&obuf, ANAME);
+	Bputc(&obuf, ANAME>>8);
+	Bputc(&obuf, t);
+	Bputc(&obuf, s);
+	while(*n) {
+		Bputc(&obuf, *n);
+		n++;
+	}
+	Bputc(&obuf, 0);
+}
+
+void
+zaddr(Gen *a, int s)
+{
+	int32 l;
+	int i, t;
+	char *n;
+	Ieee e;
+
+	t = 0;
+	if(a->index != D_NONE || a->scale != 0)
+		t |= T_INDEX;
+	if(a->offset != 0)
+		t |= T_OFFSET;
+	if(s != 0)
+		t |= T_SYM;
+
+	switch(a->type) {
+	default:
+		t |= T_TYPE;
+		break;
+	case D_FCONST:
+		t |= T_FCONST;
+		break;
+	case D_CONST2:
+		t |= T_OFFSET|T_OFFSET2;
+		break;
+	case D_SCONST:
+		t |= T_SCONST;
+		break;
+	case D_NONE:
+		break;
+	}
+	Bputc(&obuf, t);
+
+	if(t & T_INDEX) {
+		Bputc(&obuf, a->index);
+		Bputc(&obuf, a->scale);
+	}
+	if(t & T_OFFSET) {
+		l = a->offset;
+		Bputc(&obuf, l);
+		Bputc(&obuf, l>>8);
+		Bputc(&obuf, l>>16);
+		Bputc(&obuf, l>>24);
+	}
+	if(t & T_OFFSET2) {
+		l = a->offset2;
+		Bputc(&obuf, l);
+		Bputc(&obuf, l>>8);
+		Bputc(&obuf, l>>16);
+		Bputc(&obuf, l>>24);
+	}
+	if(t & T_SYM)
+		Bputc(&obuf, s);
+	if(t & T_FCONST) {
+		ieeedtod(&e, a->dval);
+		l = e.l;
+		Bputc(&obuf, l);
+		Bputc(&obuf, l>>8);
+		Bputc(&obuf, l>>16);
+		Bputc(&obuf, l>>24);
+		l = e.h;
+		Bputc(&obuf, l);
+		Bputc(&obuf, l>>8);
+		Bputc(&obuf, l>>16);
+		Bputc(&obuf, l>>24);
+		return;
+	}
+	if(t & T_SCONST) {
+		n = a->sval;
+		for(i=0; i< 8; i++) {
+			Bputc(&obuf, *n);
+			n++;
+		}
+		return;
+	}
+	if(t & T_TYPE)
+		Bputc(&obuf, a->type);
+}
+
+void
+outcode(int a, Gen2 *g2)
+{
+	int sf, st, t;
+	Sym *s;
+
+	if(pass == 1)
+		goto out;
+
+jackpot:
+	sf = 0;
+	s = g2->from.sym;
+	while(s !=((Sym*)0)) {
+		sf = s->sym;
+		if(sf < 0 || sf >= 50)
+			sf = 0;
+		t = g2->from.type;
+		if(t == D_ADDR)
+			t = g2->from.index;
+		if(h[sf].type == t)
+		if(h[sf].sym == s)
+			break;
+		zname(s->name, t, sym);
+		s->sym = sym;
+		h[sym].sym = s;
+		h[sym].type = t;
+		sf = sym;
+		sym++;
+		if(sym >= 50)
+			sym = 1;
+		break;
+	}
+	st = 0;
+	s = g2->to.sym;
+	while(s !=((Sym*)0)) {
+		st = s->sym;
+		if(st < 0 || st >= 50)
+			st = 0;
+		t = g2->to.type;
+		if(t == D_ADDR)
+			t = g2->to.index;
+		if(h[st].type == t)
+		if(h[st].sym == s)
+			break;
+		zname(s->name, t, sym);
+		s->sym = sym;
+		h[sym].sym = s;
+		h[sym].type = t;
+		st = sym;
+		sym++;
+		if(sym >= 50)
+			sym = 1;
+		if(st == sf)
+			goto jackpot;
+		break;
+	}
+	Bputc(&obuf, a);
+	Bputc(&obuf, a>>8);
+	Bputc(&obuf, lineno);
+	Bputc(&obuf, lineno>>8);
+	Bputc(&obuf, lineno>>16);
+	Bputc(&obuf, lineno>>24);
+	zaddr(&g2->from, sf);
+	zaddr(&g2->to, st);
+
+out:
+	if(a != AGLOBL && a != ADATA)
+		pc++;
+}
+
+void
+outhist(void)
+{
+	Gen g;
+	Hist *h;
+	char *p, *q, *op, c;
+	int n;
+
+	g = nullgen;
+	c = pathchar();
+	for(h = hist; h !=((Hist*)0); h = h->link) {
+		p = h->name;
+		op = 0;
+
+		if(systemtype(Windows) && p && p[1] == ':'){
+			p += 2;
+			c = *p;
+		}
+		if(p && p[0] != c && h->offset == 0 && pathname){
+
+			if(systemtype(Windows) && pathname[1] == ':') {
+				op = p;
+				p = pathname+2;
+				c = *p;
+			} else if(pathname[0] == c){
+				op = p;
+				p = pathname;
+			}
+		}
+		while(p) {
+			q = strchr(p, c);
+			if(q) {
+				n = q-p;
+				if(n == 0){
+					n = 1;
+					*p = '/';
+				}
+				q++;
+			} else {
+				n = strlen(p);
+				q = 0;
+			}
+			if(n) {
+				Bputc(&obuf, ANAME);
+				Bputc(&obuf, ANAME>>8);
+				Bputc(&obuf, D_FILE);
+				Bputc(&obuf, 1);
+				Bputc(&obuf, '<');
+				Bwrite(&obuf, p, n);
+				Bputc(&obuf, 0);
+			}
+			p = q;
+			if(p == 0 && op) {
+				p = op;
+				op = 0;
+			}
+		}
+		g.offset = h->offset;
+
+		Bputc(&obuf, AHISTORY);
+		Bputc(&obuf, AHISTORY>>8);
+		Bputc(&obuf, h->line);
+		Bputc(&obuf, h->line>>8);
+		Bputc(&obuf, h->line>>16);
+		Bputc(&obuf, h->line>>24);
+		zaddr(&nullgen, 0);
+		zaddr(&g, 0);
+	}
+}
+
+#line 1 "/usr/sape/src/go/src/cmd/8a/./../cc/lexbody"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 34 "/usr/sape/src/go/src/cmd/8a/./../cc/lexbody"
+
+void
+pragpack(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragvararg(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragdynld(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragfpround(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragtextflag(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragprofile(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+pragincomplete(void)
+{
+	while(getnsc() != '\n')
+		;
+}
+
+void
+gethunk(void)
+{
+	hunk = malloc(10000);
+	memset(hunk, 0,10000);
+	nhunk = 10000;
+}
+
+void*
+alloc(int32 n)
+{
+	void *p;
+
+	while((uintptr)hunk & 7) {
+		hunk++;
+		nhunk--;
+	}
+	while(nhunk < n)
+		gethunk();
+	p = hunk;
+	nhunk -= n;
+	hunk += n;
+	return p;
+}
+
+void*
+allocn(void *p, int32 on, int32 n)
+{
+	void *q;
+
+	q = (uchar*)p + on;
+	if(q != hunk || nhunk < n) {
+		while(nhunk < on+n)
+			gethunk();
+		memmove(hunk, p, on);
+		p = hunk;
+		hunk += on;
+		nhunk -= on;
+	}
+	hunk += n;
+	nhunk -= n;
+	return p;
+}
+
+void
+setinclude(char *p)
+{
+	int i;
+
+	if(p == 0)
+		return;
+	for(i=1; i < ninclude; i++)
+		if(strcmp(p, include[i]) == 0)
+			return;
+
+	if(ninclude >=(sizeof(include)/sizeof((include)[0]))) {
+		yyerror("ninclude too small %d",(sizeof(include)/sizeof((include)[0])));
+		exits("ninclude");
+	}
+	include[ninclude++] = p;
+}
+
+void
+errorexit(void)
+{
+
+	if(outfile)
+		remove(outfile);
+	exits("error");
+}
+
+void
+pushio(void)
+{
+	Io *i;
+
+	i = iostack;
+	if(i ==((Io*)0)) {
+		yyerror("botch in pushio");
+		errorexit();
+	}
+	i->p = fi.p;
+	i->c = fi.c;
+}
+
+void
+newio(void)
+{
+	Io *i;
+	static int pushdepth = 0;
+
+	i = iofree;
+	if(i ==((Io*)0)) {
+		pushdepth++;
+		if(pushdepth > 1000) {
+			yyerror("macro/io expansion too deep");
+			errorexit();
+		}
+		i = alloc(sizeof(*i));
+	} else
+		iofree = i->link;
+	i->c = 0;
+	i->f = -1;
+	ionext = i;
+}
+
+void
+newfile(char *s, int f)
+{
+	Io *i;
+
+	i = ionext;
+	i->link = iostack;
+	iostack = i;
+	i->f = f;
+	if(f < 0)
+		i->f = open(s, 0);
+	if(i->f < 0) {
+		yyerror("%ca: %r: %s", thechar, s);
+		errorexit();
+	}
+	fi.c = 0;
+	linehist(s, 0);
+}
+
+Sym*
+slookup(char *s)
+{
+
+	strcpy(symb, s);
+	return lookup();
+}
+
+Sym*
+lookup(void)
+{
+	Sym *s;
+	int32 h;
+	char *p;
+	int c, l;
+
+	h = 0;
+	for(p=symb; c = *p; p++)
+		h = h+h+h + c;
+	l = (p - symb) + 1;
+	h &= 0xffffff;
+	h %= 503;
+	c = symb[0];
+	for(s = hash[h]; s !=((Sym*)0); s = s->link) {
+		if(s->name[0] != c)
+			continue;
+		if(memcmp(s->name, symb, l) == 0)
+			return s;
+	}
+	s = alloc(sizeof(*s));
+	s->name = alloc(l);
+	memmove(s->name, symb, l);
+
+	s->link = hash[h];
+	hash[h] = s;
+	syminit(s);
+	return s;
+}
+
+int
+ISALPHA(int c)
+{
+	if((_ctype[(unsigned char)(c)]&(01 | 02)))
+		return 1;
+	if(c >= Runeself)
+		return 1;
+	return 0;
+}
+
+int32
+yylex(void)
+{
+	int c, c1;
+	char *cp;
+	Sym *s;
+
+	c = peekc;
+	if(c !=(-2)) {
+		peekc =(-2);
+		goto l1;
+	}
+l0:
+	c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+
+l1:
+	if(c ==(-1)) {
+		peekc =(-1);
+		return -1;
+	}
+	if((_ctype[(unsigned char)(c)]& 010)) {
+		if(c == '\n') {
+			lineno++;
+			return ';';
+		}
+		goto l0;
+	}
+	if(ISALPHA(c))
+		goto talph;
+	if((_ctype[(unsigned char)(c)]& 04))
+		goto tnum;
+	switch(c)
+	{
+	case '\n':
+		lineno++;
+		return ';';
+
+	case '#':
+		domacro();
+		goto l0;
+
+	case '.':
+		c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		if(ISALPHA(c)) {
+			cp = symb;
+			*cp++ = '.';
+			goto aloop;
+		}
+		if((_ctype[(unsigned char)(c)]& 04)) {
+			cp = symb;
+			*cp++ = '.';
+			goto casedot;
+		}
+		peekc = c;
+		return '.';
+
+	talph:
+	case '_':
+	case '@':
+		cp = symb;
+
+	aloop:
+		*cp++ = c;
+		c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		if(ISALPHA(c) ||(_ctype[(unsigned char)(c)]& 04) || c == '_' || c == '$')
+			goto aloop;
+		*cp = 0;
+		peekc = c;
+		s = lookup();
+		if(s->macro) {
+			newio();
+			cp = ionext->b;
+			macexpand(s, cp);
+			pushio();
+			ionext->link = iostack;
+			iostack = ionext;
+			fi.p = cp;
+			fi.c = strlen(cp);
+			if(peekc !=(-2)) {
+				cp[fi.c++] = peekc;
+				cp[fi.c] = 0;
+				peekc =(-2);
+			}
+			goto l0;
+		}
+		if(s->type == 0)
+			s->type = 57371;
+		if(s->type == 57371 ||
+		   s->type == 57373 ||
+		   s->type == 57372) {
+			yylval.sym = s;
+			return s->type;
+		}
+		yylval.lval = s->value;
+		return s->type;
+
+	tnum:
+		cp = symb;
+		if(c != '0')
+			goto dc;
+		*cp++ = c;
+		c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		c1 = 3;
+		if(c == 'x' || c == 'X') {
+			c1 = 4;
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		} else
+		if(c < '0' || c > '7')
+			goto dc;
+		yylval.lval = 0;
+		for(;;) {
+			if(c >= '0' && c <= '9') {
+				if(c > '7' && c1 == 3)
+					break;
+				yylval.lval <<= c1;
+				yylval.lval += c - '0';
+				c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+				continue;
+			}
+			if(c1 == 3)
+				break;
+			if(c >= 'A' && c <= 'F')
+				c += 'a' - 'A';
+			if(c >= 'a' && c <= 'f') {
+				yylval.lval <<= c1;
+				yylval.lval += c - 'a' + 10;
+				c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+				continue;
+			}
+			break;
+		}
+		goto ncu;
+
+	dc:
+		for(;;) {
+			if(!(_ctype[(unsigned char)(c)]& 04))
+				break;
+			*cp++ = c;
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		}
+		if(c == '.')
+			goto casedot;
+		if(c == 'e' || c == 'E')
+			goto casee;
+		*cp = 0;
+		if(sizeof(yylval.lval) == sizeof(vlong))
+			yylval.lval = strtoll(symb,((void*)0), 10);
+		else
+			yylval.lval = strtol(symb,((void*)0), 10);
+
+	ncu:
+		while(c == 'U' || c == 'u' || c == 'l' || c == 'L')
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		peekc = c;
+		return 57360;
+
+	casedot:
+		for(;;) {
+			*cp++ = c;
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+			if(!(_ctype[(unsigned char)(c)]& 04))
+				break;
+		}
+		if(c == 'e' || c == 'E')
+			goto casee;
+		goto caseout;
+
+	casee:
+		*cp++ = 'e';
+		c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		if(c == '+' || c == '-') {
+			*cp++ = c;
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		}
+		while((_ctype[(unsigned char)(c)]& 04)) {
+			*cp++ = c;
+			c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		}
+
+	caseout:
+		*cp = 0;
+		peekc = c;
+		if(1) {
+			yylval.dval = atof(symb);
+			return 57368;
+		}
+		yyerror("assembler cannot interpret fp constants");
+		yylval.lval = 1L;
+		return 57360;
+
+	case '"':
+		memcpy(yylval.sval, nullgen.sval, sizeof(yylval.sval));
+		cp = yylval.sval;
+		c1 = 0;
+		for(;;) {
+			c = escchar('"');
+			if(c ==(-1))
+				break;
+			if(c1 < sizeof(yylval.sval))
+				*cp++ = c;
+			c1++;
+		}
+		if(c1 > sizeof(yylval.sval))
+			yyerror("string constant too long");
+		return 57369;
+
+	case '\'':
+		c = escchar('\'');
+		if(c ==(-1))
+			c = '\'';
+		if(escchar('\'') !=(-1))
+			yyerror("missing '");
+		yylval.lval = c;
+		return 57360;
+
+	case '/':
+		c1 =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+		if(c1 == '/') {
+			for(;;) {
+				c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+				if(c == '\n')
+					goto l1;
+				if(c ==(-1)) {
+					yyerror("eof in comment");
+					errorexit();
+				}
+			}
+		}
+		if(c1 == '*') {
+			for(;;) {
+				c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+				while(c == '*') {
+					c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+					if(c == '/')
+						goto l0;
+				}
+				if(c ==(-1)) {
+					yyerror("eof in comment");
+					errorexit();
+				}
+				if(c == '\n')
+					lineno++;
+			}
+		}
+		break;
+
+	default:
+		return c;
+	}
+	peekc = c1;
+	return c;
+}
+
+int
+ ccgetc(void)
+{
+	int c;
+
+	c = peekc;
+	if(c !=(-2)) {
+		peekc =(-2);
+		return c;
+	}
+	c =((--fi.c < 0)? filbuf(): *fi.p++ & 0xff);
+	if(c == '\n')
+		lineno++;
+	if(c ==(-1)) {
+		yyerror("End of file");
+		errorexit();
+	}
+	return c;
+}
+
+int
+getnsc(void)
+{
+	int c;
+
+	for(;;) {
+		c = ccgetc();
+		if(!(_ctype[(unsigned char)(c)]& 010) || c == '\n')
+			return c;
+	}
+}
+
+void
+unget(int c)
+{
+
+	peekc = c;
+	if(c == '\n')
+		lineno--;
+}
+
+int
+escchar(int e)
+{
+	int c, l;
+
+loop:
+	c = ccgetc();
+	if(c == '\n') {
+		yyerror("newline in string");
+		return(-1);
+	}
+	if(c != '\\') {
+		if(c == e)
+			return(-1);
+		return c;
+	}
+	c = ccgetc();
+	if(c >= '0' && c <= '7') {
+		l = c - '0';
+		c = ccgetc();
+		if(c >= '0' && c <= '7') {
+			l = l*8 + c-'0';
+			c = ccgetc();
+			if(c >= '0' && c <= '7') {
+				l = l*8 + c-'0';
+				return l;
+			}
+		}
+		peekc = c;
+		return l;
+	}
+	switch(c)
+	{
+	case '\n':	goto loop;
+	case 'n':	return '\n';
+	case 't':	return '\t';
+	case 'b':	return '\b';
+	case 'r':	return '\r';
+	case 'f':	return '\f';
+	case 'a':	return 0x07;
+	case 'v':	return 0x0b;
+	case 'z':	return 0x00;
+	}
+	return c;
+}
+
+void
+pinit(char *f)
+{
+	int i;
+	Sym *s;
+
+	lineno = 1;
+	newio();
+	newfile(f, -1);
+	pc = 0;
+	peekc =(-2);
+	sym = 1;
+	for(i=0; i< 50; i++) {
+		h[i].type = 0;
+		h[i].sym =((Sym*)0);
+	}
+	for(i=0; i< 503; i++)
+		for(s = hash[i]; s !=((Sym*)0); s = s->link)
+			s->macro = 0;
+}
+
+int
+filbuf(void)
+{
+	Io *i;
+
+loop:
+	i = iostack;
+	if(i ==((Io*)0))
+		return(-1);
+	if(i->f < 0)
+		goto pop;
+	fi.c = read(i->f, i->b,8192) - 1;
+	if(fi.c < 0) {
+		close(i->f);
+		linehist(0, 0);
+		goto pop;
+	}
+	fi.p = i->b + 1;
+	return i->b[0];
+
+pop:
+	iostack = i->link;
+	i->link = iofree;
+	iofree = i;
+	i = iostack;
+	if(i ==((Io*)0))
+		return(-1);
+	fi.p = i->p;
+	fi.c = i->c;
+	if(--fi.c < 0)
+		goto loop;
+	return *fi.p++;
+}
+
+void
+yyerror(char *a, ...)
+{
+	char buf[200];
+	va_list arg;
+
+
+#line 662 "/usr/sape/src/go/src/cmd/8a/./../cc/lexbody"
+	if(strcmp(a, "syntax error") == 0) {
+		yyerror("syntax error, last name: %s", symb);
+		return;
+	}
+	prfile(lineno);
+ arg = (sizeof(a) < 4? (char*)((int*)&(a)+1): (char*)(&(a)+1));
+	vseprint(buf, buf+sizeof(buf), a, arg);
+ USED(arg);
+	print("%s\n", buf);
+	nerrors++;
+	if(nerrors > 10) {
+		print("too many errors\n");
+		errorexit();
+	}
+}
+
+void
+prfile(int32 l)
+{
+	int i, n;
+	Hist a[20], *h;
+	int32 d;
+
+	n = 0;
+	for(h = hist; h !=((Hist*)0); h = h->link) {
+		if(l < h->line)
+			break;
+		if(h->name) {
+			if(h->offset == 0) {
+				if(n >= 0 && n < 20)
+					a[n] = *h;
+				n++;
+				continue;
+			}
+			if(n > 0 && n < 20)
+				if(a[n-1].offset == 0) {
+					a[n] = *h;
+					n++;
+				} else
+					a[n-1] = *h;
+			continue;
+		}
+		n--;
+		if(n >= 0 && n < 20) {
+			d = h->line - a[n].line;
+			for(i=0; i<n; i++)
+				a[i].line += d;
+		}
+	}
+	if(n > 20)
+		n = 20;
+	for(i=0; i<n; i++)
+		print("%s:%ld ", a[i].name, (long)(l-a[i].line+a[i].offset+1));
+}
+
+void
+ieeedtod(Ieee *ieee, double native)
+{
+	double fr, ho, f;
+	int exp;
+
+	if(native < 0) {
+		ieeedtod(ieee, -native);
+		ieee->h |= 0x80000000L;
+		return;
+	}
+	if(native == 0) {
+		ieee->l = 0;
+		ieee->h = 0;
+		return;
+	}
+	fr = frexp(native, &exp);
+	f = 2097152L;
+	fr = modf(fr*f, &ho);
+	ieee->h = ho;
+	ieee->h &= 0xfffffL;
+	ieee->h |= (exp+1022L) << 20;
+	f = 65536L;
+	fr = modf(fr*f, &ho);
+	ieee->l = ho;
+	ieee->l <<= 16;
+	ieee->l |= (int32)(fr*f);
+}
+#line 959 "/usr/sape/src/go/src/cmd/8a/lex.c"
+#line 1 "/usr/sape/src/go/src/cmd/8a/./../cc/macbody"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int32
+getnsn(void)
+{
+	int32 n;
+	int c;
+
+	c = getnsc();
+	if(c < '0' || c > '9')
+		return -1;
+	n = 0;
+	while(c >= '0' && c <= '9') {
+		n = n*10 + c-'0';
+		c = ccgetc();
+	}
+	unget(c);
+	return n;
+}
+
+Sym*
+getsym(void)
+{
+	int c;
+	char *cp;
+
+	c = getnsc();
+	if(!(_ctype[(unsigned char)(c)]&(01 | 02)) && c != '_' && c < 0x80) {
+		unget(c);
+		return((Sym*)0);
+	}
+	for(cp = symb;;) {
+		if(cp <= symb+ 500 -4)
+			*cp++ = c;
+		c = ccgetc();
+		if((_ctype[(unsigned char)(c)]&(01 | 02 | 04)) || c == '_' || c >= 0x80)
+			continue;
+		unget(c);
+		break;
+	}
+	*cp = 0;
+	if(cp > symb+ 500 -4)
+		yyerror("symbol too large: %s", symb);
+	return lookup();
+}
+
+Sym*
+getsymdots(int *dots)
+{
+	int c;
+	Sym *s;
+
+	s = getsym();
+	if(s !=((Sym*)0))
+		return s;
+
+	c = getnsc();
+	if(c != '.'){
+		unget(c);
+		return((Sym*)0);
+	}
+	if(ccgetc() != '.' || ccgetc() != '.')
+		yyerror("bad dots in macro");
+	*dots = 1;
+	return slookup("__VA_ARGS__");
+}
+
+int
+getcom(void)
+{
+	int c;
+
+	for(;;) {
+		c = getnsc();
+		if(c != '/')
+			break;
+		c = ccgetc();
+		if(c == '/') {
+			while(c != '\n')
+				c = ccgetc();
+			break;
+		}
+		if(c != '*')
+			break;
+		c = ccgetc();
+		for(;;) {
+			if(c == '*') {
+				c = ccgetc();
+				if(c != '/')
+					continue;
+				c = ccgetc();
+				break;
+			}
+			if(c == '\n') {
+				yyerror("comment across newline");
+				break;
+			}
+			c = ccgetc();
+		}
+		if(c == '\n')
+			break;
+	}
+	return c;
+}
+
+void
+dodefine(char *cp)
+{
+	Sym *s;
+	char *p;
+	int32 l;
+
+	strcpy(symb, cp);
+	p = strchr(symb, '=');
+	if(p) {
+		*p++ = 0;
+		s = lookup();
+		l = strlen(p) + 2;
+		s->macro = alloc(l);
+		strcpy(s->macro+1, p);
+	} else {
+		s = lookup();
+		s->macro = "\0001";
+	}
+	if(debug['m'])
+		print("#define (-D) %s %s\n", s->name, s->macro+1);
+}
+
+struct
+{
+	char	*macname;
+	void	(*macf)(void);
+} mactab[] =
+{
+	"ifdef",	0,
+	"ifndef",	0,
+	"else",		0,
+
+	"line",		maclin,
+	"define",	macdef,
+	"include",	macinc,
+	"undef",	macund,
+
+	"pragma",	macprag,
+	"endif",	macend,
+	0
+};
+
+void
+domacro(void)
+{
+	int i;
+	Sym *s;
+
+	s = getsym();
+	if(s ==((Sym*)0))
+		s = slookup("endif");
+	for(i=0; mactab[i].macname; i++)
+		if(strcmp(s->name, mactab[i].macname) == 0) {
+			if(mactab[i].macf)
+				(*mactab[i].macf)();
+			else
+				macif(i);
+			return;
+		}
+	yyerror("unknown #: %s", s->name);
+	macend();
+}
+
+void
+macund(void)
+{
+	Sym *s;
+
+	s = getsym();
+	macend();
+	if(s ==((Sym*)0)) {
+		yyerror("syntax in #undef");
+		return;
+	}
+	s->macro = 0;
+}
+
+
+void
+macdef(void)
+{
+	Sym *s, *a;
+	char *args[25], *np, *base;
+	int n, i, c, len, dots;
+	int ischr;
+
+	s = getsym();
+	if(s ==((Sym*)0))
+		goto bad;
+	if(s->macro)
+		yyerror("macro redefined: %s", s->name);
+	c = ccgetc();
+	n = -1;
+	dots = 0;
+	if(c == '(') {
+		n++;
+		c = getnsc();
+		if(c != ')') {
+			unget(c);
+			for(;;) {
+				a = getsymdots(&dots);
+				if(a ==((Sym*)0))
+					goto bad;
+				if(n >= 25) {
+					yyerror("too many arguments in #define: %s", s->name);
+					goto bad;
+				}
+				args[n++] = a->name;
+				c = getnsc();
+				if(c == ')')
+					break;
+				if(c != ',' || dots)
+					goto bad;
+			}
+		}
+		c = ccgetc();
+	}
+	if((_ctype[(unsigned char)(c)]& 010))
+		if(c != '\n')
+			c = getnsc();
+	base = hunk;
+	len = 1;
+	ischr = 0;
+	for(;;) {
+		if((_ctype[(unsigned char)(c)]&(01 | 02)) || c == '_') {
+			np = symb;
+			*np++ = c;
+			c = ccgetc();
+			while((_ctype[(unsigned char)(c)]&(01 | 02 | 04)) || c == '_') {
+				*np++ = c;
+				c = ccgetc();
+			}
+			*np = 0;
+			for(i=0; i<n; i++)
+				if(strcmp(symb, args[i]) == 0)
+					break;
+			if(i >= n) {
+				i = strlen(symb);
+				base = allocn(base, len, i);
+				memcpy(base+len, symb, i);
+				len += i;
+				continue;
+			}
+			base = allocn(base, len, 2);
+			base[len++] = '#';
+			base[len++] = 'a' + i;
+			continue;
+		}
+		if(ischr){
+			if(c == '\\'){
+				base = allocn(base, len, 1);
+				base[len++] = c;
+				c = ccgetc();
+			}else if(c == ischr)
+				ischr = 0;
+		}else{
+			if(c == '"' || c == '\''){
+				base = allocn(base, len, 1);
+				base[len++] = c;
+				ischr = c;
+				c = ccgetc();
+				continue;
+			}
+			if(c == '/') {
+				c = ccgetc();
+				if(c == '/'){
+					c = ccgetc();
+					for(;;) {
+						if(c == '\n')
+							break;
+						c = ccgetc();
+					}
+					continue;
+				}
+				if(c == '*'){
+					c = ccgetc();
+					for(;;) {
+						if(c == '*') {
+							c = ccgetc();
+							if(c != '/')
+								continue;
+							c = ccgetc();
+							break;
+						}
+						if(c == '\n') {
+							yyerror("comment and newline in define: %s", s->name);
+							break;
+						}
+						c = ccgetc();
+					}
+					continue;
+				}
+				base = allocn(base, len, 1);
+				base[len++] = '/';
+				continue;
+			}
+		}
+		if(c == '\\') {
+			c = ccgetc();
+			if(c == '\n') {
+				c = ccgetc();
+				continue;
+			}
+			else if(c == '\r') {
+				c = ccgetc();
+				if(c == '\n') {
+					c = ccgetc();
+					continue;
+				}
+			}
+			base = allocn(base, len, 1);
+			base[len++] = '\\';
+			continue;
+		}
+		if(c == '\n')
+			break;
+		if(c == '#')
+		if(n > 0) {
+			base = allocn(base, len, 1);
+			base[len++] = c;
+		}
+		base = allocn(base, len, 1);
+		base[len++] = c;
+		c = ((--fi.c < 0)? filbuf(): (*fi.p++ & 0xff));
+		if(c == '\n')
+			lineno++;
+		if(c == -1) {
+			yyerror("eof in a macro: %s", s->name);
+			break;
+		}
+	}
+	do {
+		base = allocn(base, len, 1);
+		base[len++] = 0;
+	} while(len & 3);
+
+	*base = n+1;
+	if(dots)
+		*base |= 0x80;
+	s->macro = base;
+	if(debug['m'])
+		print("#define %s %s\n", s->name, s->macro+1);
+	return;
+
+bad:
+	if(s ==((Sym*)0))
+		yyerror("syntax in #define");
+	else
+		yyerror("syntax in #define: %s", s->name);
+	macend();
+}
+
+void
+macexpand(Sym *s, char *b)
+{
+	char buf[2000];
+	int n, l, c, nargs;
+	char *arg[25], *cp, *ob, *ecp, dots;
+
+	ob = b;
+	if(*s->macro == 0) {
+		strcpy(b, s->macro+1);
+		if(debug['m'])
+			print("#expand %s %s\n", s->name, ob);
+		return;
+	}
+
+	nargs = (char)(*s->macro & ~ 0x80) - 1;
+	dots = *s->macro & 0x80;
+
+	c = getnsc();
+	if(c != '(')
+		goto bad;
+	n = 0;
+	c = ccgetc();
+	if(c != ')') {
+		unget(c);
+		l = 0;
+		cp = buf;
+		ecp = cp + sizeof(buf)-4;
+		arg[n++] = cp;
+		for(;;) {
+			if(cp >= ecp)
+				goto toobig;
+			c = ccgetc();
+			if(c == '"')
+				for(;;) {
+					if(cp >= ecp)
+						goto toobig;
+					*cp++ = c;
+					c = ccgetc();
+					if(c == '\\') {
+						*cp++ = c;
+						c = ccgetc();
+						continue;
+					}
+					if(c == '\n')
+						goto bad;
+					if(c == '"')
+						break;
+				}
+			if(c == '\'')
+				for(;;) {
+					if(cp >= ecp)
+						goto toobig;
+					*cp++ = c;
+					c = ccgetc();
+					if(c == '\\') {
+						*cp++ = c;
+						c = ccgetc();
+						continue;
+					}
+					if(c == '\n')
+						goto bad;
+					if(c == '\'')
+						break;
+				}
+			if(c == '/') {
+				c = ccgetc();
+				switch(c) {
+				case '*':
+					for(;;) {
+						c = ccgetc();
+						if(c == '*') {
+							c = ccgetc();
+							if(c == '/')
+								break;
+						}
+					}
+					*cp++ = ' ';
+					continue;
+				case '/':
+					while((c = ccgetc()) != '\n')
+						;
+					break;
+				default:
+					unget(c);
+					c = '/';
+				}
+			}
+			if(l == 0) {
+				if(c == ',') {
+					if(n == nargs && dots) {
+						*cp++ = ',';
+						continue;
+					}
+					*cp++ = 0;
+					arg[n++] = cp;
+					if(n > nargs)
+						break;
+					continue;
+				}
+				if(c == ')')
+					break;
+			}
+			if(c == '\n')
+				c = ' ';
+			*cp++ = c;
+			if(c == '(')
+				l++;
+			if(c == ')')
+				l--;
+		}
+		*cp = 0;
+	}
+	if(n != nargs) {
+		yyerror("argument mismatch expanding: %s", s->name);
+		*b = 0;
+		return;
+	}
+	cp = s->macro+1;
+	for(;;) {
+		c = *cp++;
+		if(c == '\n')
+			c = ' ';
+		if(c != '#') {
+			*b++ = c;
+			if(c == 0)
+				break;
+			continue;
+		}
+		c = *cp++;
+		if(c == 0)
+			goto bad;
+		if(c == '#') {
+			*b++ = c;
+			continue;
+		}
+		c -= 'a';
+		if(c < 0 || c >= n)
+			continue;
+		strcpy(b, arg[c]);
+		b += strlen(arg[c]);
+	}
+	*b = 0;
+	if(debug['m'])
+		print("#expand %s %s\n", s->name, ob);
+	return;
+
+bad:
+	yyerror("syntax in macro expansion: %s", s->name);
+	*b = 0;
+	return;
+
+toobig:
+	yyerror("too much text in macro expansion: %s", s->name);
+	*b = 0;
+}
+
+void
+macinc(void)
+{
+	int c0, c, i, f;
+	char str[200], *hp;
+
+	c0 = getnsc();
+	if(c0 != '"') {
+		c = c0;
+		if(c0 != '<')
+			goto bad;
+		c0 = '>';
+	}
+	for(hp = str;;) {
+		c = ccgetc();
+		if(c == c0)
+			break;
+		if(c == '\n')
+			goto bad;
+		*hp++ = c;
+	}
+	*hp = 0;
+
+	c = getcom();
+	if(c != '\n')
+		goto bad;
+
+	f = -1;
+	for(i=0; i<ninclude; i++) {
+		if(i == 0 && c0 == '>')
+			continue;
+		strcpy(symb, include[i]);
+		strcat(symb, "/");
+		if(strcmp(symb, "./") == 0)
+			symb[0] = 0;
+		strcat(symb, str);
+		f = open(symb,0);
+		if(f >= 0)
+			break;
+	}
+	if(f < 0)
+		strcpy(symb, str);
+	c = strlen(symb) + 1;
+	hp = alloc(c);
+	memcpy(hp, symb, c);
+	newio();
+	pushio();
+	newfile(hp, f);
+	return;
+
+bad:
+	unget(c);
+	yyerror("syntax in #include");
+	macend();
+}
+
+void
+maclin(void)
+{
+	char *cp;
+	int c;
+	int32 n;
+
+	n = getnsn();
+	c = ccgetc();
+	if(n < 0)
+		goto bad;
+
+	for(;;) {
+		if(c == ' ' || c == '\t') {
+			c = ccgetc();
+			continue;
+		}
+		if(c == '"')
+			break;
+		if(c == '\n') {
+			strcpy(symb, "<noname>");
+			goto nn;
+		}
+		goto bad;
+	}
+	cp = symb;
+	for(;;) {
+		c = ccgetc();
+		if(c == '"')
+			break;
+		*cp++ = c;
+	}
+	*cp = 0;
+	c = getcom();
+	if(c != '\n')
+		goto bad;
+
+nn:
+	c = strlen(symb) + 1;
+	cp = alloc(c);
+	memcpy(cp, symb, c);
+	linehist(cp, n);
+	return;
+
+bad:
+	unget(c);
+	yyerror("syntax in #line");
+	macend();
+}
+
+void
+macif(int f)
+{
+	int c, l, bol;
+	Sym *s;
+
+	if(f == 2)
+		goto skip;
+	s = getsym();
+	if(s ==((Sym*)0))
+		goto bad;
+	if(getcom() != '\n')
+		goto bad;
+	if((s->macro != 0) ^ f)
+		return;
+
+skip:
+	bol = 1;
+	l = 0;
+	for(;;) {
+		c = ccgetc();
+		if(c != '#') {
+			if(!(_ctype[(unsigned char)(c)]& 010))
+				bol = 0;
+			if(c == '\n')
+				bol = 1;
+			continue;
+		}
+		if(!bol)
+			continue;
+		s = getsym();
+		if(s ==((Sym*)0))
+			continue;
+		if(strcmp(s->name, "endif") == 0) {
+			if(l) {
+				l--;
+				continue;
+			}
+			macend();
+			return;
+		}
+		if(strcmp(s->name, "ifdef") == 0 || strcmp(s->name, "ifndef") == 0) {
+			l++;
+			continue;
+		}
+		if(l == 0 && f != 2 && strcmp(s->name, "else") == 0) {
+			macend();
+			return;
+		}
+	}
+
+bad:
+	yyerror("syntax in #if(n)def");
+	macend();
+}
+
+void
+macprag(void)
+{
+	Sym *s;
+	int c0, c;
+	char *hp;
+	Hist *h;
+
+	s = getsym();
+
+	if(s && strcmp(s->name, "lib") == 0)
+		goto praglib;
+	if(s && strcmp(s->name, "pack") == 0) {
+		pragpack();
+		return;
+	}
+	if(s && strcmp(s->name, "fpround") == 0) {
+		pragfpround();
+		return;
+	}
+	if(s && strcmp(s->name, "textflag") == 0) {
+		pragtextflag();
+		return;
+	}
+	if(s && strcmp(s->name, "varargck") == 0) {
+		pragvararg();
+		return;
+	}
+	if(s && strcmp(s->name, "incomplete") == 0) {
+		pragincomplete();
+		return;
+	}
+	if(s && strcmp(s->name, "dynld") == 0) {
+		pragdynld();
+		return;
+	}
+	while(getnsc() != '\n')
+		;
+	return;
+
+praglib:
+	c0 = getnsc();
+	if(c0 != '"') {
+		c = c0;
+		if(c0 != '<')
+			goto bad;
+		c0 = '>';
+	}
+	for(hp = symb;;) {
+		c = ccgetc();
+		if(c == c0)
+			break;
+		if(c == '\n')
+			goto bad;
+		*hp++ = c;
+	}
+	*hp = 0;
+	c = getcom();
+	if(c != '\n')
+		goto bad;
+
+
+#line 772 "/usr/sape/src/go/src/cmd/8a/./../cc/macbody"
+	c = strlen(symb) + 1;
+	hp = alloc(c);
+	memcpy(hp, symb, c);
+
+	h = alloc(sizeof(Hist));
+	h->name = hp;
+	h->line = lineno;
+	h->offset = -1;
+	h->link =((Hist*)0);
+	if(ehist ==((Hist*)0)) {
+		hist = h;
+		ehist = h;
+		return;
+	}
+	ehist->link = h;
+	ehist = h;
+	return;
+
+bad:
+	unget(c);
+	yyerror("syntax in #pragma lib");
+	macend();
+}
+
+void
+macend(void)
+{
+	int c;
+
+	for(;;) {
+		c = getnsc();
+		if(c < 0 || c == '\n')
+			return;
+	}
+}
+
+void
+linehist(char *f, int offset)
+{
+	Hist *h;
+
+
+#line 817 "/usr/sape/src/go/src/cmd/8a/./../cc/macbody"
+	if(newflag == 0 && ehist !=((Hist*)0) && offset != 0 && ehist->offset != 0)
+		if(f && ehist->name && strcmp(f, ehist->name) == 0) {
+			ehist->line = lineno;
+			ehist->offset = offset;
+			return;
+		}
+
+	if(debug['f'])
+		if(f) {
+			if(offset)
+				print("%4ld: %s (#line %d)\n", lineno, f, offset);
+			else
+				print("%4ld: %s\n", lineno, f);
+		} else
+			print("%4ld: <pop>\n", lineno);
+	newflag = 0;
+
+	h = alloc(sizeof(Hist));
+	h->name = f;
+	h->line = lineno;
+	h->offset = offset;
+	h->link =((Hist*)0);
+	if(ehist ==((Hist*)0)) {
+		hist = h;
+		ehist = h;
+		return;
+	}
+	ehist->link = h;
+	ehist = h;
+}
+#line 960 "/usr/sape/src/go/src/cmd/8a/lex.c"

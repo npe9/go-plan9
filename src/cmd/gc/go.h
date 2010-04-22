@@ -5,6 +5,7 @@
 #include	<u.h>
 #include	<libc.h>
 #include	<bio.h>
+#include	<ctype.h>
 
 // avoid <ctype.h>
 #undef isblank
@@ -722,7 +723,7 @@ int	yyparse(void);
 void	addidir(char*);
 void	importfile(Val*, int line);
 void	cannedimports(char*, char*);
-void	unimportfile();
+void	unimportfile(void);
 int32	yylex(void);
 void	yyoptsemi(int);
 void	typeinit(void);
@@ -1093,6 +1094,7 @@ int	bitno(int32);
  *	gen.c
  */
 typedef	struct	Prog	Prog;
+#pragma incomplete Prog
 #define	P	((Prog*)0)
 
 typedef	struct	Label Label;

@@ -1,0 +1,515 @@
+char*	yytoknames[] =
+{
+	"$end",
+	"error",
+	"$unk",
+	" ;",
+	" ,",
+	" =",
+	"LPE",
+	"LME",
+	"LMLE",
+	"LDVE",
+	"LMDE",
+	"LRSHE",
+	"LLSHE",
+	"LANDE",
+	"LXORE",
+	"LORE",
+	" ?",
+	" :",
+	"LOROR",
+	"LANDAND",
+	" |",
+	" ^",
+	" &",
+	"LEQ",
+	"LNE",
+	" <",
+	" >",
+	"LLE",
+	"LGE",
+	"LLSH",
+	"LRSH",
+	" +",
+	" -",
+	" *",
+	" /",
+	" %",
+	"LMM",
+	"LPP",
+	"LMG",
+	" .",
+	" [",
+	" (",
+	"LNAME",
+	"LTYPE",
+	"LFCONST",
+	"LDCONST",
+	"LCONST",
+	"LLCONST",
+	"LUCONST",
+	"LULCONST",
+	"LVLCONST",
+	"LUVLCONST",
+	"LSTRING",
+	"LLSTRING",
+	"LAUTO",
+	"LBREAK",
+	"LCASE",
+	"LCHAR",
+	"LCONTINUE",
+	"LDEFAULT",
+	"LDO",
+	"LDOUBLE",
+	"LELSE",
+	"LEXTERN",
+	"LFLOAT",
+	"LFOR",
+	"LGOTO",
+	"LIF",
+	"LINT",
+	"LLONG",
+	"LREGISTER",
+	"LRETURN",
+	"LSHORT",
+	"LSIZEOF",
+	"LUSED",
+	"LSTATIC",
+	"LSTRUCT",
+	"LSWITCH",
+	"LTYPEDEF",
+	"LTYPESTR",
+	"LUNION",
+	"LUNSIGNED",
+	"LWHILE",
+	"LVOID",
+	"LENUM",
+	"LSIGNED",
+	"LCONSTNT",
+	"LVOLATILE",
+	"LSET",
+	"LSIGNOF",
+	"LRESTRICT",
+	"LINLINE",
+	" )",
+	" ]",
+	" {",
+	" }",
+	" !",
+	" ~",
+};
+char*	yystates[] =
+{
+	0, /*0*/
+	0, /*1*/
+	0, /*2*/
+	"xdecl:  zctlist.; \nxdecl:  zctlist.xdlist ; \nxdecl:  zctlist.xdecor $$5 pdecl $$6 block \n", /*3*/
+	0, /*4*/
+	0, /*5*/
+	0, /*6*/
+	0, /*7*/
+	0, /*8*/
+	"complex:  LSTRUCT.ltag \ncomplex:  LSTRUCT.ltag $$194 sbody \ncomplex:  LSTRUCT.sbody \n", /*9*/
+	"complex:  LUNION.ltag \ncomplex:  LUNION.ltag $$198 sbody \ncomplex:  LUNION.sbody \n", /*10*/
+	"complex:  LENUM.ltag \ncomplex:  LENUM.ltag $$202 { $$203 enum } \ncomplex:  LENUM.{ $$205 enum } \n", /*11*/
+	0, /*12*/
+	0, /*13*/
+	0, /*14*/
+	0, /*15*/
+	0, /*16*/
+	0, /*17*/
+	0, /*18*/
+	0, /*19*/
+	0, /*20*/
+	0, /*21*/
+	0, /*22*/
+	0, /*23*/
+	0, /*24*/
+	0, /*25*/
+	0, /*26*/
+	0, /*27*/
+	0, /*28*/
+	0, /*29*/
+	0, /*30*/
+	0, /*31*/
+	0, /*32*/
+	0, /*33*/
+	0, /*34*/
+	0, /*35*/
+	"xdecl:  zctlist xdlist.; \nxdlist:  xdlist., xdlist \n", /*36*/
+	0, /*37*/
+	0, /*38*/
+	0, /*39*/
+	0, /*40*/
+	"xdecor2:  (.xdecor ) \n", /*41*/
+	0, /*42*/
+	0, /*43*/
+	0, /*44*/
+	0, /*45*/
+	0, /*46*/
+	0, /*47*/
+	0, /*48*/
+	0, /*49*/
+	0, /*50*/
+	0, /*51*/
+	0, /*52*/
+	0, /*53*/
+	0, /*54*/
+	0, /*55*/
+	0, /*56*/
+	0, /*57*/
+	0, /*58*/
+	0, /*59*/
+	0, /*60*/
+	0, /*61*/
+	"xdlist:  xdlist ,.xdlist \n", /*62*/
+	0, /*63*/
+	"xdlist:  xdecor $$9.= init \n", /*64*/
+	0, /*65*/
+	0, /*66*/
+	"xdecor:  * zgnlist.xdecor \nzgnlist:  zgnlist.gname \n", /*67*/
+	"xdecor2:  ( xdecor.) \n", /*68*/
+	0, /*69*/
+	0, /*70*/
+	0, /*71*/
+	"complex:  LSTRUCT ltag $$194.sbody \n", /*72*/
+	"sbody:  { $$179.edecl } \n", /*73*/
+	"complex:  LUNION ltag $$198.sbody \n", /*74*/
+	"complex:  LENUM ltag $$202.{ $$203 enum } \n", /*75*/
+	"complex:  LENUM { $$205.enum } \n", /*76*/
+	0, /*77*/
+	0, /*78*/
+	0, /*79*/
+	"xdlist:  xdecor $$9 =.init \n", /*80*/
+	"xdecor2:  xdecor2 ( zarglist.) \n", /*81*/
+	0, /*82*/
+	0, /*83*/
+	0, /*84*/
+	"arglist:  ... . \n", /*85*/
+	0, /*86*/
+	0, /*87*/
+	"xdecor2:  xdecor2 [ zexpr.] \n", /*88*/
+	0, /*89*/
+	0, /*90*/
+	0, /*91*/
+	0, /*92*/
+	"xuexpr:  (.tlist abdecor ) xuexpr \nxuexpr:  (.tlist abdecor ) { ilist } \npexpr:  (.cexpr ) \n", /*93*/
+	0, /*94*/
+	"uexpr:  *.xuexpr \n", /*95*/
+	"uexpr:  &.xuexpr \n", /*96*/
+	"uexpr:  +.xuexpr \n", /*97*/
+	"uexpr:  -.xuexpr \n", /*98*/
+	"uexpr:  !.xuexpr \n", /*99*/
+	"uexpr:  ~.xuexpr \n", /*100*/
+	"uexpr:  LPP.xuexpr \n", /*101*/
+	"uexpr:  LMM.xuexpr \n", /*102*/
+	"uexpr:  LSIZEOF.uexpr \npexpr:  LSIZEOF.( tlist abdecor ) \n", /*103*/
+	"uexpr:  LSIGNOF.uexpr \npexpr:  LSIGNOF.( tlist abdecor ) \n", /*104*/
+	0, /*105*/
+	0, /*106*/
+	0, /*107*/
+	0, /*108*/
+	0, /*109*/
+	0, /*110*/
+	0, /*111*/
+	0, /*112*/
+	0, /*113*/
+	0, /*114*/
+	0, /*115*/
+	0, /*116*/
+	0, /*117*/
+	0, /*118*/
+	0, /*119*/
+	0, /*120*/
+	0, /*121*/
+	"edecl:  edecl.tlist $$30 zedlist ; \nsbody:  { $$179 edecl.} \n", /*122*/
+	0, /*123*/
+	0, /*124*/
+	0, /*125*/
+	"complex:  LENUM { $$205 enum.} \nenum:  enum., \nenum:  enum., enum \n", /*126*/
+	0, /*127*/
+	"xdecl:  zctlist xdecor $$5 pdecl $$6.block \n", /*128*/
+	"pdecl:  pdecl ctlist.pdlist ; \n", /*129*/
+	0, /*130*/
+	0, /*131*/
+	"init:  {.ilist } \n", /*132*/
+	0, /*133*/
+	"arglist:  arglist ,.arglist \n", /*134*/
+	0, /*135*/
+	0, /*136*/
+	0, /*137*/
+	0, /*138*/
+	0, /*139*/
+	"xdecor2:  (.xdecor ) \nabdecor3:  (.) \nabdecor3:  (.abdecor1 ) \n", /*140*/
+	0, /*141*/
+	0, /*142*/
+	"arglist:  . ... \n", /*143*/
+	0, /*144*/
+	"expr:  expr *.expr \n", /*145*/
+	"expr:  expr /.expr \n", /*146*/
+	"expr:  expr %.expr \n", /*147*/
+	"expr:  expr +.expr \n", /*148*/
+	"expr:  expr -.expr \n", /*149*/
+	"expr:  expr LRSH.expr \n", /*150*/
+	"expr:  expr LLSH.expr \n", /*151*/
+	"expr:  expr <.expr \n", /*152*/
+	"expr:  expr >.expr \n", /*153*/
+	"expr:  expr LLE.expr \n", /*154*/
+	"expr:  expr LGE.expr \n", /*155*/
+	"expr:  expr LEQ.expr \n", /*156*/
+	"expr:  expr LNE.expr \n", /*157*/
+	"expr:  expr &.expr \n", /*158*/
+	"expr:  expr ^.expr \n", /*159*/
+	"expr:  expr |.expr \n", /*160*/
+	"expr:  expr LANDAND.expr \n", /*161*/
+	"expr:  expr LOROR.expr \n", /*162*/
+	"expr:  expr ?.cexpr : expr \n", /*163*/
+	"expr:  expr =.expr \n", /*164*/
+	"expr:  expr LPE.expr \n", /*165*/
+	"expr:  expr LME.expr \n", /*166*/
+	"expr:  expr LMLE.expr \n", /*167*/
+	"expr:  expr LDVE.expr \n", /*168*/
+	"expr:  expr LMDE.expr \n", /*169*/
+	"expr:  expr LLSHE.expr \n", /*170*/
+	"expr:  expr LRSHE.expr \n", /*171*/
+	"expr:  expr LANDE.expr \n", /*172*/
+	"expr:  expr LXORE.expr \n", /*173*/
+	"expr:  expr LORE.expr \n", /*174*/
+	0, /*175*/
+	"cexpr:  cexpr., cexpr \npexpr:  ( cexpr.) \n", /*176*/
+	0, /*177*/
+	0, /*178*/
+	"pexpr:  pexpr [.cexpr ] \n", /*179*/
+	"pexpr:  pexpr LMG.ltag \n", /*180*/
+	"pexpr:  pexpr ..ltag \n", /*181*/
+	0, /*182*/
+	0, /*183*/
+	0, /*184*/
+	0, /*185*/
+	0, /*186*/
+	0, /*187*/
+	0, /*188*/
+	0, /*189*/
+	0, /*190*/
+	0, /*191*/
+	0, /*192*/
+	"pexpr:  (.cexpr ) \npexpr:  LSIZEOF (.tlist abdecor ) \n", /*193*/
+	0, /*194*/
+	"pexpr:  (.cexpr ) \npexpr:  LSIGNOF (.tlist abdecor ) \n", /*195*/
+	0, /*196*/
+	0, /*197*/
+	0, /*198*/
+	0, /*199*/
+	0, /*200*/
+	"complex:  LENUM ltag $$202 { $$203.enum } \n", /*201*/
+	0, /*202*/
+	0, /*203*/
+	"enum:  LNAME =.expr \n", /*204*/
+	0, /*205*/
+	0, /*206*/
+	"pdecl:  pdecl ctlist pdlist.; \npdlist:  pdlist., pdlist \n", /*207*/
+	0, /*208*/
+	"init:  { ilist.} \n", /*209*/
+	0, /*210*/
+	0, /*211*/
+	0, /*212*/
+	"qual:  [.lexpr ] \n", /*213*/
+	"qual:  ..ltag \n", /*214*/
+	0, /*215*/
+	0, /*216*/
+	0, /*217*/
+	0, /*218*/
+	0, /*219*/
+	"abdecor3:  ( abdecor1.) \n", /*220*/
+	"abdecor3:  [ zexpr.] \n", /*221*/
+	0, /*222*/
+	0, /*223*/
+	0, /*224*/
+	0, /*225*/
+	0, /*226*/
+	0, /*227*/
+	0, /*228*/
+	0, /*229*/
+	0, /*230*/
+	0, /*231*/
+	0, /*232*/
+	0, /*233*/
+	0, /*234*/
+	0, /*235*/
+	0, /*236*/
+	0, /*237*/
+	0, /*238*/
+	0, /*239*/
+	0, /*240*/
+	"cexpr:  cexpr., cexpr \nexpr:  expr ? cexpr.: expr \n", /*241*/
+	0, /*242*/
+	0, /*243*/
+	0, /*244*/
+	0, /*245*/
+	0, /*246*/
+	0, /*247*/
+	0, /*248*/
+	0, /*249*/
+	0, /*250*/
+	0, /*251*/
+	0, /*252*/
+	"xuexpr:  ( tlist abdecor.) xuexpr \nxuexpr:  ( tlist abdecor.) { ilist } \n", /*253*/
+	0, /*254*/
+	"abdecor3:  (.) \nabdecor3:  (.abdecor1 ) \n", /*255*/
+	"cexpr:  cexpr ,.cexpr \n", /*256*/
+	0, /*257*/
+	"pexpr:  pexpr ( zelist.) \n", /*258*/
+	0, /*259*/
+	0, /*260*/
+	"cexpr:  cexpr., cexpr \npexpr:  pexpr [ cexpr.] \n", /*261*/
+	0, /*262*/
+	0, /*263*/
+	0, /*264*/
+	0, /*265*/
+	0, /*266*/
+	"edecl:  tlist $$28 zedlist.; \n", /*267*/
+	0, /*268*/
+	0, /*269*/
+	0, /*270*/
+	0, /*271*/
+	"edecor:  :.lexpr \n", /*272*/
+	"complex:  LENUM ltag $$202 { $$203 enum.} \nenum:  enum., \nenum:  enum., enum \n", /*273*/
+	0, /*274*/
+	0, /*275*/
+	"block:  { slist.} \nslist:  slist.adecl \nslist:  slist.stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*276*/
+	0, /*277*/
+	"pdlist:  pdlist ,.pdlist \n", /*278*/
+	0, /*279*/
+	0, /*280*/
+	0, /*281*/
+	0, /*282*/
+	0, /*283*/
+	"qual:  [ lexpr.] \n", /*284*/
+	0, /*285*/
+	0, /*286*/
+	"abdecor2:  abdecor2 ( zarglist.) \n", /*287*/
+	"abdecor2:  abdecor2 [ zexpr.] \n", /*288*/
+	0, /*289*/
+	0, /*290*/
+	"expr:  expr ? cexpr :.expr \n", /*291*/
+	"xuexpr:  ( tlist abdecor ).xuexpr \nxuexpr:  ( tlist abdecor ).{ ilist } \n", /*292*/
+	0, /*293*/
+	0, /*294*/
+	0, /*295*/
+	"elist:  elist ,.elist \n", /*296*/
+	0, /*297*/
+	"pexpr:  LSIZEOF ( tlist abdecor.) \n", /*298*/
+	"pexpr:  LSIGNOF ( tlist abdecor.) \n", /*299*/
+	"edecl:  edecl tlist $$30 zedlist.; \n", /*300*/
+	0, /*301*/
+	"edlist:  edlist ,.edlist \n", /*302*/
+	"edecor:  tag :.lexpr \n", /*303*/
+	0, /*304*/
+	0, /*305*/
+	0, /*306*/
+	0, /*307*/
+	0, /*308*/
+	"adecl:  ctlist.; \nadecl:  ctlist.adlist ; \n", /*309*/
+	"stmnt:  error.; \n", /*310*/
+	0, /*311*/
+	0, /*312*/
+	"ulstmnt:  zcexpr.; \n", /*313*/
+	"ulstmnt:  $$84.block \n", /*314*/
+	"ulstmnt:  LIF.( cexpr ) stmnt \nulstmnt:  LIF.( cexpr ) stmnt LELSE stmnt \n", /*315*/
+	"ulstmnt:  $$88.LFOR ( forexpr ; zcexpr ; zcexpr ) stmnt \n", /*316*/
+	"ulstmnt:  LWHILE.( cexpr ) stmnt \n", /*317*/
+	"ulstmnt:  LDO.stmnt LWHILE ( cexpr ) ; \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*318*/
+	0, /*319*/
+	"ulstmnt:  LSWITCH.( cexpr ) stmnt \n", /*320*/
+	"ulstmnt:  LBREAK.; \n", /*321*/
+	"ulstmnt:  LCONTINUE.; \n", /*322*/
+	"ulstmnt:  LGOTO.ltag ; \n", /*323*/
+	"ulstmnt:  LUSED.( zelist ) ; \n", /*324*/
+	"ulstmnt:  LSET.( zelist ) ; \n", /*325*/
+	0, /*326*/
+	0, /*327*/
+	"label:  LCASE.expr : \n", /*328*/
+	"label:  LDEFAULT.: \n", /*329*/
+	0, /*330*/
+	0, /*331*/
+	0, /*332*/
+	0, /*333*/
+	0, /*334*/
+	0, /*335*/
+	0, /*336*/
+	0, /*337*/
+	"xuexpr:  ( tlist abdecor ) {.ilist } \n", /*338*/
+	0, /*339*/
+	0, /*340*/
+	0, /*341*/
+	0, /*342*/
+	0, /*343*/
+	0, /*344*/
+	0, /*345*/
+	"adecl:  ctlist adlist.; \nadlist:  adlist., adlist \n", /*346*/
+	0, /*347*/
+	0, /*348*/
+	0, /*349*/
+	0, /*350*/
+	0, /*351*/
+	0, /*352*/
+	"ulstmnt:  LIF (.cexpr ) stmnt \nulstmnt:  LIF (.cexpr ) stmnt LELSE stmnt \n", /*353*/
+	"ulstmnt:  $$88 LFOR.( forexpr ; zcexpr ; zcexpr ) stmnt \n", /*354*/
+	"ulstmnt:  LWHILE (.cexpr ) stmnt \n", /*355*/
+	"ulstmnt:  LDO stmnt.LWHILE ( cexpr ) ; \n", /*356*/
+	"ulstmnt:  LRETURN zcexpr.; \n", /*357*/
+	"ulstmnt:  LSWITCH (.cexpr ) stmnt \n", /*358*/
+	0, /*359*/
+	0, /*360*/
+	"ulstmnt:  LGOTO ltag.; \n", /*361*/
+	0, /*362*/
+	0, /*363*/
+	"label:  LCASE expr.: \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.LRSH expr \nexpr:  expr.LLSH expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LLE expr \nexpr:  expr.LGE expr \nexpr:  expr.LEQ expr \nexpr:  expr.LNE expr \nexpr:  expr.& expr \nexpr:  expr.^ expr \nexpr:  expr.| expr \nexpr:  expr.LANDAND expr \nexpr:  expr.LOROR expr \nexpr:  expr.? cexpr : expr \nexpr:  expr.= expr \nexpr:  expr.LPE expr \nexpr:  expr.LME expr \nexpr:  expr.LMLE expr \nexpr:  expr.LDVE expr \nexpr:  expr.LMDE expr \nexpr:  expr.LLSHE expr \nexpr:  expr.LRSHE expr \nexpr:  expr.LANDE expr \nexpr:  expr.LXORE expr \nexpr:  expr.LORE expr \n", /*364*/
+	0, /*365*/
+	0, /*366*/
+	"xuexpr:  ( tlist abdecor ) { ilist.} \n", /*367*/
+	0, /*368*/
+	"adlist:  adlist ,.adlist \n", /*369*/
+	"adlist:  xdecor $$21.= init \n", /*370*/
+	"ulstmnt:  LIF ( cexpr.) stmnt \nulstmnt:  LIF ( cexpr.) stmnt LELSE stmnt \ncexpr:  cexpr., cexpr \n", /*371*/
+	0, /*372*/
+	"ulstmnt:  LWHILE ( cexpr.) stmnt \ncexpr:  cexpr., cexpr \n", /*373*/
+	"ulstmnt:  LDO stmnt LWHILE.( cexpr ) ; \n", /*374*/
+	0, /*375*/
+	"ulstmnt:  LSWITCH ( cexpr.) stmnt \ncexpr:  cexpr., cexpr \n", /*376*/
+	0, /*377*/
+	"ulstmnt:  LUSED ( zelist.) ; \n", /*378*/
+	"ulstmnt:  LSET ( zelist.) ; \n", /*379*/
+	0, /*380*/
+	0, /*381*/
+	0, /*382*/
+	"adlist:  xdecor $$21 =.init \n", /*383*/
+	"ulstmnt:  LIF ( cexpr ).stmnt \nulstmnt:  LIF ( cexpr ).stmnt LELSE stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*384*/
+	"ulstmnt:  $$88 LFOR ( forexpr.; zcexpr ; zcexpr ) stmnt \n", /*385*/
+	0, /*386*/
+	"forexpr:  ctlist.adlist \n", /*387*/
+	"ulstmnt:  LWHILE ( cexpr ).stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*388*/
+	"ulstmnt:  LDO stmnt LWHILE (.cexpr ) ; \n", /*389*/
+	"ulstmnt:  LSWITCH ( cexpr ).stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*390*/
+	"ulstmnt:  LUSED ( zelist ).; \n", /*391*/
+	"ulstmnt:  LSET ( zelist ).; \n", /*392*/
+	0, /*393*/
+	0, /*394*/
+	0, /*395*/
+	0, /*396*/
+	0, /*397*/
+	"ulstmnt:  LDO stmnt LWHILE ( cexpr.) ; \ncexpr:  cexpr., cexpr \n", /*398*/
+	0, /*399*/
+	0, /*400*/
+	0, /*401*/
+	"ulstmnt:  LIF ( cexpr ) stmnt LELSE.stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*402*/
+	"ulstmnt:  $$88 LFOR ( forexpr ; zcexpr.; zcexpr ) stmnt \n", /*403*/
+	"ulstmnt:  LDO stmnt LWHILE ( cexpr ).; \n", /*404*/
+	0, /*405*/
+	0, /*406*/
+	0, /*407*/
+	"ulstmnt:  $$88 LFOR ( forexpr ; zcexpr ; zcexpr.) stmnt \n", /*408*/
+	"ulstmnt:  $$88 LFOR ( forexpr ; zcexpr ; zcexpr ).stmnt \nzcexpr: .    (99)\n$$84: .    (84)\n$$88: .    (88)\n", /*409*/
+	0, /*410*/
+};
