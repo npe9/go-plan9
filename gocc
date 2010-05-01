@@ -1,0 +1,19 @@
+#!/bin/rc
+
+pccopts=()
+ccopts=()
+
+while(~ $1 -*){
+	switch($1){
+	case -I* -D*
+		pccopts=($pccopts $1)
+	case -*
+		ccopts=($ccopts $1)
+	}
+	shift
+}
+
+ifile=$1
+stem=`{basename $1 .c}
+
+eval cpp -N $pccopts '-+' $ifile '|' $O^c $ccopts -o $stem.$O
