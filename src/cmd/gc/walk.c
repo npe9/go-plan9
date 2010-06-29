@@ -106,7 +106,7 @@ walk(Node *fn)
 }
 
 void
-gettype(Node **np, NodeList **init)
+gettype(Node **np, NodeList ** /*init*/)
 {
 	if(debug['W'])
 		dump("\nbefore gettype", *np);
@@ -126,7 +126,6 @@ void
 walkdef(Node *n)
 {
 	int lno, maplineno, embedlineno;
-	NodeList *init;
 	Node *e;
 	Type *t;
 
@@ -152,7 +151,6 @@ walkdef(Node *n)
 	if(n->type != T || n->sym == S)	// builtin or no name
 		goto ret;
 
-	init = nil;
 	switch(n->op) {
 	default:
 		fatal("walkdef %O", n->op);
@@ -277,14 +275,13 @@ walkstmt(Node **np)
 {
 	NodeList *init;
 	NodeList *ll, *rl;
-	int cl, lno;
+	int cl;
 	Node *n;
 
 	n = *np;
 	if(n == N)
 		return;
 
-	lno = lineno;
 	setlineno(n);
 
 	switch(n->op) {
@@ -479,9 +476,6 @@ walkexpr(Node **np, NodeList **init)
 		dump("missed typecheck", n);
 		fatal("missed typecheck");
 	}
-
-	t = T;
-	et = Txxx;
 
 	switch(n->op) {
 	default:
@@ -1062,7 +1056,7 @@ ret:
 	*np = n;
 }
 
-Node*
+static Node*
 makenewvar(Type *t, NodeList **init, Node **nstar)
 {
 	Node *nvar, *nas;
@@ -1144,7 +1138,7 @@ bad:
 }
 
 Node*
-ascompatee1(int op, Node *l, Node *r, NodeList **init)
+ascompatee1(int, Node *l, Node *r, NodeList **init)
 {
 	return convas(nod(OAS, l, r), init);
 }
@@ -1186,7 +1180,7 @@ fncall(Node *l, Type *rt)
 }
 
 NodeList*
-ascompatet(int op, NodeList *nl, Type **nr, int fp, NodeList **init)
+ascompatet(int /*op*/, NodeList *nl, Type **nr, int fp, NodeList **init)
 {
 	Node *l, *tmp, *a;
 	NodeList *ll;
@@ -1354,7 +1348,6 @@ dumptypes(Type **nl, char *what)
 	Type *l;
 	Iter savel;
 
-	l = structfirst(&savel, nl);
 	print("\t");
 	first = 1;
 	for(l = structfirst(&savel, nl); l != T; l = structnext(&savel)) {
@@ -1817,9 +1810,6 @@ convas(Node *n, NodeList **init)
 	if(n->op != OAS)
 		fatal("convas: not OAS %O", n->op);
 	n->typecheck = 1;
-
-	lt = T;
-	rt = T;
 
 	l = n->left;
 	r = n->right;

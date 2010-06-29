@@ -209,17 +209,11 @@ void*
 SysAlloc(uintptr n)
 {
 	void *p;
+
 	mstats.sys += n;
-	p = runtime_mmap(nil, n, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_ANON|MAP_PRIVATE, -1, 0);
-	if(p < (void*)4096) {
-		if(p == (void*)EACCES) {
-			printf("mmap: access denied\n");
-			printf("If you're running SELinux, enable execmem for this process.\n");
-		} else {
-			printf("mmap: errno=%p\n", p);
-		}
-		exit(2);
-	}
+	p = sbrk(n);
+	if((void*)p == (void*)-1)
+		sysfatal("sbrk: %r");
 	return p;
 }
 

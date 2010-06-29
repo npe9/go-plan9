@@ -1,0 +1,103 @@
+</$objtype/mkfile
+LIB=runtime.a
+
+# Set SIZE to 32 or 64.
+SIZE_386=32
+SIZE_amd64=64
+SIZE_arm=32
+
+CFLAGS=-Iplan9 -wF
+
+GOFILES=\
+	extern.go\
+	type.go\
+
+# 386-specific object files
+OFILES_386=\
+	vlop.$O\
+	vlrt.$O\
+
+GOARM=6
+
+# arm-specific object files
+OFILES_arm=\
+	cas$GOARM.$O\
+	memset.$O\
+	vlop.$O\
+	vlrt.$O\
+
+ARCHFILES=`{echo '$'OFILES_$objtype}
+SIZE=`{echo '$'SIZE_$objtype}
+
+OFILES=\
+	asm.$O\
+	cgocall.$O\
+	chan.$O\
+	closure.$O\
+	float.$O\
+	hashmap.$O\
+	iface.$O\
+	malloc.$O\
+	mcache.$O\
+	mcentral.$O\
+	mem.$O\
+	memmove.$O\
+	mfixalloc.$O\
+	mgc0.$O\
+	mheap.$O\
+	mheapmap$SIZE.$O\
+	msize.$O\
+	print.$O\
+	proc.$O\
+	reflect.$O\
+	rune.$O\
+	runtime.$O\
+	rt0.$O\
+	sema.$O\
+	signal.$O\
+	slice.$O\
+	string.$O\
+	symtab.$O\
+	sys.$O\
+	thread.$O\
+	traceback.$O\
+	$ARCHFILES\
+
+HFILES=\
+	cgocall.h\
+	runtime.h\
+	hashmap.h\
+	malloc.h\
+	$objtype/asm.h\
+	plan9/os.h\
+	plan9/$objtype/defs.h\
+
+</sys/src/cmd/mklib
+
+$objtype/asm.h: mkasmh.sh runtime.acid.$objtype
+	./mkasmh.sh >$target
+
+$O.cgo2c: cgo2c.c
+	$CC $CFLAGS $stem.c
+	$LD -o $O.$stem $stem.$O
+
+%.$O:	plan9/%.c
+	$CC $CFLAGS plan9/$stem.c
+
+%.$O:	plan9/$objtype/%.c
+	$CC $CFLAGS  plan9/$objtype/$stem.c
+
+%.$O:	./plan9/$objtype/%.s
+	$AS ./plan9/$objtype/$stem.s
+
+# %.c:	%.cgo $O.cgo2c
+# 	$O.cgo2c $stem.cgo>$stem.c
+
+%.$O:	$objtype/%.c
+	$CC $CFLAGS $objtype/$stem.c
+
+%.$O:	./$objtype/%.s
+	$AS ./$objtype/$stem.s
+
+runtime.acid.$cputype: runtime.h proc.c
+	$CC -a proc.c >$target

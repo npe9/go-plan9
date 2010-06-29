@@ -54,7 +54,7 @@ isfunct(Node *n)
 	Funct *f;
 	Node *l;
 	Sym *s;
-	int o;
+	uint o;
 
 	o = n->op;
 	if(n->left == Z)

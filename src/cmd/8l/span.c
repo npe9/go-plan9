@@ -75,7 +75,7 @@ start:
 		Bflush(&bso);
 		if(n > 500) {
 			// TODO(rsc): figure out why nacl takes so long to converge.
-			print("span must be looping - %d\n", textsize);
+			print("span must be looping - %ld\n", textsize);
 			errorexit();
 		}
 		c = INITTEXT;
@@ -189,7 +189,7 @@ putsymb(char *s, int t, int32 v, int ver, Sym *go)
 		if(ver)
 			Bprint(&bso, "%c %.8lux %s<%d> %s (%.8llux)\n", t, v, s, ver, go ? go->name : "", gv);
 		else
-			Bprint(&bso, "%c %.8lux %s\n", t, v, s, go ? go->name : "", gv);
+			Bprint(&bso, "%c %.8lux %s %s (%.8llux)\n", t, v, s, go ? go->name : "", gv);
 	}
 }
 
@@ -1472,7 +1472,7 @@ asmins(Prog *p)
 		doasm(p);
 	}
 	if(andptr > and+sizeof and) {
-		print("and[] is too short - %d byte instruction\n", andptr - and);
+		print("and[] is too short - %ld byte instruction\n", andptr - and);
 		errorexit();
 	}
 }

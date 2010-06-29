@@ -1,7 +1,3 @@
-// Copyright 2009 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 /*
  * Go language grammar.
  *
@@ -18,7 +14,6 @@
  */
 
 %{
-#include <stdio.h>	/* if we don't, bison will, and go.h re-#defines getc */
 #include "go.h"
 %}
 %union	{
@@ -29,8 +24,6 @@
 	struct	Val	val;
 	int		lint;
 }
-
-// |sed 's/.*	//' |9 fmt -l1 |sort |9 fmt -l50 | sed 's/^/%xxx		/'
 
 %token	<val>	LLITERAL
 %token	<lint>	LASOP
@@ -189,10 +182,12 @@ import_stmt:
 		if(my->name[0] == '_' && my->name[1] == '\0')
 			break;
 
-		// Can end up with my->def->op set to ONONAME
-		// if one package refers to p without importing it.
-		// Don't want to give an error on a good import
-		// in another file.
+		/*
+		 *  Can end up with my->def->op set to ONONAME
+		 *  if one package refers to p without importing it.
+		 *  Don't want to give an error on a good import
+		 *  in another file.
+		 */
 		if(my->def && my->def->op != ONONAME) {
 			lineno = $1;
 			redeclare(my, "as imported package name");
@@ -627,7 +622,7 @@ if_stmt:
 	{
 		$$ = $3;
 		$$->nbody = $4;
-		// no popdcl; maybe there's an LELSE
+		/* no popdcl; maybe there's an LELSE */
 		yyoptsemi(LELSE);
 	}
 
@@ -848,13 +843,15 @@ pexpr:
 	}
 |	convtype lbrace braced_keyval_list '}'
 	{
-		// composite expression
+		/* composite expression */
 		$$ = nod(OCOMPLIT, N, $1);
 		$$->list = $3;
 
-		// If the opening brace was an LBODY,
-		// set up for another one now that we're done.
-		// See comment in lex.c about loophack.
+		/*
+		 *  If the opening brace was an LBODY,
+		 *  set up for another one now that we're done.
+		 *  See comment in lex.c about loophack.
+		 */
 		if($2 == LBODY)
 			loophack = 1;
 	}
@@ -1600,7 +1597,7 @@ hidden_import:
 	{
 		if($3->next != nil || $3->n->op != ODCLFIELD) {
 			yyerror("bad receiver in method");
-			YYERROR;
+		//	YYERROR;
 		}
 		importmethod($5, functype($3->n, $7, $9));
 	}

@@ -349,7 +349,6 @@ maplit(Node *n, Node *var, NodeList **init)
 			b++;
 	}
 
-	t = T;
 	if(b != 0) {
 		// build type [count]struct { a Tindex, b Tvalue }
 		t = n->type;

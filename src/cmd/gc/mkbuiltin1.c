@@ -1,54 +1,43 @@
-// Copyright 2009 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
+#include <u.h>
+#include <libc.h>
+#include <bio.h>
 
 // Compile .go file, import data from .6 file, and generate C string version.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <errno.h>
-
-int
+void
 main(int argc, char **argv)
 {
 	char *name;
-	FILE *fin;
-	char buf[1024], initfunc[1024], *p, *q;
+	char buf[1024], initfunc[1024], *s, *p, *q;
+	Biobuf *bin;
 
 	if(argc != 2) {
-		fprintf(stderr, "usage: mkbuiltin1 sys\n");
-		fprintf(stderr, "in file $1.6 s/PACKAGE/$1/\n");
-		exit(1);
+		fprint(2, "usage: mkbuiltin1 sys\n");
+		fprint(2, "in file $1.6 s/PACKAGE/$1/\n");
+		exits("usage");
 	}
 
 	name = argv[1];
-	snprintf(initfunc, sizeof(initfunc), "init_%s_function", name);
+	snprint(initfunc, sizeof(initfunc), "init_%s_function", name);
 
-	snprintf(buf, sizeof(buf), "%s.%s", name, getenv("O"));
-	if((fin = fopen(buf, "r")) == NULL) {
-		fprintf(stderr, "open %s: %s\n", buf, strerror(errno));
-		exit(1);
-	}
-
+	snprint(buf, sizeof(buf), "%s.%s", name, getenv("O"));
+	bin = Bopen(buf, OREAD);
+	if(bin == nil)
+		sysfatal("open: %r");
+   
 	// look for $$ that introduces imports
-	while(fgets(buf, sizeof buf, fin) != NULL)
+	for(; s = Brdstr(bin, '\n', 1); free(s))
 		if(strstr(buf, "$$"))
 			goto begin;
-	fprintf(stderr, "did not find beginning of imports\n");
-	exit(1);
+	sysfatal("did not find beginning of imports");
 
 begin:
-	printf("char *%simport =\n", name);
-
-	// process imports, stopping at $$ that closes them
-	while(fgets(buf, sizeof buf, fin) != NULL) {
-		buf[strlen(buf)-1] = 0;	// chop \n
-		if(strstr(buf, "$$"))
+	print("char *%simport =\n", name);
+	for(free(s); s = Brdstr(bin, '\n', 1); free(s)){
+		if(strstr(buf, "$$")){
+			free(s);
 			goto end;
-
-		// chop leading white space
+		}
 		for(p=buf; *p==' ' || *p == '\t'; p++)
 			;
 
@@ -58,20 +47,19 @@ begin:
 
 		// sys.go claims to be in package PACKAGE to avoid
 		// conflicts during "6g sys.go".  rename PACKAGE to $2.
-		printf("\t\"");
+		print("\t\"");
 		while(q = strstr(p, "PACKAGE")) {
 			*q = 0;
-			printf("%s", p);	// up to the substitution
-			printf("%s", name);	// the sub name
+			print("%s", p);	// up to the substitution
+			print("%s", name);	// the sub name
 			p = q+7;		// continue with rest
 		}
 
-		printf("%s\\n\"\n", p);
+		print("%s\\n\"\n", p);
 	}
-	fprintf(stderr, "did not find end of imports\n");
-	exit(1);
+	sysfatal("did not find end of imports\n");
 
 end:
-	printf("\t\"$$\\n\";\n");
-	return 0;
+	print("\t\"$$\\n\";\n");
+	exits("");
 }

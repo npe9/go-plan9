@@ -1540,10 +1540,8 @@ alloc(int32 n)
 	void *p;
 
 	p = malloc(n);
-	if(p == nil) {
-		print("alloc out of mem\n");
-		exit(1);
-	}
+	if(p == nil)
+		sysfatal("malloc: %r");
 	memset(p, 0, n);
 	return p;
 }
@@ -1554,10 +1552,7 @@ allocn(void *p, int32 n, int32 d)
 	if(p == nil)
 		return alloc(n+d);
 	p = realloc(p, n+d);
-	if(p == nil) {
-		print("allocn out of mem\n");
-		exit(1);
-	}
+		sysfatal("allocn: %r");
 	if(d > 0)
 		memset((char*)p+n, 0, d);
 	return p;

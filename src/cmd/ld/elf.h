@@ -259,8 +259,7 @@ typedef struct {
 
 /* Values for d_tag. */
 #define DT_NULL		0	/* Terminating entry. */
-#define DT_NEEDED	1	/* String table offset of a needed shared
-				   library. */
+#define DT_NEEDED	1	/* String table offset of a needed shared library. */
 #define DT_PLTRELSZ	2	/* Total size in bytes of PLT relocations. */
 #define DT_PLTGOT	3	/* Processor-dependent address. */
 #define DT_HASH		4	/* Address of symbol hash table. */
@@ -273,8 +272,7 @@ typedef struct {
 #define DT_SYMENT	11	/* Size of each symbol table entry. */
 #define DT_INIT		12	/* Address of initialization function. */
 #define DT_FINI		13	/* Address of finalization function. */
-#define DT_SONAME	14	/* String table offset of shared object
-				   name. */
+#define DT_SONAME	14	/* String table offset of shared object name. */
 #define DT_RPATH	15	/* String table offset of library path. [sup] */
 #define DT_SYMBOLIC	16	/* Indicates "symbolic" linking. [sup] */
 #define DT_REL		17	/* Address of ElfNN_Rel relocations. */
@@ -282,47 +280,44 @@ typedef struct {
 #define DT_RELENT	19	/* Size of each ElfNN_Rel relocation. */
 #define DT_PLTREL	20	/* Type of relocation used for PLT. */
 #define DT_DEBUG	21	/* Reserved (not used). */
-#define DT_TEXTREL	22	/* Indicates there may be relocations in
-				   non-writable segments. [sup] */
+#define DT_TEXTREL	22	/* Indicates there may be relocations in non-writable segments. [sup] */
 #define DT_JMPREL	23	/* Address of PLT relocations. */
 #define	DT_BIND_NOW	24	/* [sup] */
-#define	DT_INIT_ARRAY	25	/* Address of the array of pointers to
-				   initialization functions */
-#define	DT_FINI_ARRAY	26	/* Address of the array of pointers to
-				   termination functions */
-#define	DT_INIT_ARRAYSZ	27	/* Size in bytes of the array of
-				   initialization functions. */
-#define	DT_FINI_ARRAYSZ	28	/* Size in bytes of the array of
-				   terminationfunctions. */
-#define	DT_RUNPATH	29	/* String table offset of a null-terminated
-				   library search path string. */
+#define	DT_INIT_ARRAY	25	/* Address of the array of pointers to initialization functions */
+#define	DT_FINI_ARRAY	26	/* Address of the array of pointers to termination functions */
+#define	DT_INIT_ARRAYSZ	27	/* Size in bytes of the array of initialization functions. */
+#define	DT_FINI_ARRAYSZ	28	/* Size in bytes of the array of termination functions. */
+#define	DT_RUNPATH	29	/* String table offset of a null-terminated library search path string. */
 #define	DT_FLAGS	30	/* Object specific flag values. */
-#define	DT_ENCODING	32	/* Values greater than or equal to DT_ENCODING
+#define	DT_ENCODING	32
+			/* Values greater than or equal to DT_ENCODING
 				   and less than DT_LOOS follow the rules for
 				   the interpretation of the d_un union
 				   as follows: even == 'd_ptr', even == 'd_val'
 				   or none */
-#define	DT_PREINIT_ARRAY 32	/* Address of the array of pointers to
-				   pre-initialization functions. */
-#define	DT_PREINIT_ARRAYSZ 33	/* Size in bytes of the array of
-				   pre-initialization functions. */
+#define	DT_PREINIT_ARRAY 32	/* Address of the array of pointers to pre-initialization functions. */
+#define	DT_PREINIT_ARRAYSZ 33	/* Size in bytes of the array of pre-initialization functions. */
 #define	DT_LOOS		0x6000000d	/* First OS-specific */
 #define	DT_HIOS		0x6ffff000	/* Last OS-specific */
 #define	DT_LOPROC	0x70000000	/* First processor-specific type. */
 #define	DT_HIPROC	0x7fffffff	/* Last processor-specific type. */
 
 /* Values for DT_FLAGS */
-#define	DF_ORIGIN	0x0001	/* Indicates that the object being loaded may
+#define	DF_ORIGIN	0x0001
+				/* Indicates that the object being loaded may
 				   make reference to the $ORIGIN substitution
 				   string */
 #define	DF_SYMBOLIC	0x0002	/* Indicates "symbolic" linking. */
-#define	DF_TEXTREL	0x0004	/* Indicates there may be relocations in
+#define	DF_TEXTREL	0x0004
+				/* Indicates there may be relocations in
 				   non-writable segments. */
-#define	DF_BIND_NOW	0x0008	/* Indicates that the dynamic linker should
+#define	DF_BIND_NOW	0x0008
+				/* Indicates that the dynamic linker should
 				   process all relocations for the object
 				   containing this entry before transferring
 				   control to the program. */
-#define	DF_STATIC_TLS	0x0010	/* Indicates that the shared object or
+#define	DF_STATIC_TLS	0x0010
+				/* Indicates that the shared object or
 				   executable contains code using a static
 				   thread-local storage scheme. */
 
@@ -946,10 +941,10 @@ typedef Elf64_Shdr ElfShdr;
 typedef Elf64_Phdr ElfPhdr;
 
 void	elfinit(void);
-ElfEhdr	*getElfEhdr();
+ElfEhdr	*getElfEhdr(void);
 ElfShdr	*newElfShstrtab(vlong);
 ElfShdr	*newElfShdr(vlong);
-ElfPhdr	*newElfPhdr();
+ElfPhdr	*newElfPhdr(void);
 uint32	elfwritehdr(void);
 uint32	elfwritephdrs(void);
 uint32	elfwriteshdrs(void);

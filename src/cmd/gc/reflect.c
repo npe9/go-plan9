@@ -473,7 +473,7 @@ typename(Type *t)
 	return n;
 }
 
-Sym*
+static Sym*
 dtypesym(Type *t)
 {
 	int ot, n;
@@ -496,7 +496,6 @@ dtypesym(Type *t)
 	t1 = T;
 	if(isptr[t->etype])
 		t1 = t->type;
-	tsym = S;
 	if(t1)
 		tsym = t1->sym;
 	else

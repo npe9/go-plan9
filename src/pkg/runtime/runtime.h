@@ -1,6 +1,10 @@
 // Copyright 2009 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+#include <u.h>
+#include <ureg.h>
+#pragma	varargck	type	"X"	ulong
+typedef struct Ureg Ureg;
 
 /*
  * basic types
@@ -17,10 +21,8 @@ typedef	float			float32;
 typedef	double			float64;
 
 #ifdef _64BIT
-typedef	uint64		uintptr;
 typedef	int64		intptr;
 #else
-typedef	uint32		uintptr;
 typedef int32		intptr;
 #endif
 
@@ -269,7 +271,6 @@ struct	Func
  *    to add this list.
  */
 #define	nelem(x)	(sizeof(x)/sizeof((x)[0]))
-#define	nil		((void*)0)
 
 /*
  * known to compiler
@@ -354,7 +355,6 @@ int32	open(byte*, int32, ...);
 int32	write(int32, void*, int32);
 bool	cas(uint32*, uint32, uint32);
 void	jmpdefer(byte*, void*);
-void	exit1(int32);
 void	ready(G*);
 byte*	getenv(int8*);
 int32	atoi(byte*);
@@ -377,7 +377,7 @@ uint32	noequal(uint32, void*, void*);
 void*	malloc(uintptr size);
 void*	mallocgc(uintptr size);
 void	free(void *v);
-void	exit(int32);
+void	exits(int8*);
 void	breakpoint(void);
 void	gosched(void);
 void	goexit(void);
@@ -458,6 +458,7 @@ void	notewakeup(Note*);
 /*
  * low level go-called
  */
+void	*sbrk(uint32);
 uint8*	runtime_mmap(byte*, uint32, int32, int32, int32, uint32);
 void	runtime_memclr(byte*, uint32);
 void	runtime_setcallerpc(void*, void*);

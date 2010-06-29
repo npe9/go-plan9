@@ -364,6 +364,7 @@ mporfixfix(Mpint *a, Mpint *b)
 		x = *a1 | *b1++;
 		*a1++ = x;
 	}
+	SET(x);
 
 	if(b->neg)
 		mpneg(b);
@@ -398,6 +399,7 @@ mpandfixfix(Mpint *a, Mpint *b)
 		x = *a1 & *b1++;
 		*a1++ = x;
 	}
+	SET(x);
 
 	if(b->neg)
 		mpneg(b);
@@ -432,6 +434,7 @@ mpandnotfixfix(Mpint *a, Mpint *b)
 		x = *a1 & ~*b1++;
 		*a1++ = x;
 	}
+	SET(x);
 
 	if(b->neg)
 		mpneg(b);
@@ -466,6 +469,7 @@ mpxorfixfix(Mpint *a, Mpint *b)
 		x = *a1 ^ *b1++;
 		*a1++ = x;
 	}
+	SET(x);
 
 	if(b->neg)
 		mpneg(b);

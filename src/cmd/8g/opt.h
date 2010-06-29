@@ -89,29 +89,29 @@ struct	Rgn
 	short	regno;
 };
 
-EXTERN	int32	exregoffset;		// not set
-EXTERN	int32	exfregoffset;		// not set
-EXTERN	Reg*	firstr;
-EXTERN	Reg*	lastr;
-EXTERN	Reg	zreg;
-EXTERN	Reg*	freer;
-EXTERN	Reg**	rpo2r;
-EXTERN	Rgn	region[NRGN];
-EXTERN	Rgn*	rgp;
-EXTERN	int	nregion;
-EXTERN	int	nvar;
-EXTERN	int32	regbits;
-EXTERN	int32	exregbits;
-EXTERN	Bits	externs;
-EXTERN	Bits	params;
-EXTERN	Bits	consts;
-EXTERN	Bits	addrs;
-EXTERN	Bits	ovar;
-EXTERN	int	change;
-EXTERN	int32	maxnr;
-EXTERN	int32*	idom;
+int32	exregoffset;		// not set
+int32	exfregoffset;		// not set
+Reg*	firstr;
+Reg*	lastr;
+Reg	zreg;
+Reg*	freer;
+Reg**	rpo2r;
+Rgn	region[NRGN];
+Rgn*	rgp;
+int	nregion;
+int	nvar;
+int32	regbits;
+int32	exregbits;
+Bits	externs;
+Bits	params;
+Bits	consts;
+Bits	addrs;
+Bits	ovar;
+int	change;
+int32	maxnr;
+int32*	idom;
 
-EXTERN	struct
+struct
 {
 	int32	ncvtreg;
 	int32	nspill;

@@ -1121,7 +1121,7 @@ relcon(Node *l, Node *r)
 }
 
 int
-relindex(int o)
+relindex(uint o)
 {
 
 	switch(o) {

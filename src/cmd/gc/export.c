@@ -101,7 +101,7 @@ dumpexportconst(Sym *s)
 		dumpprereq(t);
 
 	Bprint(bout, "\t");
-	Bprint(bout, "const %lS", s);
+	Bprint(bout, "const %S", s);
 	if(t != T && !isideal(t))
 		Bprint(bout, " %#T", t);
 	Bprint(bout, " = ");
@@ -145,9 +145,9 @@ dumpexportvar(Sym *s)
 
 	Bprint(bout, "\t");
 	if(t->etype == TFUNC && n->class == PFUNC)
-		Bprint(bout, "func %lS %#hhT", s, t);
+		Bprint(bout, "func %S %#hhT", s, t);
 	else
-		Bprint(bout, "var %lS %#T", s, t);
+		Bprint(bout, "var %S %#T", s, t);
 	Bprint(bout, "\n");
 }
 
@@ -164,7 +164,7 @@ dumpexporttype(Sym *s)
 		yyerror("export of incomplete type %T", t);
 		return;
 	}
-	Bprint(bout, "type %#T %l#T\n",  t, t);
+	Bprint(bout, "type %#T %#T\n",  t, t);
 }
 
 void
@@ -215,7 +215,7 @@ dumptype(Type *t)
 	if(t->sym != S && t->sym->def == typenod(t) && !t->local)
 		return;
 
-	Bprint(bout, "type %#T %l#T\n",  t, t);
+	Bprint(bout, "type %#T %#T\n",  t, t);
 }
 
 void
@@ -350,7 +350,7 @@ importvar(Sym *s, Type *t, int ctxt)
 	declare(n, ctxt);
 
 	if(debug['E'])
-		print("import var %S %lT\n", s, t);
+		print("import var %S %T\n", s, t);
 }
 
 void
@@ -360,7 +360,7 @@ importtype(Type *pt, Type *t)
 		typedcl2(pt, t);
 
 	if(debug['E'])
-		print("import type %T %lT\n", pt, t);
+		print("import type %T %T\n", pt, t);
 }
 
 void
@@ -395,25 +395,25 @@ return;
 		et = t->etype;
 		switch(t->etype) {
 		case TFORW:
-			print("ci-1: %S %lT\n", s, t);
+			print("ci-1: %S %T\n", s, t);
 			break;
 
 		case TPTR32:
 		case TPTR64:
 			if(t->type == T) {
-				print("ci-2: %S %lT\n", s, t);
+				print("ci-2: %S %T\n", s, t);
 				break;
 			}
 
 			t1 = t->type;
 			if(t1 == T) {
-				print("ci-3: %S %lT\n", s, t1);
+				print("ci-3: %S %T\n", s, t1);
 				break;
 			}
 
 			et = t1->etype;
 			if(et == TFORW) {
-				print("%L: ci-4: %S %lT\n", lineno, s, t);
+				print("%L: ci-4: %S %T\n", lineno, s, t);
 				break;
 			}
 			break;

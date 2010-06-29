@@ -108,7 +108,6 @@ walkrange(Node *n)
 	init = list(init, nod(OAS, ha, a));
 
 	v1 = n->list->n;
-	hv1 = N;
 
 	v2 = N;
 	if(n->list->next)

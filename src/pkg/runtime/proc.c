@@ -489,7 +489,7 @@ scheduler(void)
 			}
 			gfput(gp);
 			if(--sched.gcount == 0)
-				exit(0);
+				exits("");
 			break;
 		}
 		if(gp->readyonstop){

@@ -149,6 +149,9 @@ main(int argc, char *argv[])
 
 	if(HEADTYPE == -1) {
 		HEADTYPE = 2;
+		if(strcmp(goos, "plan9") == 0)
+			HEADTYPE = 2;
+		else
 		if(strcmp(goos, "linux") == 0)
 			HEADTYPE = 7;
 		else
@@ -161,7 +164,7 @@ main(int argc, char *argv[])
 		if(strcmp(goos, "freebsd") == 0)
 			HEADTYPE = 9;
 		else
-			print("goos is not known: %sn", goos);
+			print("goos is not known: %s\n", goos);
 	}
 
 	switch(HEADTYPE) {

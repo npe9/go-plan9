@@ -114,7 +114,7 @@ markdcl(void)
 }
 
 void
-dumpdcl(char *st)
+dumpdcl(char *)
 {
 	Sym *s, *d;
 	int i;
@@ -129,7 +129,7 @@ dumpdcl(char *st)
 		}
 		print(" '%s'", d->name);
 		s = pkglookup(d->name, d->package);
-		print(" %lS\n", s);
+		print(" %S\n", s);
 	}
 }
 
@@ -250,7 +250,7 @@ updatetype(Type *n, Type *t)
 {
 	Sym *s;
 	int local, vargen;
-	int maplineno, lno, etype;
+	int maplineno, lno;
 
 	if(t == T)
 		return;
@@ -258,7 +258,6 @@ updatetype(Type *n, Type *t)
 	if(s == S || s->def == N || s->def->op != OTYPE || s->def->type != n)
 		fatal("updatetype %T = %T", n, t);
 
-	etype = n->etype;
 	switch(n->etype) {
 	case TFORW:
 		break;
@@ -781,12 +780,10 @@ stotype(NodeList *l, int et, Type **t)
 	Type *f, *t1, *t2, **t0;
 	Strlit *note;
 	int lno;
-	NodeList *init;
 	Node *n;
 	char *what;
 
 	t0 = t;
-	init = nil;
 	lno = lineno;
 	what = "field";
 	if(et == TINTER)
@@ -795,7 +792,6 @@ stotype(NodeList *l, int et, Type **t)
 	for(; l; l=l->next) {
 		n = l->n;
 		lineno = n->lineno;
-		note = nil;
 
 		if(n->op != ODCLFIELD)
 			fatal("stotype: oops %N\n", n);
@@ -1182,8 +1178,6 @@ addmethod(Sym *sf, Type *t, int local)
 {
 	Type *f, *d, *pa;
 	Node *n;
-
-	pa = nil;
 
 	// get field sym
 	if(sf == S)

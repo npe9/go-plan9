@@ -1,0 +1,52 @@
+</$objtype/mkfile
+
+TARG=	8l
+OFILES=\
+	asm.$O\
+	elf.$O\
+	enam.$O\
+	lib.$O\
+	list.$O\
+	macho.$O\
+	obj.$O\
+	optab.$O\
+	pass.$O\
+	span.$O\
+	go.$O\
+
+HFILES=\
+	l.h\
+	../8l/8.out.h\
+	../ld/elf.h\
+	../ld/macho.h\
+
+BIN=/$objtype/bin
+CFILES=${OFILES:%.$O=%.c}
+CFILES=${CFILES:enam.c=../8c/enam.c}
+UPDATE=\
+	mkfile\
+	$HFILES\
+	$CFILES\
+	${TARG:%=/386/bin/%}\
+
+</sys/src/cmd/mkone
+
+enam.c: 8.out.h
+	ed - ../8l/8.out.h <<'!'
+	v/^	A/d
+	,s/^	A/	"/
+	g/ .*$/s///
+	,s/,*$/",/
+	1i
+	char*	anames[] =
+	{
+	.
+	$a
+	};
+	.
+	w enam.c
+	Q
+	!
+
+%.$O: ../ld/%.c
+	$CC $CFLAGS ../ld/$stem.c

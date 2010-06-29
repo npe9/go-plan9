@@ -27,7 +27,7 @@ runtime·panicl(int32 lno)
 	fd = 2;
 	if(panicking) {
 		printf("double panic\n");
-		exit(3);
+		exits("double panic");
 	}
 	panicking++;
 
@@ -38,7 +38,7 @@ runtime·panicl(int32 lno)
 		tracebackothers(g);
 	}
 	breakpoint();  // so we can grab it in a debugger
-	exit(2);
+	exit("runtime·panicl");
 }
 
 void
@@ -72,7 +72,7 @@ throw(int8 *s)
 	printf("throw: %s\n", s);
 	runtime·panicl(-1);
 	*(int32*)0 = 0;	// not reached
-	exit(1);	// even more not reached
+	exits("throw");
 }
 
 void

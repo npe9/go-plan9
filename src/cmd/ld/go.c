@@ -317,14 +317,13 @@ parsemethod(char **pp, char *ep, char **methp)
 }
 
 static void
-loaddynld(char *file, char *p, int n)
+loaddynld(char *, char *p, int n)
 {
 	char *next, *name, *def, *p0, *lib;
 	Sym *s;
 
 	p[n] = '\0';
 
-	p0 = p;
 	for(; *p; p=next) {
 		next = strchr(p, '\n');
 		if(next == nil)

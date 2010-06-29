@@ -650,7 +650,6 @@ agen(Node *n, Node *res)
 		break;
 
 	case ODOT:
-		t = nl->type;
 		agen(nl, res);
 		if(n->xoffset != 0) {
 			nodconst(&n1, types[tptr], n->xoffset);
@@ -741,9 +740,6 @@ bgen(Node *n, int true, Prog *to)
 	if(n == N)
 		n = nodbool(1);
 
-	nl = n->left;
-	nr = n->right;
-
 	if(n->type == T) {
 		convlit(&n, types[TBOOL]);
 		if(n->type == T)
@@ -756,7 +752,6 @@ bgen(Node *n, int true, Prog *to)
 		patch(gins(AEND, N, N), to);
 		return;
 	}
-	nl = N;
 	nr = N;
 
 	switch(n->op) {
@@ -1049,13 +1044,13 @@ stkof(Node *n)
  *	memmove(&res, &n, w);
  */
 void
-sgen(Node *n, Node *res, int w)
+sgen(Node *n, Node *res, long w)
 {
 	Node dst, src, tdst, tsrc;
 	int32 c, q, odst, osrc;
 
 	if(debug['g']) {
-		print("\nsgen w=%d\n", w);
+		print("\nsgen w=%ld\n", w);
 		dump("r", n);
 		dump("res", res);
 	}

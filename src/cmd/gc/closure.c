@@ -53,7 +53,6 @@ closurebody(NodeList *body)
 		body = list1(nod(OEMPTY, N, N));
 
 	func = curfn;
-	l = func->dcl;
 	func->nbody = body;
 	funcbody(func);
 
@@ -152,7 +151,7 @@ walkclosure(Node *func, NodeList **init)
 
 	// create the function
 	xfunc = nod(ODCLFUNC, N, N);
-	snprint(namebuf, sizeof namebuf, "_f%.3ld", ++closgen);
+	snprint(namebuf, sizeof namebuf, "_f%.3d", ++closgen);
 	xfunc->nname = newname(lookup(namebuf));
 	xfunc->nname->ntype = xtype;
 	declare(xfunc->nname, PFUNC);

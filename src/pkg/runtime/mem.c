@@ -19,10 +19,10 @@ brk(uint32 n)
 {
 	byte *v;
 
-	v = runtime_mmap(nil, n, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_ANON|MAP_PRIVATE, 0, 0);
-	if(v < (void *)4096) {
+	v = (byte*)sbrk(n);
+	if((void*)v == (void*)-1){
 		printf("mmap: errno=%p\n", v);
-		exit(2);
+		exits("no memory");
 	}
 	m->mem.nmmap += n;
 	return v;
@@ -58,8 +58,7 @@ oldmal(uint32 n)
 			// so we have to call runtime_mmap directly - it is written
 			// in assembly and tagged not to grow the stack.
 			m->mem.hunk =
-				runtime_mmap(nil, NHUNK, PROT_READ|PROT_WRITE|PROT_EXEC,
-					MAP_ANON|MAP_PRIVATE, 0, 0);
+				sbrk(NHUNK);
 			if(m->mem.hunk < (void*)4096) {
 				*(uint32*)0xf1 = 0;
 			}

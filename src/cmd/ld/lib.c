@@ -61,7 +61,7 @@ libinit(void)
 	// add goroot to the end of the libdir list.
 	libdir[nlibdir++] = smprint("%s/pkg/%s_%s", goroot, goos, goarch);
 
-	unlink(outfile);
+	remove(outfile);
 	cout = create(outfile, 1, 0775);
 	if(cout < 0) {
 		diag("cannot create %s", outfile);
@@ -288,7 +288,7 @@ objfile(char *file)
 			l = SARNAME;
 			while(l > 0 && arhdr.name[l-1] == ' ')
 				l--;
-			sprint(pname, "%s(%.*s)", file, l, arhdr.name);
+			sprint(pname, "%s(%.*s)", file, (int)l, arhdr.name);
 			l = atolwhex(arhdr.size);
 			ldobj(f, l, pname);
 			if(s->type == SXREF) {
@@ -417,7 +417,6 @@ copyhistfrog(char *buf, int nbuf)
 
 	p = buf;
 	ep = buf + nbuf;
-	i = 0;
 	for(i=0; i<histfrogp; i++) {
 		p = seprint(p, ep, "%s", histfrog[i]->name+1);
 		if(i+1<histfrogp && (p == buf || p[-1] != '/'))
@@ -720,12 +719,13 @@ mywhatsys(void)
 {
 	char *s;
 
-	goroot = getenv("GOROOT");
-	goarch = getenv("GOARCH");
+	goroot = "/usr/quanstro/src/go";
+//	goroot = getenv("GOROOT");
+	goarch = getenv("objtype");
 	goos = getenv("GOOS");
 
 	if(goroot == nil) {
-		s = getenv("HOME");
+		s = getenv("home");
 		if(s == nil)
 			s = "/home/ken";
 		goroot = mal(strlen(s) + 10);
@@ -736,7 +736,7 @@ mywhatsys(void)
 		goarch = "amd64";
 	}
 	if(goos == nil) {
-		goos = "linux";
+		goos = "plan9";
 	}
 }
 

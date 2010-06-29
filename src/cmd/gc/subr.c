@@ -24,7 +24,7 @@ errorexit(void)
 	flusherrors();
 	if(outfile)
 		remove(outfile);
-	exit(1);
+	exits("error");
 }
 
 extern int yychar;
@@ -37,7 +37,7 @@ parserline(void)
 }
 
 static void
-adderr(int line, char *fmt, va_list arg)
+adderr(long line, char *fmt, va_list arg)
 {
 	Fmt f;
 	Error *p;
@@ -100,7 +100,7 @@ hcrash(void)
 	if(debug['h']) {
 		flusherrors();
 		if(outfile)
-			unlink(outfile);
+			remove(outfile);
 		*(int*)0 = 0;
 	}
 }
@@ -559,12 +559,10 @@ nodbool(int b)
 Type*
 aindex(Node *b, Type *t)
 {
-	NodeList *init;
 	Type *r;
 	int bound;
 
 	bound = -1;	// open bound
-	init = nil;
 	typecheck(&b, Erv);
 	if(b != nil) {
 		switch(consttype(b)) {
@@ -884,38 +882,7 @@ s%~	%%g
 */
 
 static char*
-etnames[] =
-{
-	[TINT]		= "INT",
-	[TUINT]		= "UINT",
-	[TINT8]		= "INT8",
-	[TUINT8]	= "UINT8",
-	[TINT16]	= "INT16",
-	[TUINT16]	= "UINT16",
-	[TINT32]	= "INT32",
-	[TUINT32]	= "UINT32",
-	[TINT64]	= "INT64",
-	[TUINT64]	= "UINT64",
-	[TUINTPTR]	= "UINTPTR",
-	[TFLOAT]	= "FLOAT",
-	[TFLOAT32]	= "FLOAT32",
-	[TFLOAT64]	= "FLOAT64",
-	[TBOOL]		= "BOOL",
-	[TPTR32]	= "PTR32",
-	[TPTR64]	= "PTR64",
-	[TDDD]		= "DDD",
-	[TFUNC]		= "FUNC",
-	[TARRAY]	= "ARRAY",
-	[TSTRUCT]	= "STRUCT",
-	[TCHAN]		= "CHAN",
-	[TMAP]		= "MAP",
-	[TINTER]	= "INTER",
-	[TFORW]		= "FORW",
-	[TFIELD]	= "FIELD",
-	[TSTRING]	= "STRING",
-	[TCHAN]		= "CHAN",
-	[TANY]		= "ANY",
-};
+etnames[30];
 
 int
 Econv(Fmt *fp)
@@ -1069,13 +1036,13 @@ Tpretty(Fmt *fp, Type *t)
 			if(fp->flags & FmtShort)
 				fmtprint(fp, "%hS", s);
 			else
-				fmtprint(fp, "%lS", s);
+				fmtprint(fp, "%S", s);
 			if(strcmp(s->package, package) != 0)
 				return 0;
 			if(s->flags & SymImported)
 				return 0;
 			if(t->vargen)
-				fmtprint(fp, "·%d", t->vargen);
+				fmtprint(fp, "·%ld", t->vargen);
 			return 0;
 		}
 		return fmtprint(fp, "%S", s);
@@ -1274,7 +1241,7 @@ Tconv(Fmt *fp)
 
 	case TFUNC:
 		if(fp->flags & FmtLong)
-			fmtprint(fp, "%d%d%d(%lT,%lT)%lT",
+			fmtprint(fp, "%d%d%d(%T,%T)%T",
 				t->thistuple, t->intuple, t->outtuple,
 				t->type, t->type->down->down, t->type->down);
 		else
@@ -1287,7 +1254,7 @@ Tconv(Fmt *fp)
 		fmtprint(fp, "{");
 		if(fp->flags & FmtLong)
 			for(t1=t->type; t1!=T; t1=t1->down)
-				fmtprint(fp, "%lT;", t1);
+				fmtprint(fp, "%T;", t1);
 		fmtprint(fp, "}");
 		break;
 
@@ -1295,7 +1262,7 @@ Tconv(Fmt *fp)
 		fmtprint(fp, "{");
 		if(fp->flags & FmtLong)
 			for(t1=t->type; t1!=T; t1=t1->down)
-				fmtprint(fp, "%lT;", t1);
+				fmtprint(fp, "%T;", t1);
 		fmtprint(fp, "}");
 		break;
 
@@ -1606,17 +1573,13 @@ isideal(Type *t)
 Type*
 methtype(Type *t)
 {
-	int ptr;
-
 	if(t == T)
 		return T;
 
 	// strip away pointer if it's there
-	ptr = 0;
 	if(isptr[t->etype]) {
 		if(t->sym != S)
 			return T;
-		ptr = 1;
 		t = t->type;
 		if(t == T)
 			return T;
@@ -1691,7 +1654,6 @@ eqtype1(Type *t1, Type *t2, int d, int names)
 			t1 = t1->down;
 			t2 = t2->down;
 		}
-		return 1;
 
 	case TFUNC:
 		// Loop over structs: receiver, in, out.
@@ -2086,7 +2048,7 @@ frame(int context)
 		case ONAME:
 			if(flag)
 				print("--- %s frame ---\n", p);
-			print("%O %S G%ld T\n", n->op, n->sym, n->vargen, n->type);
+			print("%O %S G%ld %T\n", n->op, n->sym, n->vargen, n->type);
 			flag = 0;
 			break;
 

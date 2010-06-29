@@ -21,6 +21,15 @@
 #define	getc	ccgetc
 #define	ungetc	ccungetc
 
+#define int8	char
+#define uint8	uchar
+#define	int16	short
+#define uint16	ushort
+#define int32	long
+#define	uint32	ulong
+#define int64	vlong
+#define uint64	uvlong
+
 enum
 {
 	NHUNK		= 50000,
@@ -722,7 +731,7 @@ int	yyparse(void);
 void	addidir(char*);
 void	importfile(Val*, int line);
 void	cannedimports(char*, char*);
-void	unimportfile();
+void	unimportfile(void);
 int32	yylex(void);
 void	yyoptsemi(int);
 void	typeinit(void);
@@ -1093,6 +1102,7 @@ int	bitno(int32);
  *	gen.c
  */
 typedef	struct	Prog	Prog;
+#pragma incomplete Prog
 #define	P	((Prog*)0)
 
 typedef	struct	Label Label;
@@ -1176,7 +1186,6 @@ void	cgen_ret(Node *n);
 int	isfat(Type*);
 void	clearfat(Node *n);
 void	cgen(Node*, Node*);
-struct Prog;
 void	gused(Node*);
 void	gdata(Node*, Node*, int);
 void	gdatastring(Node*, Strlit*);
@@ -1202,3 +1211,16 @@ int	duintxx(Sym *s, int off, uint64 v, int wid);
 void	genembedtramp(Type*, Type*, Sym*);
 int	gen_as_init(Node*);
 
+#pragma	varargck	type	"L"	long
+#pragma	varargck	type	"L"	ulong
+#pragma	varargck	type	"N"	Node*
+#pragma	varargck	type	"Z"	Strlit*
+#pragma	varargck	type	"S"	Sym*
+#pragma	varargck	type	"O"	uint
+#pragma	varargck	type	"E"	int
+#pragma	varargck	type	"J"	Node*
+#pragma	varargck	type	"T"	Type*
+#pragma	varargck	type	"J"	Node*
+#pragma	varargck	type	"B"	Mpint*
+#pragma	varargck	type	"F"	Mpflt*
+#pragma	varargck	type	"R"	int

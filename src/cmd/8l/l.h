@@ -31,6 +31,18 @@
 #include	<u.h>
 #include	<libc.h>
 #include	<bio.h>
+
+
+#define int8	char
+#define uint8	uchar
+#define	int16	short
+#define uint16	ushort
+#define int32	long
+#define	uint32	ulong
+#define int64	vlong
+#define uint64	uvlong
+
+
 #include	"../8l/8.out.h"
 
 #ifndef	EXTERN
@@ -253,10 +265,12 @@ EXTERN union
 #define	cbuf	u.obuf
 #define	xbuf	u.ibuf
 
+#pragma	varargck	type	"A"	int
 #pragma	varargck	type	"A"	uint
 #pragma	varargck	type	"D"	Adr*
 #pragma	varargck	type	"P"	Prog*
 #pragma	varargck	type	"R"	int
+#pragma	varargck	type	"R"	uint
 #pragma	varargck	type	"S"	char*
 
 EXTERN	int32	HEADR;
@@ -397,8 +411,3 @@ void	deadcode(void);
 #define	LPUT(a)	lputl(a)
 #define	WPUT(a)	wputl(a)
 #define	VPUT(a)	vputl(a)
-
-#pragma	varargck	type	"D"	Adr*
-#pragma	varargck	type	"P"	Prog*
-#pragma	varargck	type	"R"	int
-#pragma	varargck	type	"A"	int

@@ -595,11 +595,7 @@ void
 cgen_div(int op, Node *nl, Node *nr, Node *res)
 {
 	Node ax, dx, oldax, olddx;
-	int rax, rdx;
 	Type *t;
-
-	rax = reg[D_AX];
-	rdx = reg[D_DX];
 
 	if(is64(nl->type))
 		fatal("cgen_div %T", nl->type);

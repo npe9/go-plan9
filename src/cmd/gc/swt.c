@@ -68,7 +68,7 @@ dumpcase(Case *c0)
 		case Ttypeconst:
 			print("case-typeconst\n");
 			print("	ord=%d\n", c->ordinal);
-			print("	hash=%ux\n", c->hash);
+			print("	hash=%lux\n", c->hash);
 			break;
 		case Ttypevar:
 			print("case-typevar\n");
@@ -78,7 +78,7 @@ dumpcase(Case *c0)
 			print("case-???\n");
 			print("	ord=%d\n", c->ordinal);
 			print("	op=%O\n", c->node->left->op);
-			print("	hash=%ux\n", c->hash);
+			print("	hash=%lux\n", c->hash);
 			break;
 		}
 	}
@@ -251,7 +251,7 @@ newlabel(void)
 void
 casebody(Node *sw, Node *typeswvar)
 {
-	Node *os, *oc, *n, *c, *last;
+	Node *n, *c, *last;
 	Node *def;
 	NodeList *cas, *stat, *l, *lc;
 	Node *go, *br;
@@ -264,8 +264,6 @@ casebody(Node *sw, Node *typeswvar)
 	cas = nil;	// cases
 	stat = nil;	// statements
 	def = N;	// defaults
-	os = N;		// last statement
-	oc = N;		// last case
 	br = nod(OBREAK, N, N);
 
 	for(l=sw->list; l; l=l->next) {
@@ -843,8 +841,8 @@ typecheckswitch(Node *n)
 						yyerror("case %+N in %T switch", ll->n, t);
 					break;
 				case Etype:	// type switch
-					if(ll->n->op == OLITERAL && istype(ll->n->type, TNIL))
-						;
+					if(ll->n->op == OLITERAL && istype(ll->n->type, TNIL)){
+					}
 					else if(ll->n->op != OTYPE && ll->n->type != T)
 						yyerror("%#N is not a type", ll->n);
 					break;

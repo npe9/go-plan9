@@ -78,7 +78,7 @@ prog(int as)
  * t is ignored.
  */
 Prog*
-gbranch(int as, Type *t)
+gbranch(int as, Type *)
 {
 	Prog *p;
 
@@ -758,7 +758,6 @@ regalloc(Node *n, Type *t, Node *o)
 		goto out;
 	}
 	yyerror("regalloc: unknown type %T", t);
-	i = 0;
 
 err:
 	nodreg(n, t, 0);
@@ -766,7 +765,7 @@ err:
 
 out:
 	if(reg[i] == 0) {
-		regpc[i] = (ulong)__builtin_return_address(0);
+		regpc[i] = (ulong)getcallerpc(&n);
 		if(i == D_AX || i == D_CX || i == D_DX || i == D_SP) {
 			dump("regalloc-o", o);
 			fatal("regalloc %R", i);
@@ -1857,7 +1856,7 @@ sudoclean(void)
 }
 
 int
-sudoaddable(int as, Node *n, Addr *a)
+sudoaddable(int, Node*, Addr*)
 {
 	return 0;
 }

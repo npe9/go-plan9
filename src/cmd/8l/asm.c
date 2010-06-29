@@ -643,7 +643,6 @@ asmb(void)
 		lput(0L);
 		lput(~0L);			/* gp value ?? */
 		break;
-		lputl(0);			/* x */
 	case 1:	/* unix coff */
 		/*
 		 * file header
@@ -770,6 +769,7 @@ asmb(void)
 
 		/* This null SHdr must appear before all others */
 		sh = newElfShdr(elfstr[ElfStrEmpty]);
+		USED(sh);
 
 		/* program header info - but not on native client */
 		pph = nil;

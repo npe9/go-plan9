@@ -800,7 +800,7 @@ out:
 	// funny punning
 	if(v->etype != et) {
 		if(debug['R'])
-			print("pun et=%d/%d w=%d/%d o=%d/%d %D\n",
+			print("pun et=%d/%d w=%d/%d o=%lld/%ld %D\n",
 				v->etype, et,
 				v->width, w,
 				v->offset, o, a);
@@ -1362,7 +1362,7 @@ dumpone(Reg *r)
 	int z;
 	Bits bit;
 
-	print("%ld:%P", r->loop, r->prog);
+	print("%d:%P", r->loop, r->prog);
 	for(z=0; z<BITS; z++)
 		bit.b[z] =
 			r->set.b[z] |

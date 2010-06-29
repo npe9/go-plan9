@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/rc
 # Copyright 2009 The Go Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
@@ -8,13 +8,14 @@ echo 'static char*'
 echo 'opnames[] = '
 echo '{'
 sed -n '/OXXX/,/OEND/p' go.h |
-	cpp |
-	sed 's!//.*!!; /^#/d'  |
-	tr ' ' '\n' |
-	tr -d ' \t,' |
+	sed 's:\/\/.*::g
+		s/,/\n/g
+		s/[ 	]+//g
+		s/^OEND$//g' |
 	grep . |
 	sort |
-	grep -v '^OEND$' |
-	sed 's/O//; s/.*/	[O&] =	"&",/'
+	sed 's/O//; s/.*/	[O&] =	"&",/' |
+	sed 's/\[O[ 	]+/[O/g' |
+	grep -v '\[O\]'
 echo '};'
 

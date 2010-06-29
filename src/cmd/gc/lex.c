@@ -5,19 +5,20 @@
 #define		EXTERN
 #include	"go.h"
 #include	"y.tab.h"
-#include <ar.h>
+#include 	<ar.h>
+#include	<ctype.h>
 
-extern int yychar;
+int yychar;
 char nopackage[] = "____";
 void lexfini(void);
 
-#define	DBG	if(!debug['x']);else print
+#define	DBG	if(!debug['x']){}else print
 enum
 {
 	EOF		= -1,
 };
 
-int
+void
 main(int argc, char *argv[])
 {
 	int i, c;
@@ -128,8 +129,7 @@ main(int argc, char *argv[])
 	if(nerrors)
 		errorexit();
 
-	exit(0);
-	return 0;
+	exits("");
 
 usage:
 	print("flags:\n");
@@ -144,8 +144,7 @@ usage:
 	print("  -S print the assembly language\n");
 	print("  -w print the parse tree after typing\n");
 	print("  -x print lex tokens\n");
-	exit(0);
-	return 0;
+	exits("");
 }
 
 int
@@ -222,9 +221,9 @@ findpkg(Strlit *name)
 	Idir *p;
 
 	if(goroot == nil) {
-		goroot = getenv("GOROOT");
-		goos = getenv("GOOS");
-		goarch = getenv("GOARCH");
+		goroot = "/";
+		goos = "plan9";
+		goarch = getenv("cputype");
 	}
 
 	if(islocalname(name)) {
@@ -260,7 +259,7 @@ findpkg(Strlit *name)
 }
 
 void
-importfile(Val *f, int line)
+importfile(Val *f, int /*line*/)
 {
 	Biobuf *imp;
 	char *file, *p;
@@ -424,7 +423,6 @@ l0:
 			cp = lexbuf;
 			*cp++ = c;
 			c = c1;
-			c1 = 0;
 			goto casedot;
 		}
 		if(c1 == '.') {
@@ -836,7 +834,6 @@ talph:
 	return s->lexical;
 
 tnum:
-	c1 = 0;
 	cp = lexbuf;
 	if(c != '0') {
 		for(;;) {

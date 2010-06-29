@@ -715,6 +715,7 @@ out:
 		// JMP instructions too close to the top of
 		// a new function.
 		p = pc;
+		USED(p);
 		gins(ANOP, N, N);
 	}
 

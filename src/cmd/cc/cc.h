@@ -33,11 +33,18 @@
 #include <bio.h>
 #include <ctype.h>
 
+#define int8	char
+#define uint8	uchar
+#define	int16	short
+#define uint16	ushort
+#define int32	long
+#define	uint32	ulong
+#define int64	vlong
+#define uint64	uvlong
+
 #pragma	lib	"../cc/cc.a$O"
 
-#ifndef	EXTERN
 #define EXTERN	extern
-#endif
 
 #undef	getc
 #undef	ungetc
@@ -701,7 +708,7 @@ int	nocast(Type*, Type*);
 void	prtree(Node*, char*);
 void	prtree1(Node*, int, int);
 void	relcon(Node*, Node*);
-int	relindex(int);
+int	relindex(uint);
 int	simpleg(int32);
 Type*	garbt(Type*, int32);
 int	simplec(int32);
@@ -798,9 +805,9 @@ int	machcap(Node*);
 #pragma	varargck	argpos	yyerror	1
 
 #pragma	varargck	type	"F"	Node*
-#pragma	varargck	type	"L"	int32
-#pragma	varargck	type	"Q"	int32
-#pragma	varargck	type	"O"	int
+#pragma	varargck	type	"L"	long
+#pragma	varargck	type	"Q"	long
+#pragma	varargck	type	"O"	uint
 #pragma	varargck	type	"T"	Type*
 #pragma	varargck	type	"|"	int
 

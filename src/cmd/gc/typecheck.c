@@ -567,7 +567,7 @@ reswitch:
 		}
 		defaultlit(&n->right, t->type);
 		r = n->right;
-		if((t = r->type) == T)
+		if(r->type == T)
 			goto error;
 		// TODO: more aggressive
 		n->etype = 0;
@@ -799,7 +799,7 @@ reswitch:
 		ok |= Erv;
 		typecheck(&n->left, Erv | (top & Eindir));
 		convlit1(&n->left, n->type, 1);
-		if((t = n->left->type) == T || n->type == T)
+		if(n->left->type == T || n->type == T)
 			goto error;
 		n = typecheckconv(n, n->left, n->type, 1, "conversion");
 		if(n->type == T)

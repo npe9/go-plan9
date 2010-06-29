@@ -2,14 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-#include <u.h>
-#include <libc.h>
-
 #include "../gc/go.h"
 #include "../8l/8.out.h"
 
 #ifndef	EXTERN
-#define EXTERN	extern
+#define extern
 #endif
 
 typedef	struct	Addr	Addr;
@@ -52,22 +49,22 @@ enum
 	Fpop2 = 1<<2,
 };
 
-EXTERN	Biobuf*	bout;
-EXTERN	int32	dynloc;
-EXTERN	uchar	reg[D_NONE];
-EXTERN	int32	pcloc;		// instruction counter
-EXTERN	Strlit	emptystring;
+Biobuf*	bout;
+int32	dynloc;
+uchar	reg[D_NONE];
+int32	pcloc;		// instruction counter
+Strlit	emptystring;
 extern	char*	anames[];
-EXTERN	Hist*	hist;
-EXTERN	Prog	zprog;
-EXTERN	Node*	curfn;
-EXTERN	Node*	newproc;
-EXTERN	Node*	deferproc;
-EXTERN	Node*	deferreturn;
-EXTERN	Node*	throwindex;
-EXTERN	Node*	throwslice;
-EXTERN	Node*	throwreturn;
-EXTERN	int	maxstksize;
+Hist*	hist;
+Prog	zprog;
+Node*	curfn;
+Node*	newproc;
+Node*	deferproc;
+Node*	deferreturn;
+Node*	throwindex;
+Node*	throwslice;
+Node*	throwreturn;
+int	maxstksize;
 extern	uint32	unmappedzero;
 
 
@@ -175,3 +172,9 @@ void	listinit(void);
 
 void	zaddr(Biobuf*, Addr*, int, int);
 
+#pragma	varargck	type	"A"	int
+#pragma	varargck	type	"D"	Addr*
+#pragma	varargck	type	"P"	Prog*
+#pragma	varargck	type	"Q"	Bits
+#pragma	varargck	type	"R"	int
+#pragma	varargck	type	"Y"	char*
