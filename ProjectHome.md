@@ -1,0 +1,1 @@
+Repository tracking attempt(s) to port Go to Plan 9.  If you'd like to join and start your own attempt, please email me.
